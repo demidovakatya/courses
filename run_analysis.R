@@ -8,21 +8,21 @@ if (!file.exists("data")) {
 }
 file.url <- "https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip"
 download.file(file.url, destfile="data/UCI_HAR_20_Dataset.zip", method="curl")
-unzip(zipfile="data/UCI_HAR_20_Dataset.zip", exdir="./data")
+unzip(zipfile="data/UCI_HAR_20_Dataset.zip", exdir="data")
 
 # A 561-feature vector with time and frequency domain variables. 
-features <- read.table("data/features.txt")
+features <- read.table("data/UCI HAR Dataset/features.txt")
 features <- as.vector(features[,2])
 
 # Sets and activity labels
-x.test <- read.table("data/test/x_test.txt", header = FALSE, col.names = features)
-y.test <- read.table("data/test/y_test.txt", header = FALSE, col.names = "Activity")
-x.train <- read.table("data/train/X_train.txt", header = FALSE, col.names = features)
-y.train <- read.table("data/train/y_train.txt", header = FALSE, col.names = "Activity")
+x.test <- read.table("data/UCI HAR Dataset/test/x_test.txt", header = FALSE, col.names = features)
+y.test <- read.table("data/UCI HAR Dataset/test/y_test.txt", header = FALSE, col.names = "Activity")
+x.train <- read.table("data/UCI HAR Dataset/train/X_train.txt", header = FALSE, col.names = features)
+y.train <- read.table("data/UCI HAR Dataset/train/y_train.txt", header = FALSE, col.names = "Activity")
 
 # An identifier of the subject who carried out the experiment.
-subject.test <- read.table("data/test/subject_test.txt", header = FALSE, col.names = "Subject")
-subject.train <- read.table("data/train/subject_train.txt", header = FALSE, col.names = "Subject")
+subject.test <- read.table("data/UCI HAR Dataset/test/subject_test.txt", header = FALSE, col.names = "Subject")
+subject.train <- read.table("data/UCI HAR Dataset/train/subject_train.txt", header = FALSE, col.names = "Subject")
 
 
 # ================================================================================
