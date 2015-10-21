@@ -45,6 +45,8 @@ rm(x.test, x.train, y.train, y.test, test, train, subject.train, subject.test)
 # ================================================================================
 
 # Create a logical vector of requested features.
+# 'requested features' - the mean and the st.deviation.
+# The mean frequency (meanFreq) is not included here.
 req.features <- grepl("-mean", features) & !grepl("-meanFreq", features) | grepl("-std", features)
 
 # Add subject and activity (first two columns).
