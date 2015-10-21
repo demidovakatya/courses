@@ -35,6 +35,9 @@ train <- cbind(subject.train, y.train, x.train)
 # Merge the training and the test sets to create one data set.
 data <- rbind(test, train)
 
+# Encode subject IDs as factors (because this variable is categorical)
+data$Subject <- as.factor(data$Subject)
+
 # Remove unnecessary stuff
 rm(x.test, x.train, y.train, y.test, test, train, subject.train, subject.test)
 
@@ -42,20 +45,7 @@ rm(x.test, x.train, y.train, y.test, test, train, subject.train, subject.test)
 # ================================================================================
 # 2. Extract only the measurements on the mean and standard deviation for each measurement.
 # ================================================================================
-
-# Create a logical vector of requested features.
-# 'requested features' - the mean and the st.deviation.
-# The mean frequency (meanFreq) is not included here.
-req.features <- grepl("-mean", features) & !grepl("-meanFreq", features) | grepl("-std", features)
-
-# Add subject and activity (first two columns).
-req.cols <- c(TRUE, TRUE, req.features)
-
-# Get rid of unnecessary columns.
-data <- data[req.cols]
-
-# Encode subject IDs as factors (because this variable is categorical)
-data$Subject <- as.factor(data$Subject)
+data <- data[, grepl("\\.mean\\.|\\.std|Activity|Subject", names(data))]
 
 
 # ================================================================================
