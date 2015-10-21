@@ -56,8 +56,7 @@ The code in the script is divided into sections, and these sections will be expl
 * Removes unnecessary objects from the environment.
 
 ### 2. Extract only the measurements on the mean and standard deviation for each measurement.
-* Creates a logical vector `req.features` where `TRUE` stands for mean() or std() variables.
-* Removes from `data` unnecessary columns.
+* Using the `grepl` function, chooses a data set with only those columns that contain mean values (`-mean()`), standard deviation (`-std()`), and reassignes this data set to `data`.
 
 ### 3. Use descriptive activity names to name the activities in the data set
 * Reads activity_labels.txt as `activity.labels`.
@@ -67,6 +66,8 @@ The code in the script is divided into sections, and these sections will be expl
 * Stores current variable names in a vector.
 * Using `sub` function, makes these names more descriptive.
 * Assigns new names to `data` column names.
+
+[read about variable names →](#description-of-the-variables)
 
 ### 5. From the data set in step 4, create a second, independent tidy data set with the average of each variable for each activity and each subject.
 * Loads the `plyr` library.
@@ -87,14 +88,18 @@ The code in the script is divided into sections, and these sections will be expl
 There are the following variables in the resulting data set `tidy.data`.
 
 #### Subject
-`Subject` – an identifier of the subject who performed the activity. 
-Factor with 30 levels/labels: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30
+An identifier of the subject who performed the activity. 
+
+Factor with 30 levels/labels: 
+
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30
 
 #### Activity
-`Activity` – a type of performed activity. 
+A type of performed activity. 
+
 Factor w/ 6 levels:
+
 Level | Label
-------|------
 1 | WALKING
 2 | WALKING_UPSTAIRS
 3 | WALKING_DOWNSTAIRS
@@ -103,88 +108,58 @@ Level | Label
 6 | LAYING
 
 #### Features
-All features are numeric vectors within `[-1,1]`. 
+- All features are numeric vectors within `[-1,1]`. 
 - The gyroscope units are rad/seg.
-- The units used for the accelerations (total and body) are 'g's (gravity of earth -> 9.80665 m/seg2).
+- The units used for the accelerations (total and body) are 'g's (gravity of earth -> 9.80665 m/seg2).- 
+- `Time` — time domain signal.
+- `Freq` — frequency domain signal.
+- `Body.Acceleration` – body linear acceleration.
+- `Body.AccelerationJerk` – body linear acceleration jerk.
+- `Gravity.Acceleration` – gravity acceleration.
+- `Body.AngularVelocity` – the body angular velocity.
+- `Body.AngularVelocityJerk` – the body angular velocity jerk.
+- `Magnitude` – the magnitude of the signal, calculated using the Euclidean norm
+- `X`, `Y`, `Z` – the axis of the signal.
+- `Mean` – mean value of the signal.
+- `StDev` – standard deviation of the signals.
 
-`Time` — time domain signals.
-`Freq` — frequency domain signals.
-`Body.Acceleration` – body acceleration signals
-`Body.AccelerationJerk` – the body linear acceleration
-`Gravity.Acceleration` – gravity acceleration signals
-`Body.AngularVelocity` – the body angular velocity
-`X`, `Y`, `Z` – de
-`Magnitude` – the magnitude of the signals, calculated using the Euclidean norm
+So, for example, `Time.Body.AngularVelocity.Mean.Y` → time domain body angular velocity signal in the Y direction
 
-There are only means and standard deviations of these signals in the `tidy.data` data set.
+Table of all "feature" variables:
 
-List of all variable names:
-* `Time.Body.Acceleration.Mean.X`
-* `Time.Body.Acceleration.Mean.Y`
-* `Time.Body.Acceleration.Mean.Z`
-* `Time.Body.Acceleration.StDev.X`
-* `Time.Body.Acceleration.StDev.Y`
-* `Time.Body.Acceleration.StDev.Z`
-* `Time.Gravity.Acceleration.Mean.X`
-* `Time.Gravity.Acceleration.Mean.Y`
-* `Time.Gravity.Acceleration.Mean.Z`
-* `Time.Gravity.Acceleration.StDev.X`
-* `Time.Gravity.Acceleration.StDev.Y`
-* `Time.Gravity.Acceleration.StDev.Z`
-* `Time.Body.AccelerationJerk.Mean.X`
-* `Time.Body.AccelerationJerk.Mean.Y`
-* `Time.Body.AccelerationJerk.Mean.Z`
-* `Time.Body.AccelerationJerk.StDev.X`
-* `Time.Body.AccelerationJerk.StDev.Y`
-* `Time.Body.AccelerationJerk.StDev.Z`
-* `Time.Body.AngularVelocity.Mean.X`
-* `Time.Body.AngularVelocity.Mean.Y`
-* `Time.Body.AngularVelocity.Mean.Z`
-* `Time.Body.AngularVelocity.StDev.X`
-* `Time.Body.AngularVelocity.StDev.Y`
-* `Time.Body.AngularVelocity.StDev.Z`
-* `Time.Body.AngularVelocityJerk.Mean.X`
-* `Time.Body.AngularVelocityJerk.Mean.Y`
-* `Time.Body.AngularVelocityJerk.Mean.Z`
-* `Time.Body.AngularVelocityJerk.StDev.X`
-* `Time.Body.AngularVelocityJerk.StDev.Y`
-* `Time.Body.AngularVelocityJerk.StDev.Z`
-* `Time.Body.Acceleration.Magnitude.Mean`
-* `Time.Body.Acceleration.Magnitude.StDev`
-* `Time.Gravity.Acceleration.Magnitude.Mean`
-* `Time.Gravity.Acceleration.Magnitude.StDev`
-* `Time.Body.AccelerationJerk.Magnitude.Mean`
-* `Time.Body.AccelerationJerk.Magnitude.StDev`
-* `Time.Body.AngularVelocity.Magnitude.Mean`
-* `Time.Body.AngularVelocity.Magnitude.StDev`
-* `Time.Body.AngularVelocityJerk.Magnitude.Mean`
-* `Time.Body.AngularVelocityJerk.Magnitude.StDev`
-* `Freq.Body.Acceleration.Mean.X`
-* `Freq.Body.Acceleration.Mean.Y`
-* `Freq.Body.Acceleration.Mean.Z`
-* `Freq.Body.Acceleration.StDev.X`
-* `Freq.Body.Acceleration.StDev.Y`
-* `Freq.Body.Acceleration.StDev.Z`
-* `Freq.Body.AccelerationJerk.Mean.X`
-* `Freq.Body.AccelerationJerk.Mean.Y`
-* `Freq.Body.AccelerationJerk.Mean.Z`
-* `Freq.Body.AccelerationJerk.StDev.X`
-* `Freq.Body.AccelerationJerk.StDev.Y`
-* `Freq.Body.AccelerationJerk.StDev.Z`
-* `Freq.Body.AngularVelocity.Mean.X`
-* `Freq.Body.AngularVelocity.Mean.Y`
-* `Freq.Body.AngularVelocity.Mean.Z`
-* `Freq.Body.AngularVelocity.StDev.X`
-* `Freq.Body.AngularVelocity.StDev.Y`
-* `Freq.Body.AngularVelocity.StDev.Z`
-* `Freq.Body.Acceleration.Magnitude.Mean`
-* `Freq.Body.Acceleration.Magnitude.StDev`
-* `Freq.Body.AccelerationJerk.Magnitude.Mean`
-* `Freq.Body.AccelerationJerk.Magnitude.StDev`
-* `Freq.Body.AngularVelocity.Magnitude.Mean`
-* `Freq.Body.AngularVelocity.Magnitude.StDev`
-* `Freq.Body.AngularVelocityJerk.Magnitude.Mean`
-* `Freq.Body.AngularVelocityJerk.Magnitude.StDev`
+Time.Body.Acceleration.Mean.X | Time.Body.Acceleration.StDev.X 
+Time.Body.Acceleration.Mean.Y | Time.Body.Acceleration.StDev.Y
+Time.Body.Acceleration.Mean.Z | Time.Body.Acceleration.StDev.Z
+Time.Gravity.Acceleration.Mean.X | Time.Gravity.Acceleration.StDev.X
+Time.Gravity.Acceleration.Mean.Y | Time.Gravity.Acceleration.StDev.Y
+Time.Gravity.Acceleration.Mean.Z | Time.Gravity.Acceleration.StDev.Z
+Time.Body.AccelerationJerk.Mean.X | Time.Body.AccelerationJerk.StDev.X
+Time.Body.AccelerationJerk.Mean.Y | Time.Body.AccelerationJerk.StDev.Y
+Time.Body.AccelerationJerk.Mean.Z | Time.Body.AccelerationJerk.StDev.Z
+Time.Body.AngularVelocity.Mean.X | Time.Body.AngularVelocity.StDev.X
+Time.Body.AngularVelocity.Mean.Y | Time.Body.AngularVelocity.StDev.Y
+Time.Body.AngularVelocity.Mean.Z | Time.Body.AngularVelocity.StDev.Z
+Time.Body.AngularVelocityJerk.Mean.X | Time.Body.AngularVelocityJerk.StDev.X
+Time.Body.AngularVelocityJerk.Mean.Y | Time.Body.AngularVelocityJerk.StDev.Y
+Time.Body.AngularVelocityJerk.Mean.Z | Time.Body.AngularVelocityJerk.StDev.Z
+Time.Body.Acceleration.Magnitude.Mean | Time.Body.Acceleration.Magnitude.StDev
+Time.Gravity.Acceleration.Magnitude.Mean | Time.Gravity.Acceleration.Magnitude.StDev
+Time.Body.AccelerationJerk.Magnitude.Mean | Time.Body.AccelerationJerk.Magnitude.StDev
+Time.Body.AngularVelocity.Magnitude.Mean | Time.Body.AngularVelocity.Magnitude.StDev
+Time.Body.AngularVelocityJerk.Magnitude.Mean | Time.Body.AngularVelocityJerk.Magnitude.StDev
+Freq.Body.Acceleration.Mean.X | Freq.Body.Acceleration.StDev.X
+Freq.Body.Acceleration.Mean.Y | Freq.Body.Acceleration.StDev.Y
+Freq.Body.Acceleration.Mean.Z | Freq.Body.Acceleration.StDev.Z
+Freq.Body.AccelerationJerk.Mean.X | Freq.Body.AccelerationJerk .StDev.X
+Freq.Body.AccelerationJerk.Mean.Y | Freq.Body.AccelerationJerk.StDev.Y 
+Freq.Body.AccelerationJerk.Mean.Z | Freq.Body.AccelerationJerk.StDev.Z 
+Freq.Body.AngularVelocity.Mean.X | Freq.Body.AngularVelocity.StDev.X
+Freq.Body.AngularVelocity.Mean.Y | Freq.Body.AngularVelocity.StDev.Y
+Freq.Body.AngularVelocity.Mean.Z | Freq.Body.AngularVelocity.StDev.Z
+Freq.Body.Acceleration.Magnitude.Mean | Freq.Body.Acceleration.Magnitude.StDev
+Freq.Body.AccelerationJerk.Magnitude.Mean | Freq.Body.AccelerationJerk.Magnitude.StDev 
+Freq.Body.AngularVelocity.Magnitude.Mean | Freq.Body.AngularVelocity.Magnitude.StDev 
+Freq.Body.AngularVelocityJerk.Magnitude.Mean | Freq.Body.AngularVelocityJerk.Magnitude.StDev 
 
 ## Resources
 1. [Human Activity Recognition Using Smartphones Data Set](http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones)
