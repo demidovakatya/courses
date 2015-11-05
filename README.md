@@ -54,3 +54,9 @@ from the <a href="https://archive.ics.uci.edu/ml/datasets/Individual+household+e
 <li><b>Sub_metering_3</b>: energy sub-metering No. 3 (in watt-hour of active energy). It corresponds to an electric water-heater and an air-conditioner.</li>
 </ol>
 
+## Plots
+
+![](plot1.png)
+![](plot2.png)
+![](plot3.png)
+![](plot4.png)
