@@ -57,6 +57,9 @@ from the <a href="https://archive.ics.uci.edu/ml/datasets/Individual+household+e
 ## Plots
 
 ![](plot1.png)
+
 ![](plot2.png)
+
 ![](plot3.png)
+
 ![](plot4.png)
