@@ -16,7 +16,17 @@ data <- subset(raw.data, subset = (Date >= "2007-02-01" & Date <= "2007-02-02"))
 rm(raw.data) 
 
 # Convert the Date and Time variables to Date/Time classes
-library(tidyr)
-data$Datetime  <- as.POSIXct(paste(data$Date, data$Time, sep=" "))
+data$datetime  <- as.POSIXct(paste(data$Date, data$Time, sep=" "))
 
+# Create the plot
+with(data, {
+  plot(Sub_metering_1~datetime, type="l", col="black", ylab = "Energy sub metering", xlab="")
+  lines(Sub_metering_2~datetime, type="l", col="red")
+  lines(Sub_metering_3~datetime, type="l", col="blue")
+})
+legend("topright", col = c("black", "red", "blue"), lty = 1,
+       legend = c("Sub_metering_1", "Sub_metering_2", "Sub_metering_3"))
 
+# Create the PNG file
+dev.copy(png, file="plot3.png")
+dev.off()

@@ -16,6 +16,13 @@ data <- subset(raw.data, subset = (Date >= "2007-02-01" & Date <= "2007-02-02"))
 rm(raw.data) 
 
 # Convert the Date and Time variables to Date/Time classes
-library(tidyr)
-data$Datetime  <- as.POSIXct(paste(data$Date, data$Time, sep=" "))
+data$datetime  <- as.POSIXct(paste(data$Date, data$Time, sep=" "))
 
+# Create the plot
+par(mfrow=c(1,1))
+with(data, hist(Global_active_power, col = "red", xlab = "Global Active Power (kilowatts)",
+                main="Global Active Power"))
+
+# Create the PNG file
+dev.copy(png, file="plot1.png")
+dev.off()

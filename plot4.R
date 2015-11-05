@@ -17,6 +17,20 @@ rm(raw.data)
 
 # Convert the Date and Time variables to Date/Time classes
 library(tidyr)
-data$Datetime  <- as.POSIXct(paste(data$Date, data$Time, sep=" "))
+data$datetime  <- as.POSIXct(paste(data$Date, data$Time, sep=" "))
 
+# Create the plot
+par(mfrow=c(2,2))
+with(data, {
+  plot(Global_active_power~datetime, type="l", col="black", 
+                ylab = "Global Active Power (kilowatts)", xlab="")
+  plot(Voltage~datetime, type="l")
+  plot(Sub_metering_1~datetime, type="l", col="black", ylab = "Energy Sub Metering", xlab="")
+  lines(Sub_metering_2~datetime, type="l", col="red")
+  lines(Sub_metering_3~datetime, type="l", col="blue")
+  plot(Global_reactive_power~datetime, type="l")
+})
 
+# Create the PNG file
+dev.copy(png, file="plot4.png")
+dev.off()
