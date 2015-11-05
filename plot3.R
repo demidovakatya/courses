@@ -19,6 +19,7 @@ rm(raw.data)
 data$datetime  <- as.POSIXct(paste(data$Date, data$Time, sep=" "))
 
 # Create the plot
+par(mfrow=c(1,1))
 with(data, {
   plot(Sub_metering_1~datetime, type="l", col="black", ylab = "Energy sub metering", xlab="")
   lines(Sub_metering_2~datetime, type="l", col="red")
@@ -30,3 +31,4 @@ legend("topright", col = c("black", "red", "blue"), lty = 1,
 # Create the PNG file
 dev.copy(png, file="plot3.png")
 dev.off()
+
