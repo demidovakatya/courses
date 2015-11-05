@@ -24,5 +24,5 @@ with(data, plot(Global_active_power~datetime, type="l", col="black",
                 ylab = "Global Active Power (kilowatts)", xlab=""))
 
 # Create the PNG file
-dev.copy(png, file="plot2.png")
+dev.copy(png, file="plot2.png", width=480, height=480)
 dev.off()
