@@ -25,7 +25,7 @@ with(data, {
   lines(Sub_metering_2~datetime, type="l", col="red")
   lines(Sub_metering_3~datetime, type="l", col="blue")
 })
-legend("topright", col = c("black", "red", "blue"), lty = 1,
+legend("topright", col = c("black", "red", "blue"), lty=c(1,1), lwd=c(1,1), cex=0.75,
        legend = c("Sub_metering_1", "Sub_metering_2", "Sub_metering_3"))
 
 # Create the PNG file
