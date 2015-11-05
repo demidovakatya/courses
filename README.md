@@ -5,7 +5,7 @@
 The overall **goal** here is to examine how household energy usage
 varies over a 2-day period in February, 2007. 
 
-The **task** was to reconstruct four plots, all of which were constructed using the base plotting system ([read more about the assignment]:book: (https://github.com/rdpeng/ExData_Plotting1)).
+The **task** was to reconstruct four plots, all of which were constructed using the base plotting system ([:book: read more about the assignment](https://github.com/rdpeng/ExData_Plotting1)).
 
 ## .R files
 
