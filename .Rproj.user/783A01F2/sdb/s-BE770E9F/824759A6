@@ -1,0 +1,25 @@
+{
+    "contents" : "",
+    "created" : 1447415895001.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "824759A6",
+    "lastKnownWriteTime" : 6917529027917853873,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "q34ynnznzi",
+        "caption" : "filling.steps",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=filling.steps&cache_key=q34ynnznzi",
+        "displayedObservations" : 288,
+        "environment" : "",
+        "object" : "filling.steps",
+        "totalObservations" : 288,
+        "variables" : 2
+    },
+    "relative_order" : 6,
+    "source_on_save" : false,
+    "type" : "r_dataframe"
+}

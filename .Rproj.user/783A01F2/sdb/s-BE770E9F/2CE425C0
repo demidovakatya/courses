@@ -1,0 +1,25 @@
+{
+    "contents" : "",
+    "created" : 1447416479553.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "2CE425C0",
+    "lastKnownWriteTime" : 4528088792,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "1ib1uejiw7",
+        "caption" : "daily.steps",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=daily.steps&cache_key=1ib1uejiw7",
+        "displayedObservations" : "61",
+        "environment" : "",
+        "object" : "daily.steps",
+        "totalObservations" : "61",
+        "variables" : "2"
+    },
+    "relative_order" : 7,
+    "source_on_save" : false,
+    "type" : "r_dataframe"
+}
