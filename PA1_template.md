@@ -1,4 +1,11 @@
-# Reproducible Research: Peer Assessment 1
+---
+title: "Reproducible Research: Peer Assessment 1"
+output: 
+  html_document:
+    fig_width: 8
+    keep_md: yes
+    toc: yes
+---
 
 ## Introduction
 
@@ -138,7 +145,7 @@ colnames(daily.steps) <- c("day", "total.steps")
 hist(daily.steps$total.steps, breaks = 20, xlab = "Number of steps", main = "Histogram of the total number of steps\ntaken each day (NAs ignored)", col="red")
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-3-1.png) 
+![plot of chunk unnamed-chunk-3](figure/unnamed-chunk-3-1.png) 
 
 2. Calculate and report the mean and median total number of steps taken per day
 
@@ -178,7 +185,7 @@ plot(interval.steps$interval, interval.steps$average.steps,
      ylab = "Average number of steps taken")
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-5-1.png) 
+![plot of chunk unnamed-chunk-5](figure/unnamed-chunk-5-1.png) 
 
 2. Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?
 
@@ -192,7 +199,7 @@ interval.steps[which.max(interval.steps$average.steps),]
 ## 104      835      206.1698
 ```
 
-The maximum number of steps is contained in the **835** 5-minute interval: **206.1698113** steps.
+The maximum number of steps is contained in the **835** 5-minute interval. It contains **206.1698113** steps.
 
 ## Imputing missing values
 
@@ -245,7 +252,7 @@ hist(daily.filled.steps$total.steps, breaks = 20, xlab = "Number of steps",
      col="green")
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-10-1.png) 
+![plot of chunk unnamed-chunk-10](figure/unnamed-chunk-10-1.png) 
 
 ```r
 mean(daily.filled.steps$total.steps)
@@ -268,7 +275,7 @@ median(daily.filled.steps$total.steps)
 
 As we can see in the figure below, the new dataset *slightly* differs from the original dataset:
 
-<img src="PA1_template_files/figure-html/unnamed-chunk-11-1.png" title="" alt="" style="display: block; margin: auto;" />
+<img src="figure/unnamed-chunk-11-1.png" title="plot of chunk unnamed-chunk-11" alt="plot of chunk unnamed-chunk-11" style="display: block; margin: auto;" />
 
 
 ```
@@ -289,7 +296,7 @@ If we look at summaries of these two datasets, we may notice that only `Min.` an
 
 This is why I think choosing mean instead of medium is tricky. If we fill the dataset with means for the corresponding intervals, everything would change drastically:
 
-![](PA1_template_files/figure-html/unnamed-chunk-13-1.png) 
+![plot of chunk unnamed-chunk-13](figure/unnamed-chunk-13-1.png) 
 
 ```r
 # Mean and median
@@ -334,5 +341,5 @@ xyplot(average.steps ~ interval | daytype, data = week.steps,
        main = "Average daily activity pattern for weekends and weekdays")
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-16-1.png) 
+![plot of chunk unnamed-chunk-16](figure/unnamed-chunk-16-1.png) 
 
