@@ -1,11 +1,4 @@
----
-title: "Reproducible Research: Peer Assessment 1"
-output: 
-  html_document:
-    fig_width: 8
-    keep_md: yes
-    toc: yes
----
+# Reproducible Research: Peer Assessment 1
 
 ## Introduction
 
@@ -40,7 +33,8 @@ are a total of 17,568 observations in this dataset.
 
 1. Load the data (i.e. `read.csv()`)
 
-```{r}
+
+```r
 # Download the package
 if (!file.exists("activity.zip")) {
   url <- "https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2Factivity.zip"
@@ -57,12 +51,33 @@ activity <- read.csv("activity.csv", stringsAsFactors = F)
 
 # Show the structure and the first part of the loaded data
 str(activity)
+```
+
+```
+## 'data.frame':	17568 obs. of  3 variables:
+##  $ steps   : int  NA NA NA NA NA NA NA NA NA NA ...
+##  $ date    : chr  "2012-10-01" "2012-10-01" "2012-10-01" "2012-10-01" ...
+##  $ interval: int  0 5 10 15 20 25 30 35 40 45 ...
+```
+
+```r
 head(activity)
+```
+
+```
+##   steps       date interval
+## 1    NA 2012-10-01        0
+## 2    NA 2012-10-01        5
+## 3    NA 2012-10-01       10
+## 4    NA 2012-10-01       15
+## 5    NA 2012-10-01       20
+## 6    NA 2012-10-01       25
 ```
 
 2. Process/transform the data into a format suitable for further analysis
 
-```{r}
+
+```r
 # Convert the 'date' variable to an date-time object
 activity$date <- as.POSIXct(activity$date, format = "%Y-%m-%d")
 
@@ -76,11 +91,33 @@ activity$daytype <- as.factor(ifelse(weekday == "saturday" | weekday == "sunday"
 
 # Show the structure and the first part of the processed data
 str(activity)
-head(activity)
+```
 
+```
+## 'data.frame':	17568 obs. of  4 variables:
+##  $ steps   : int  NA NA NA NA NA NA NA NA NA NA ...
+##  $ date    : POSIXct, format: "2012-10-01" "2012-10-01" ...
+##  $ interval: int  0 5 10 15 20 25 30 35 40 45 ...
+##  $ daytype : Factor w/ 2 levels "weekday","weekend": 1 1 1 1 1 1 1 1 1 1 ...
+```
+
+```r
+head(activity)
+```
+
+```
+##   steps       date interval daytype
+## 1    NA 2012-10-01        0 weekday
+## 2    NA 2012-10-01        5 weekday
+## 3    NA 2012-10-01       10 weekday
+## 4    NA 2012-10-01       15 weekday
+## 5    NA 2012-10-01       20 weekday
+## 6    NA 2012-10-01       25 weekday
+```
+
+```r
 # Clear the workplace
 rm(weekday)
-
 ```
 
 
@@ -90,7 +127,8 @@ For this part of the assignment, we ignore the missing values in the dataset.
 
 1. Make a histogram of the total number of steps taken each day
 
-```{r}
+
+```r
 # Create a dataframe with summarized data
 daily.steps <- aggregate(activity$steps, list(activity$date), 
                          FUN = sum, na.rm = TRUE)
@@ -98,24 +136,38 @@ colnames(daily.steps) <- c("day", "total.steps")
 
 # Make the histogram
 hist(daily.steps$total.steps, breaks = 20, xlab = "Number of steps", main = "Histogram of the total number of steps\ntaken each day (NAs ignored)", col="red")
-
 ```
+
+![](PA1_template_files/figure-html/unnamed-chunk-3-1.png) 
 
 2. Calculate and report the mean and median total number of steps taken per day
 
-```{r}
+
+```r
 mean(daily.steps$total.steps)
+```
+
+```
+## [1] 9354.23
+```
+
+```r
 median(daily.steps$total.steps)
 ```
 
-* The mean total number of steps taken per day: **`r mean(daily.steps$total.steps)`**
-* The median total number of steps taken per day: **`r median(daily.steps$total.steps)`**
+```
+## [1] 10395
+```
+
+* The mean total number of steps taken per day: **9354.2295082**
+* The median total number of steps taken per day: **10395**
 
 ## What is the average daily activity pattern?
 
 1. Make a time series plot (i.e. `type = "l"`) of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all days (y-axis)
 
-```{r}
+
+```r
 interval.steps <- aggregate(activity$steps, 
                             by = list(activity$interval), 
                             FUN = mean, na.rm = TRUE)
@@ -126,13 +178,21 @@ plot(interval.steps$interval, interval.steps$average.steps,
      ylab = "Average number of steps taken")
 ```
 
+![](PA1_template_files/figure-html/unnamed-chunk-5-1.png) 
+
 2. Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?
 
-```{r}
+
+```r
 interval.steps[which.max(interval.steps$average.steps),]
 ```
 
-The maximum number of steps is contained in the **`r interval.steps[which.max(interval.steps$average.steps),][1]`** 5-minute interval. It contains **`r max(interval.steps$average.steps)`** steps.
+```
+##     interval average.steps
+## 104      835      206.1698
+```
+
+The maximum number of steps is contained in the **835** 5-minute interval: **206.1698113** steps.
 
 ## Imputing missing values
 
@@ -140,15 +200,21 @@ There are a number of days/intervals where there are missing values (coded as `N
 
 1. Calculate and report the total number of missing values in the dataset (i.e. the total number of rows with NAs). Due to the fact that only the `steps` variable has missing values, the total number of rows with missing values in the dataset equals to the total number of missing values in the `steps` column:
 
-```{r}
+
+```r
 sum(is.na(activity$steps))
 ```
 
-There are **`r sum(is.na(activity$steps))`** missing values in the dataset.
+```
+## [1] 2304
+```
+
+There are **2304** missing values in the dataset.
 
 2. Devise a strategy for filling in all of the missing values in the dataset. A strategy for filling in all of the missing values in the dataset us to use the median values for the 5-minute intervals. 
 
-```{r}
+
+```r
 filling.steps <- aggregate(activity$steps, 
                             by = list(activity$interval), 
                             FUN = median, na.rm = TRUE)
@@ -157,7 +223,8 @@ colnames(filling.steps) <- c("interval", "median.steps")
 
 3. Create a new dataset that is equal to the original dataset but with the missing data filled in. 
 
-```{r}
+
+```r
 # We merge the original dataset with this dataframe and fill the missing values
 filled.activity <- merge(activity, filling.steps)
 filled.activity$new.steps <- ifelse(is.na(filled.activity$steps), 
@@ -166,7 +233,8 @@ filled.activity$new.steps <- ifelse(is.na(filled.activity$steps),
 
 4. Make a histogram of the total number of steps taken each day. Calculate and report the mean and median total number of steps taken per day. 
 
-```{r}
+
+```r
 daily.filled.steps <- aggregate(filled.activity$new.steps, 
                                 list(filled.activity$date), 
                                 FUN = sum, na.rm = TRUE)
@@ -175,8 +243,24 @@ colnames(daily.filled.steps) <- c("day", "total.steps")
 hist(daily.filled.steps$total.steps, breaks = 20, xlab = "Number of steps", 
      main = "Histogram of the total number of steps\ntaken each day (NAs filled)", 
      col="green")
+```
+
+![](PA1_template_files/figure-html/unnamed-chunk-10-1.png) 
+
+```r
 mean(daily.filled.steps$total.steps)
+```
+
+```
+## [1] 9503.869
+```
+
+```r
 median(daily.filled.steps$total.steps)
+```
+
+```
+## [1] 10395
 ```
 
 
@@ -184,43 +268,39 @@ median(daily.filled.steps$total.steps)
 
 As we can see in the figure below, the new dataset *slightly* differs from the original dataset:
 
-```{r echo=FALSE, fig.width=8, fig.align='center'}
-par(mfrow=c(1,2))
-hist(daily.steps$total.steps, breaks = 20, xlab = "", 
-     main = "total steps per day\nNAs omitted", col="red")
-hist(daily.filled.steps$total.steps, breaks = 20, xlab = "", 
-     main = "total steps per day\nNAs filled", col="green")
-```
+<img src="PA1_template_files/figure-html/unnamed-chunk-11-1.png" title="" alt="" style="display: block; margin: auto;" />
 
-```{r echo=F}
-cbind(na.omitted = summary(daily.steps[,2]), na.filled = summary(daily.filled.steps[,2]))
+
+```
+##         na.omitted na.filled
+## Min.             0        41
+## 1st Qu.       6778      6778
+## Median       10400     10400
+## Mean          9354      9504
+## 3rd Qu.      12810     12810
+## Max.         21190     21190
 ```
 
 If we look at summaries of these two datasets, we may notice that only `Min.` and `Mean` values have changed:
 
-* The minima value changed from **`r min(daily.steps$total.steps, na.rm=T)`** to **`r min(daily.filled.steps$total.steps, na.rm=T)`**. In the original dataset, there are days with no recordings at all (`NA`s only), and *total steps* for these days are `0`. Then we fill `NA`s, and since there are no days without any activity at all, there are no more zero *total steps*.
+* The minima value changed from **0** to **41**. In the original dataset, there are days with no recordings at all (`NA`s only), and *total steps* for these days are `0`. Then we fill `NA`s, and since there are no days without any activity at all, there are no more zero *total steps*.
 
 * As the consequence, the mean value changed. 
 
 This is why I think choosing mean instead of medium is tricky. If we fill the dataset with means for the corresponding intervals, everything would change drastically:
 
-```{r echo=F}
-bad.filled.activity <- merge(activity, interval.steps)
-bad.filled.activity$steps <- ifelse(is.na(bad.filled.activity$steps), 
-                                bad.filled.activity$average.steps, 
-                                bad.filled.activity$steps)
-bad.daily.filled.steps <- aggregate(bad.filled.activity$steps, 
-                                list(bad.filled.activity$date), 
-                         FUN = sum, na.rm = TRUE)
-colnames(bad.daily.filled.steps) <- c("day", "total.steps")
-hist(bad.daily.filled.steps$total.steps, breaks = 20, xlab = "Number of steps", main = "Histogram of the total number\nof steps taken each day", col="yellow")
-```
-```{r}
+![](PA1_template_files/figure-html/unnamed-chunk-13-1.png) 
+
+```r
 # Mean and median
 ```
-```{r echo=F}
-mean(bad.daily.filled.steps$total.steps)
-median(bad.daily.filled.steps$total.steps)
+
+```
+## [1] 10766.19
+```
+
+```
+## [1] 10766.19
 ```
 
 ## Are there differences in activity patterns between weekdays and weekends?
@@ -239,7 +319,8 @@ There are some differences in activity patterns between weekdays and weekends, a
 
 I think, the daily activity patterns are pretty understandable, though these plots give us an opportunity to literally see these patterns and the differences between them.
 
-```{r, fig.height=6}
+
+```r
 week.steps <- aggregate(filled.activity$new.steps, 
                         by = list(filled.activity$daytype, 
                                   filled.activity$interval),
@@ -252,4 +333,6 @@ xyplot(average.steps ~ interval | daytype, data = week.steps,
        xlab = "Interval", ylab = "Number of steps", 
        main = "Average daily activity pattern for weekends and weekdays")
 ```
+
+![](PA1_template_files/figure-html/unnamed-chunk-16-1.png) 
 
