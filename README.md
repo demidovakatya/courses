@@ -94,50 +94,155 @@ For each plot you should
 
 ## Result
 
+This code reads the data (it is included into every R file):
+
+```
+# Load and extract the data into the working directory
+if (!file.exists("NEI_data/")) {
+  url <- "https://d396qusza40orc.cloudfront.net/exdata%2Fdata%2FNEI_data.zip"
+  download.file(url, destfile = "NEI_data.zip", method = "curl")
+  unzip("NEI_data.zip", exdir = "NEI_data/")
+}
+
+# Load the data into the environment
+if (!exists("nei")) { nei <- readRDS("NEI_data/summarySCC_PM25.rds") }
+if (!exists("scc")) { scc <- readRDS("NEI_data/Source_Classification_Code.rds") }
+
+```
+
 1. Have total emissions from PM2.5 decreased in the United States from 1999 to 2008? Using the base plotting system, make a plot showing the total PM2.5 emission from all sources for each of the years 1999, 2002, 2005, and 2008.
 
 ```
-# the code for question 1
+# Aggregate the amout of PM2.5 emission by year
+emission.by.year <- aggregate(Emissions ~ year, data = nei, FUN = sum)
+
+# Create the plot
+options(scipen = 20)
+with(emission.by.year, 
+     barplot(height = Emissions, xlab = "year", names.arg = year, 
+             ylab = "PM2.5 emission, tons", col="orange",
+             main="The total PM2.5 emission\n(all sources)", yaxs="i"))
+
+# Save the plot
+dev.copy(png, "plot1.png", width=600, height=600)
+dev.off()
 ```
 
-![the plot for question 1]()
+![the plot for question 1](plot1.png)
 
 2. Have total emissions from PM2.5 decreased in the Baltimore City, Maryland (`fips == "24510"`) from 1999 to 2008? Use the base plotting system to make a plot answering this question.
 
 ```
-# the code for question 2
+# Aggregate the amout of PM2.5 emission by year for the Baltimore City
+emission.by.year <- aggregate(Emissions ~ year, data = subset(nei, fips=="24510"), FUN = sum)
+
+# Create the plot
+options(scipen = 20)
+with(emission.by.year, 
+     barplot(height = Emissions, xlab = "year", names.arg = year, 
+             ylab = "PM2.5 emission, tons", col="red",
+             main="The total PM2.5 emission\nin the Baltimore City\n(all sources)", yaxs="i"))
+
+# Save the plot
+dev.copy(png, "plot2.png", width=600, height=600)
+dev.off()
 ```
 
-![the plot for question 2]()
+![the plot for question 2](plot2.png)
 
 3. Of the four types of sources indicated by the `type` (point, nonpoint, onroad, nonroad) variable, which of these four sources have seen decreases in emissions from 1999–2008 for Baltimore City? Which have seen increases in emissions from 1999–2008? Use the ggplot2 plotting system to make a plot answer this question.
 
 ```
-# the code for question 3
+# Aggregate the amout of PM2.5 emission by year and source for Baltimore City
+emission.for.baltimore <- aggregate(Emissions ~ year + type, 
+                              data = subset(nei, fips=="24510"), FUN = sum)
+
+# Create the plot
+library(ggplot2)
+ggplot(data = emission.for.baltimore, aes(factor(year), Emissions)) + 
+  facet_grid(. ~ type) + geom_bar(stat = "identity") +
+  xlab("year") + ylab("Emission, tons") +
+  ggtitle("Emissions from different types of sources\nin Baltimore City")
+
+# Save the plot
+dev.copy(png, "plot3.png", width=600, height=600)
+dev.off()
 ```
 
-![the plot for question 3]()
+![the plot for question 3](plot3.png)
 
 4. Across the United States, how have emissions from coal combustion-related sources changed from 1999–2008?
 
 ```
-# the code for question 4
+# Merge the NEI and SCC data and select rows with "coal" in SCC Short Name
+nei.with.scc <- merge(nei, scc, by = "SCC")
+source.is.coal.related <- grepl("coal", nei.with.scc$Short.Name, ignore.case=TRUE)
+chosen.data <- nei.with.scc[source.is.coal.related, ]
+
+# Aggregate the amout of PM2.5 emission from coal combustion-related sources by year
+emission.from.coal <- aggregate(Emissions ~ year, 
+                                    data = chosen.data, FUN = sum)
+
+# Create the plot
+library(ggplot2)
+ggplot(data = emission.from.coal, aes(factor(year), Emissions)) + 
+  geom_bar(stat = "identity") +
+  xlab("year") + ylab("Emission, tons") +
+  ggtitle("Emissions from coal combustion-related sources")
+
+# Save the plot
+dev.copy(png, "plot4.png", width=600, height=600)
+dev.off()
+
 ```
 
-![the plot for question 4]()
+![the plot for question 4](plot4.png)
 
 5. How have emissions from motor vehicle sources changed from 1999–2008 in Baltimore City?
 
 ```
-# the code for question 5
+# Aggregate the amout of PM2.5 emission by year 
+# for the Baltimore City AND motor vehicle sources
+emission.from.motor.in.baltimore <- aggregate(Emissions ~ year, data = 
+                                subset(nei, fips=="24510" & type=="ON-ROAD"), FUN = sum)
+
+# Create the plot
+library(ggplot2)
+ggplot(emission.from.motor.in.baltimore, aes(factor(year), Emissions)) + 
+  geom_bar(stat="identity") + 
+  xlab(label = "year") + ylab(label = "Emissions, tons") + 
+  ggtitle(label = "Emissions from motor vehicle sources in Baltimore")
+
+# Save the plot
+dev.copy(png, "plot5.png", width=600, height=600)
+dev.off()
+
 ```
 
-![the plot for question 5]()
+![the plot for question 5](plot5.png)
 
 6. Compare emissions from motor vehicle sources in Baltimore City with emissions from motor vehicle sources in Los Angeles County, California (`fips == "06037"`). Which city has seen greater changes over time in motor vehicle emissions?
 
 ```
-# the code for question 6
+# Aggregate the amout of PM2.5 emission by year 
+# for Baltimore City OR Los Angeles County
+# AND On-Road type of sources
+chosen.nei <- subset(nei, type=="ON-ROAD")
+chosen.nei <- subset(chosen.nei, (fips=="06037" | fips=="24510"))
+emission.from.motor <- aggregate(Emissions ~ year + fips, data = chosen.nei, FUN = sum)
+emission.from.motor$fips[emission.from.motor$fips=="06037"] <- "Los Angeles"
+emission.from.motor$fips[emission.from.motor$fips=="24510"] <- "Baltimore City"
+
+# Create the plot
+library(ggplot2)
+ggplot(emission.from.motor, aes(factor(year), Emissions)) + 
+  facet_grid(. ~ fips) + geom_bar(stat="identity") + 
+  xlab(label = "year") + ylab(label = "Emissions, tons") + 
+  ggtitle(label = "Emissions from motor vehicle sources\nin Los Angeles and Baltimore")
+
+# Save the plot
+dev.copy(png, "plot6.png", width=600, height=600)
+dev.off()
 ```
 
-![the plot for question 6]()
+![the plot for question 6](plot6.png)
