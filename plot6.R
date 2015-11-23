@@ -24,8 +24,8 @@ emission.from.motor$fips[emission.from.motor$fips=="24510"] <- "Baltimore City"
 
 # Create the plot
 library(ggplot2)
-ggplot(emission.from.motor, aes(factor(year), Emissions)) + 
-  facet_grid(. ~ fips) + geom_bar(stat="identity") + 
+ggplot(emission.from.motor, aes(factor(year), Emissions, fill = fips)) + 
+  geom_bar(stat="identity", position = position_dodge()) +
   xlab(label = "year") + ylab(label = "Emissions, tons") + 
   ggtitle(label = "Emissions from motor vehicle sources\nin Los Angeles and Baltimore")
 

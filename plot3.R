@@ -21,8 +21,8 @@ emission.for.baltimore <- aggregate(Emissions ~ year + type,
 
 # Create the plot
 library(ggplot2)
-ggplot(data = emission.for.baltimore, aes(factor(year), Emissions)) + 
-  facet_grid(. ~ type) + geom_bar(stat = "identity") +
+ggplot(data = emission.for.baltimore, aes(factor(year), Emissions, group=type, color=type)) + 
+  geom_line() + geom_point(size=4) +
   xlab("year") + ylab("Emission, tons") +
   ggtitle("Emissions from different types of sources\nin Baltimore City")
 
