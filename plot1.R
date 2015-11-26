@@ -18,10 +18,11 @@ emission.by.year <- aggregate(Emissions ~ year, data = nei, FUN = sum)
 
 # Create the plot
 options(scipen = 20)
-with(emission.by.year, 
-     barplot(height = Emissions, xlab = "year", names.arg = year, 
-             ylab = "PM2.5 emission, tons", col="orange",
+plot <- with(emission.by.year, 
+             barplot(height = Emissions, xlab = "year", names.arg = year, 
+             ylab = "PM2.5 emission, tons", col="pink",
              main="The total PM2.5 emission\n(all sources)", yaxs="i"))
+text(x = plot, y = emission.by.year$Emissions, label = round(emission.by.year$Emissions/1000000,2), pos = 1)
 
 # Save the plot
 dev.copy(png, "plot1.png", width=600, height=600)
