@@ -38,7 +38,7 @@ are a total of 17,568 observations in this dataset.
 
 ## Loading and preprocessing the data
 
-1. Load the data (i.e. `read.csv()`)
+* Load the data (i.e. `read.csv()`)
 
 
 ```r
@@ -81,7 +81,7 @@ head(activity)
 ## 6    NA 2012-10-01       25
 ```
 
-2. Process/transform the data into a format suitable for further analysis
+* Process/transform the data into a format suitable for further analysis
 
 
 ```r
@@ -132,7 +132,7 @@ rm(weekday)
 
 For this part of the assignment, we ignore the missing values in the dataset.
 
-1. Make a histogram of the total number of steps taken each day
+* Make a histogram of the total number of steps taken each day
 
 
 ```r
@@ -147,7 +147,7 @@ hist(daily.steps$total.steps, breaks = 20, xlab = "Number of steps", main = "His
 
 ![plot of chunk unnamed-chunk-3](figure/unnamed-chunk-3-1.png) 
 
-2. Calculate and report the mean and median total number of steps taken per day
+* Calculate and report the mean and median total number of steps taken per day
 
 
 ```r
@@ -171,7 +171,7 @@ median(daily.steps$total.steps)
 
 ## What is the average daily activity pattern?
 
-1. Make a time series plot (i.e. `type = "l"`) of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all days (y-axis)
+* Make a time series plot (i.e. `type = "l"`) of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all days (y-axis)
 
 
 ```r
@@ -187,7 +187,7 @@ plot(interval.steps$interval, interval.steps$average.steps,
 
 ![plot of chunk unnamed-chunk-5](figure/unnamed-chunk-5-1.png) 
 
-2. Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?
+* Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?
 
 
 ```r
@@ -205,7 +205,7 @@ The maximum number of steps is contained in the **835** 5-minute interval. It co
 
 There are a number of days/intervals where there are missing values (coded as `NA`). The presence of missing days may introduce bias into some calculations or summaries of the data.
 
-1. Calculate and report the total number of missing values in the dataset (i.e. the total number of rows with NAs). Due to the fact that only the `steps` variable has missing values, the total number of rows with missing values in the dataset equals to the total number of missing values in the `steps` column:
+* Calculate and report the total number of missing values in the dataset (i.e. the total number of rows with NAs). Due to the fact that only the `steps` variable has missing values, the total number of rows with missing values in the dataset equals to the total number of missing values in the `steps` column:
 
 
 ```r
@@ -218,7 +218,7 @@ sum(is.na(activity$steps))
 
 There are **2304** missing values in the dataset.
 
-2. Devise a strategy for filling in all of the missing values in the dataset. A strategy for filling in all of the missing values in the dataset us to use the median values for the 5-minute intervals. 
+* Devise a strategy for filling in all of the missing values in the dataset. A strategy for filling in all of the missing values in the dataset us to use the median values for the 5-minute intervals. 
 
 
 ```r
@@ -228,7 +228,7 @@ filling.steps <- aggregate(activity$steps,
 colnames(filling.steps) <- c("interval", "median.steps")
 ```
 
-3. Create a new dataset that is equal to the original dataset but with the missing data filled in. 
+* Create a new dataset that is equal to the original dataset but with the missing data filled in. 
 
 
 ```r
@@ -238,7 +238,7 @@ filled.activity$new.steps <- ifelse(is.na(filled.activity$steps),
                                 filled.activity$median.steps, filled.activity$steps)
 ```
 
-4. Make a histogram of the total number of steps taken each day. Calculate and report the mean and median total number of steps taken per day. 
+* Make a histogram of the total number of steps taken each day. Calculate and report the mean and median total number of steps taken per day. 
 
 
 ```r
