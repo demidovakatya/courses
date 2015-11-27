@@ -42,7 +42,7 @@ The events in the database start in the year 1950 and end in November 2011. In t
 ```{r, results='hide'}
 echo = TRUE # to ensure that all code will be shown
 
-options(scipen = 2)
+options(scipen = 1)
 
 library(dplyr)
 library(tidyr)
@@ -159,11 +159,10 @@ storm <- storm %>% mutate(cropdmg=cropdmg * 10 ^ cropdmgexp)
 storm <- storm %>% select(-ends_with("dmgexp"))
 ```
 
-Convert `state` and `evtype` into factor variables:
+Convert `state` into factor variable:
 
 ```{r, cache=TRUE}
 storm$state <- as.factor(storm$state)
-storm$evtype <- as.factor(storm$evtype)
 ```
 
 Convert dates:
@@ -173,8 +172,7 @@ storm$bgn_date <- as.Date(storm$bgn_date, format = "%m/%d/%Y %H:%M:%S")
 
 The last thing is to tidy up the `evtype` column. Let's save it to a separate variable and then have a look at it:
 ```{r, cache=TRUE}
-event.types <- data.frame(table(storm$evtype))
-event.types <- event.types %>% arrange(Var1)
+head(data.frame(table(storm$evtype)), n=20)
 ```
 
 We can see similar values, for example:
@@ -207,5 +205,22 @@ storm$evtype <- gsub("^\\s+|\\s+$|\\s\\s+", "", storm$evtype)
 storm$evtype <- as.factor(storm$evtype)
 ```
 
+Now we still have things like `AVALANCHE` and `AVALANCE`, but we can consider them insignificant.
+
 ## Results
-Results
+
+There are two questions to be answered in the assignment:
+
+1. Across the United States, which types of events are most harmful with respect to population health?
+2. Across the United States, which types of events have the greatest economic consequences?
+
+To begin with, I'll create a table containing data summarized by event type:
+
+```{r}
+event.types <- storm %>% group_by(evtype) %>% 
+  summarise(fatalities = sum(fatalities), injuries = sum(injuries),
+            propdmg = sum(propdmg), cropdmg = sum(cropdmg))
+
+head(event.types, n = 10)
+```
+
