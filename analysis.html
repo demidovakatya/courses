@@ -69,9 +69,19 @@ img {
 
 
 <p>Your document should have a title that briefly summarizes your data analysis</p>
+<div id="synopsis" class="section level2">
+<h2>Synopsis</h2>
 <p>Synopsis: Immediately after the title, there should be a synopsis which describes and summarizes your analysis in at most 10 complete sentences.</p>
 <p>The analysis document must have at least one figure containing a plot. Your analyis must have no more than three figures. Figures may have multiple plots in them (i.e. panel plots), but there cannot be more than three figures total.</p>
 <p>You must show all your code for the work in your analysis document. This may make the document a bit verbose, but that is okay. In general, you should ensure that echo = TRUE for every code chunk (this is the default setting in knitr).</p>
+<div id="questions" class="section level3">
+<h3>Questions</h3>
+<ol style="list-style-type: decimal">
+<li><p>Across the United States, which types of events (as indicated in the <code>EVTYPE</code> variable) are most harmful with respect to population health?</p></li>
+<li><p>Across the United States, which types of events have the greatest economic consequences?</p></li>
+</ol>
+</div>
+</div>
 <div id="data" class="section level2">
 <h2>Data</h2>
 <p>The data for this assignment (comma-separated-value file compressed via the bzip2 algorithm):</p>
@@ -85,25 +95,13 @@ img {
 </ul>
 <p>The events in the database start in the year 1950 and end in November 2011. In the earlier years of the database there are generally fewer events recorded, most likely due to a lack of good records. More recent years should be considered more complete.</p>
 </div>
-<div id="questions" class="section level2">
-<h2>Questions</h2>
-<ol style="list-style-type: decimal">
-<li><p>Across the United States, which types of events (as indicated in the <code>EVTYPE</code> variable) are most harmful with respect to population health?</p></li>
-<li><p>Across the United States, which types of events have the greatest economic consequences?</p></li>
-</ol>
-</div>
-<div id="data-processing" class="section level2">
-<h2>Data Processing</h2>
-<p>Data Processing describes (in words and code) how the data were loaded into R and processed for analysis. In particular, your analysis must start from the raw CSV file containing the data. You cannot do any preprocessing outside the document. If preprocessing is time-consuming you may consider using the cache = TRUE option for certain code chunks.</p>
-<pre class="r"><code># Load libraries
-library(data.table)
+<div id="setting-up" class="section level2">
+<h2>Setting up</h2>
+<pre class="r"><code>echo = TRUE # to ensure that all code will be shown
+
 library(dplyr)</code></pre>
 <pre><code>## 
 ## Attaching package: 'dplyr'
-## 
-## The following objects are masked from 'package:data.table':
-## 
-##     between, last
 ## 
 ## The following objects are masked from 'package:stats':
 ## 
@@ -112,32 +110,44 @@ library(dplyr)</code></pre>
 ## The following objects are masked from 'package:base':
 ## 
 ##     intersect, setdiff, setequal, union</code></pre>
-<pre class="r"><code>library(tidyr)</code></pre>
-<div id="import-the-data" class="section level3">
-<h3>Import the data</h3>
+<pre class="r"><code>library(tidyr)
+library(ggplot2)</code></pre>
+</div>
+<div id="import-the-data" class="section level2">
+<h2>Import the data</h2>
 <p>The CSV file is very large (561.6 MB), so to load the data for the first time we use <code>fread()</code> method. In R Documentation <code>fread {data.table}</code> is described as similar to <code>read.table</code> but faster and more convenient.</p>
 <p>After reading in the original CSV file, we save the dataset as an RDS file so we could restore the dataset via <code>readRDS()</code>. <code>readRDS()</code> is considered faster than other <code>read</code> methods.</p>
-<p><em>These tips were found at the Coursera Discussion Forums. Many thanks to my coursemates</em></p>
-<pre class="r"><code># Import the data
-storm &lt;- fread(&quot;StormData.csv&quot;, sep=&quot;,&quot;, na.strings = c(&quot;NA&quot;, &quot;&quot;))</code></pre>
-<pre><code>## 
-Read 0.0% of 967216 rows
-Read 26.9% of 967216 rows
-Read 44.5% of 967216 rows
-Read 54.8% of 967216 rows
-Read 71.3% of 967216 rows
-Read 78.6% of 967216 rows
-Read 85.8% of 967216 rows
-Read 902297 rows and 37 (of 37) columns from 0.523 GB file in 00:00:10</code></pre>
-<pre><code>## Warning in fread(&quot;StormData.csv&quot;, sep = &quot;,&quot;, na.strings = c(&quot;NA&quot;, &quot;&quot;)):
-## Read less rows (902297) than were allocated (967216). Run again with
-## verbose=TRUE and please report.</code></pre>
-<pre class="r"><code>saveRDS(storm, &quot;StormData.rds&quot;)
-storm &lt;- readRDS(&quot;StormData.rds&quot;)
+<p>The following chunk of code checks if there is an RDS file (if there isn’t, it creates it (from the CSV file which is created by unpacking the BZ2 package)) and loads the data into workspace.</p>
+<pre class="r"><code># Download and import the data
+
+if (!file.exists(&quot;StormData.rds&quot;)) {
+  # If we don't have the csv, we need to unpack the .bz2 file
+  if (!file.exists(&quot;StormData.csv&quot;)) {
+    library(R.utils)
+    # If we don't have the .bz2 file, we need to download it
+    if (!file.exists(&quot;StormData.csv.bz2&quot;)) {
+      download.file(&quot;https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2FStormData.csv.bz2&quot;,
+                    &quot;StormData.csv.bz2&quot;)
+    }
+    bunzip2(&quot;StormData.csv.bz2&quot;)
+  }
+  library(data.table)
+  raw.storm &lt;- fread(&quot;StormData.csv&quot;, na.strings = c(&quot;NA&quot;, &quot;&quot;))
+  saveRDS(storm, &quot;StormData.rds&quot;)
+  file.remove(&quot;StormData.csv&quot;)
+}
+
+# Load the data into workspace unless we it already exists
+if (!exists(&quot;raw.storm&quot;)) {
+  raw.storm &lt;- readRDS(&quot;StormData.rds&quot;)
+}
 
 #============================================================== Create a subset ???????</code></pre>
-<p>Quick overview of the internal structure of the dataset, its first and last rows:</p>
-<pre class="r"><code>str(storm)</code></pre>
+</div>
+<div id="data-processing" class="section level2">
+<h2>Data Processing</h2>
+<p>Quick overview of the internal structure of the dataset and its first three rows:</p>
+<pre class="r"><code>str(raw.storm)</code></pre>
 <pre><code>## Classes 'data.table' and 'data.frame':   902297 obs. of  37 variables:
 ##  $ STATE__   : num  1 1 1 1 1 1 1 1 1 1 ...
 ##  $ BGN_DATE  : chr  &quot;4/18/1950 0:00:00&quot; &quot;4/18/1950 0:00:00&quot; &quot;2/20/1951 0:00:00&quot; &quot;6/8/1951 0:00:00&quot; ...
@@ -177,107 +187,137 @@ storm &lt;- readRDS(&quot;StormData.rds&quot;)
 ##  $ REMARKS   : chr  NA NA NA NA ...
 ##  $ REFNUM    : num  1 2 3 4 5 6 7 8 9 10 ...
 ##  - attr(*, &quot;.internal.selfref&quot;)=&lt;externalptr&gt;</code></pre>
-<pre class="r"><code>head(storm)</code></pre>
-<pre><code>##    STATE__           BGN_DATE BGN_TIME TIME_ZONE COUNTY COUNTYNAME STATE
-## 1:       1  4/18/1950 0:00:00     0130       CST     97     MOBILE    AL
-## 2:       1  4/18/1950 0:00:00     0145       CST      3    BALDWIN    AL
-## 3:       1  2/20/1951 0:00:00     1600       CST     57    FAYETTE    AL
-## 4:       1   6/8/1951 0:00:00     0900       CST     89    MADISON    AL
-## 5:       1 11/15/1951 0:00:00     1500       CST     43    CULLMAN    AL
-## 6:       1 11/15/1951 0:00:00     2000       CST     77 LAUDERDALE    AL
+<pre class="r"><code>head(raw.storm, n = 3)</code></pre>
+<pre><code>##    STATE__          BGN_DATE BGN_TIME TIME_ZONE COUNTY COUNTYNAME STATE
+## 1:       1 4/18/1950 0:00:00     0130       CST     97     MOBILE    AL
+## 2:       1 4/18/1950 0:00:00     0145       CST      3    BALDWIN    AL
+## 3:       1 2/20/1951 0:00:00     1600       CST     57    FAYETTE    AL
 ##     EVTYPE BGN_RANGE BGN_AZI BGN_LOCATI END_DATE END_TIME COUNTY_END
 ## 1: TORNADO         0      NA         NA       NA       NA          0
 ## 2: TORNADO         0      NA         NA       NA       NA          0
 ## 3: TORNADO         0      NA         NA       NA       NA          0
-## 4: TORNADO         0      NA         NA       NA       NA          0
-## 5: TORNADO         0      NA         NA       NA       NA          0
-## 6: TORNADO         0      NA         NA       NA       NA          0
 ##    COUNTYENDN END_RANGE END_AZI END_LOCATI LENGTH WIDTH F MAG FATALITIES
 ## 1:         NA         0      NA         NA   14.0   100 3   0          0
 ## 2:         NA         0      NA         NA    2.0   150 2   0          0
 ## 3:         NA         0      NA         NA    0.1   123 2   0          0
-## 4:         NA         0      NA         NA    0.0   100 2   0          0
-## 5:         NA         0      NA         NA    0.0   150 2   0          0
-## 6:         NA         0      NA         NA    1.5   177 2   0          0
 ##    INJURIES PROPDMG PROPDMGEXP CROPDMG CROPDMGEXP WFO STATEOFFIC ZONENAMES
 ## 1:       15    25.0          K       0         NA  NA         NA        NA
 ## 2:        0     2.5          K       0         NA  NA         NA        NA
 ## 3:        2    25.0          K       0         NA  NA         NA        NA
-## 4:        2     2.5          K       0         NA  NA         NA        NA
-## 5:        2     2.5          K       0         NA  NA         NA        NA
-## 6:        6     2.5          K       0         NA  NA         NA        NA
 ##    LATITUDE LONGITUDE LATITUDE_E LONGITUDE_ REMARKS REFNUM
 ## 1:     3040      8812       3051       8806      NA      1
 ## 2:     3042      8755          0          0      NA      2
-## 3:     3340      8742          0          0      NA      3
-## 4:     3458      8626          0          0      NA      4
-## 5:     3412      8642          0          0      NA      5
-## 6:     3450      8748          0          0      NA      6</code></pre>
-<pre class="r"><code>tail(storm)</code></pre>
-<pre><code>##    STATE__           BGN_DATE    BGN_TIME TIME_ZONE COUNTY
-## 1:      47 11/28/2011 0:00:00 03:00:00 PM       CST     21
-## 2:      56 11/30/2011 0:00:00 10:30:00 PM       MST      7
-## 3:      30 11/10/2011 0:00:00 02:48:00 PM       MST      9
-## 4:       2  11/8/2011 0:00:00 02:58:00 PM       AKS    213
-## 5:       2  11/9/2011 0:00:00 10:21:00 AM       AKS    202
-## 6:       1 11/28/2011 0:00:00 08:00:00 PM       CST      6
-##                              COUNTYNAME STATE         EVTYPE BGN_RANGE
-## 1: TNZ001&gt;004 - 019&gt;021 - 048&gt;055 - 088    TN WINTER WEATHER         0
-## 2:                         WYZ007 - 017    WY      HIGH WIND         0
-## 3:                         MTZ009 - 010    MT      HIGH WIND         0
-## 4:                               AKZ213    AK      HIGH WIND         0
-## 5:                               AKZ202    AK       BLIZZARD         0
-## 6:                               ALZ006    AL     HEAVY SNOW         0
-##    BGN_AZI BGN_LOCATI           END_DATE    END_TIME COUNTY_END COUNTYENDN
-## 1:      NA         NA 11/29/2011 0:00:00 12:00:00 PM          0         NA
-## 2:      NA         NA 11/30/2011 0:00:00 10:30:00 PM          0         NA
-## 3:      NA         NA 11/10/2011 0:00:00 02:48:00 PM          0         NA
-## 4:      NA         NA  11/9/2011 0:00:00 01:15:00 PM          0         NA
-## 5:      NA         NA  11/9/2011 0:00:00 05:00:00 PM          0         NA
-## 6:      NA         NA 11/29/2011 0:00:00 04:00:00 AM          0         NA
-##    END_RANGE END_AZI END_LOCATI LENGTH WIDTH  F MAG FATALITIES INJURIES
-## 1:         0      NA         NA      0     0 NA   0          0        0
-## 2:         0      NA         NA      0     0 NA  66          0        0
-## 3:         0      NA         NA      0     0 NA  52          0        0
-## 4:         0      NA         NA      0     0 NA  81          0        0
-## 5:         0      NA         NA      0     0 NA   0          0        0
-## 6:         0      NA         NA      0     0 NA   0          0        0
-##    PROPDMG PROPDMGEXP CROPDMG CROPDMGEXP WFO                STATEOFFIC
-## 1:       0          K       0          K MEG           TENNESSEE, West
-## 2:       0          K       0          K RIW WYOMING, Central and West
-## 3:       0          K       0          K TFX          MONTANA, Central
-## 4:       0          K       0          K AFG          ALASKA, Northern
-## 5:       0          K       0          K AFG          ALASKA, Northern
-## 6:       0          K       0          K HUN            ALABAMA, North
-##                                                                                                                                                        ZONENAMES
-## 1: LAKE - LAKE - OBION - WEAKLEY - HENRY - DYER - GIBSON - CARROLL - LAUDERDALE - TIPTON - HAYWOOD - CROCKETT - MADISON - CHESTER - HENDERSON - DECATUR - SHELBY
-## 2:                                                                              OWL CREEK &amp; BRIDGER MOUNTAINS - OWL CREEK &amp; BRIDGER MOUNTAINS - WIND RIVER BASIN
-## 3:                                                                                     NORTH ROCKY MOUNTAIN FRONT - NORTH ROCKY MOUNTAIN FRONT - EASTERN GLACIER
-## 4:                                                                                                 ST LAWRENCE IS. BERING STRAIT - ST LAWRENCE IS. BERING STRAIT
-## 5:                                                                                                                 NORTHERN ARCTIC COAST - NORTHERN ARCTIC COAST
-## 6:                                                                                                                                             MADISON - MADISON
-##    LATITUDE LONGITUDE LATITUDE_E LONGITUDE_
-## 1:        0         0          0          0
-## 2:        0         0          0          0
-## 3:        0         0          0          0
-## 4:        0         0          0          0
-## 5:        0         0          0          0
-## 6:        0         0          0          0
-##                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    REMARKS
-## 1:                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    EPISODE NARRATIVE: A powerful upper level low pressure system brought snow to portions of Northeast Arkansas, the Missouri Bootheel, West Tennessee and extreme north Mississippi. Most areas picked up between 1 and 3 inches of with areas of Northeast Arkansas and the Missouri Bootheel receiving between 4 and 6 inches of snow.EVENT NARRATIVE: Around 1 inch of snow fell in Carroll County.
-## 2:                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           EPISODE NARRATIVE: A strong cold front moved south through north central Wyoming bringing high wind to the Meeteetse area and along the south slopes of the western Owl Creek Range. Wind gusts to 76 mph were recorded at Madden Reservoir.EVENT NARRATIVE: 
-## 3:                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      EPISODE NARRATIVE: A strong westerly flow aloft produced gusty winds at the surface along the Rocky Mountain front and over the plains of Central Montana. Wind gusts in excess of 60 mph were reported.EVENT NARRATIVE: A wind gust to 60 mph was reported at East Glacier Park 1ENE (the Two Medicine DOT site).
-## 4: EPISODE NARRATIVE: A 960 mb low over the southern Aleutians at 0300AKST on the 8th intensified to 945 mb near the Gulf of Anadyr by 2100AKST on the 8th. The low crossed the Chukotsk Peninsula as a 956 mb low at 0900AKST on the 9th, and moved into the southern Chukchi Sea as a 958 mb low by 2100AKST on the 9th. The low then tracked to the northwest and weakened to 975 mb about 150 miles north of Wrangel Island by 1500AKST on the 10th. The storm was one of the strongest storms to impact the west coast of Alaska since November 1974. \n\nZone 201: Blizzard conditions were observed at Wainwright from approximately 1153AKST through 1611AKST on the 9th. The visibility was frequently reduced to one quarter mile in snow and blowing snow. There was a peak wind gust to 43kt (50 mph) at the Wainwright ASOS. During this event, there was also a peak wind gust to \n68 kt (78 mph) at the Cape Lisburne AWOS. \n\nZone 202: Blizzard conditions were observed at Barrow from approximately 1021AKST through 1700AKST on the 9th. The visibility was frequently reduced to one quarter mile or less in blowing snow. There was a peak wind gust to 46 kt (53 mph) at the Barrow ASOS. \n\nZone 207: Blizzard conditions were observed at Kivalina from approximately 0400AKST through 1230AKST on the 9th. The visibility was frequently reduced to one quarter of a mile in snow and blowing snow. There was a peak wind gust to 61 kt (70 mph) at the Kivalina ASOS.  The doors to the village transportation shed were blown out to sea.  Many homes lost portions of their tin roofing, and satellite dishes were ripped off of roofs. One home had its door blown off.  At Point Hope, severe blizzard conditions were observed. There was a peak wind gust of 68 kt (78 mph) at the Point Hope AWOS before power was lost to the AWOS. It was estimated that the wind gusted as high as 85 mph in the village during the height of the storm during the morning and early afternoon hours on the 9th. Five power poles were knocked down in the storm EVENT NARRATIVE: 
-## 5: EPISODE NARRATIVE: A 960 mb low over the southern Aleutians at 0300AKST on the 8th intensified to 945 mb near the Gulf of Anadyr by 2100AKST on the 8th. The low crossed the Chukotsk Peninsula as a 956 mb low at 0900AKST on the 9th, and moved into the southern Chukchi Sea as a 958 mb low by 2100AKST on the 9th. The low then tracked to the northwest and weakened to 975 mb about 150 miles north of Wrangel Island by 1500AKST on the 10th. The storm was one of the strongest storms to impact the west coast of Alaska since November 1974. \n\nZone 201: Blizzard conditions were observed at Wainwright from approximately 1153AKST through 1611AKST on the 9th. The visibility was frequently reduced to one quarter mile in snow and blowing snow. There was a peak wind gust to 43kt (50 mph) at the Wainwright ASOS. During this event, there was also a peak wind gust to \n68 kt (78 mph) at the Cape Lisburne AWOS. \n\nZone 202: Blizzard conditions were observed at Barrow from approximately 1021AKST through 1700AKST on the 9th. The visibility was frequently reduced to one quarter mile or less in blowing snow. There was a peak wind gust to 46 kt (53 mph) at the Barrow ASOS. \n\nZone 207: Blizzard conditions were observed at Kivalina from approximately 0400AKST through 1230AKST on the 9th. The visibility was frequently reduced to one quarter of a mile in snow and blowing snow. There was a peak wind gust to 61 kt (70 mph) at the Kivalina ASOS.  The doors to the village transportation shed were blown out to sea.  Many homes lost portions of their tin roofing, and satellite dishes were ripped off of roofs. One home had its door blown off.  At Point Hope, severe blizzard conditions were observed. There was a peak wind gust of 68 kt (78 mph) at the Point Hope AWOS before power was lost to the AWOS. It was estimated that the wind gusted as high as 85 mph in the village during the height of the storm during the morning and early afternoon hours on the 9th. Five power poles were knocked down in the storm EVENT NARRATIVE: 
-## 6:                           EPISODE NARRATIVE: An intense upper level low developed on the 28th at the base of a highly amplified upper trough across the Great Lakes and Mississippi Valley.  The upper low closed off over the mid South and tracked northeast across the Tennessee Valley during the morning of the 29th.   A warm conveyor belt of heavy rainfall developed in advance of the low which dumped from around 2 to over 5 inches of rain across the eastern two thirds of north Alabama and middle Tennessee.  The highest rain amounts were recorded in Jackson and DeKalb Counties with 3 to 5 inches.  The rain fell over 24 to 36 hour period, with rainfall remaining light to moderate during most its duration.  The rainfall resulted in minor river flooding along the Little River, Big Wills Creek and Paint Rock.   A landslide occurred on Highway 35 just north of Section in Jackson County.  A driver was trapped in his vehicle, but was rescued unharmed.  Trees, boulders and debris blocked 100 to 250 yards of Highway 35.\n\nThe rain mixed with and changed to snow across north Alabama during the afternoon and  evening hours of the 28th, and lasted into the 29th.  The heaviest bursts of snow occurred in northwest Alabama during the afternoon and evening hours, and in north central and northeast Alabama during the overnight and morning hours.  Since ground temperatures were in the 50s, and air temperatures in valley areas only dropped into the mid 30s, most of the snowfall melted on impact with mostly trace amounts reported in valley locations.  However, above 1500 foot elevation, snow accumulations of 1 to 2 inches were reported.  The heaviest amount was 2.3 inches on Monte Sano Mountain, about 5 miles northeast of Huntsville.EVENT NARRATIVE: Snowfall accumulations of up to 2.3 inches were reported on the higher elevations of eastern Madison County.  A snow accumulation of 1.5 inches was reported 2.7 miles south of Gurley, while 2.3 inches was reported 3 miles east of Huntsville atop Monte Sano Mountain.
-##    REFNUM
-## 1: 902292
-## 2: 902293
-## 3: 902294
-## 4: 902295
-## 5: 902296
-## 6: 902297</code></pre>
-</div>
+## 3:     3340      8742          0          0      NA      3</code></pre>
+<p>There are 37 columns and 902297 rows in this dataset.</p>
+<pre class="r"><code>dim(raw.storm)</code></pre>
+<pre><code>## [1] 902297     37</code></pre>
+<pre class="r"><code>names(raw.storm)</code></pre>
+<pre><code>##  [1] &quot;STATE__&quot;    &quot;BGN_DATE&quot;   &quot;BGN_TIME&quot;   &quot;TIME_ZONE&quot;  &quot;COUNTY&quot;    
+##  [6] &quot;COUNTYNAME&quot; &quot;STATE&quot;      &quot;EVTYPE&quot;     &quot;BGN_RANGE&quot;  &quot;BGN_AZI&quot;   
+## [11] &quot;BGN_LOCATI&quot; &quot;END_DATE&quot;   &quot;END_TIME&quot;   &quot;COUNTY_END&quot; &quot;COUNTYENDN&quot;
+## [16] &quot;END_RANGE&quot;  &quot;END_AZI&quot;    &quot;END_LOCATI&quot; &quot;LENGTH&quot;     &quot;WIDTH&quot;     
+## [21] &quot;F&quot;          &quot;MAG&quot;        &quot;FATALITIES&quot; &quot;INJURIES&quot;   &quot;PROPDMG&quot;   
+## [26] &quot;PROPDMGEXP&quot; &quot;CROPDMG&quot;    &quot;CROPDMGEXP&quot; &quot;WFO&quot;        &quot;STATEOFFIC&quot;
+## [31] &quot;ZONENAMES&quot;  &quot;LATITUDE&quot;   &quot;LONGITUDE&quot;  &quot;LATITUDE_E&quot; &quot;LONGITUDE_&quot;
+## [36] &quot;REMARKS&quot;    &quot;REFNUM&quot;</code></pre>
+<p>Since these column names are not obvious, I’ve made an attempt to explain these variables. You can see the results in <a href="https://github.com/demidovakatya/repdata-peer-assessment-2/blob/master/variable_explanation.md">this table</a>.</p>
+<p>These variables may be useful for further analysis:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Variable name</th>
+<th align="left">Class</th>
+<th align="left">Explanation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">BGN_DATE</td>
+<td align="left">chr</td>
+<td align="left">The beginning date of the event</td>
+</tr>
+<tr class="even">
+<td align="left">BGN_TIME</td>
+<td align="left">chr</td>
+<td align="left">The beginning time of the event</td>
+</tr>
+<tr class="odd">
+<td align="left">END_DATE</td>
+<td align="left">chr</td>
+<td align="left">The ending date of the event</td>
+</tr>
+<tr class="even">
+<td align="left">END_TIME</td>
+<td align="left">chr</td>
+<td align="left">The ending time of the event</td>
+</tr>
+<tr class="odd">
+<td align="left">STATE</td>
+<td align="left">chr</td>
+<td align="left">State where the event happened</td>
+</tr>
+<tr class="even">
+<td align="left">EVTYPE</td>
+<td align="left">chr</td>
+<td align="left">Event type</td>
+</tr>
+<tr class="odd">
+<td align="left">FATALITIES</td>
+<td align="left">num</td>
+<td align="left">Number of fatalities caused by the event</td>
+</tr>
+<tr class="even">
+<td align="left">INJURIES</td>
+<td align="left">num</td>
+<td align="left">Number of injuries caused by the event</td>
+</tr>
+<tr class="odd">
+<td align="left">PROPDMG</td>
+<td align="left">num</td>
+<td align="left">Property damage caused by the event</td>
+</tr>
+<tr class="even">
+<td align="left">PROPDMGEXP</td>
+<td align="left">chr</td>
+<td align="left">Property damage multiplier</td>
+</tr>
+<tr class="odd">
+<td align="left">CROPDMG</td>
+<td align="left">num</td>
+<td align="left">Crops damage caused by the event</td>
+</tr>
+<tr class="even">
+<td align="left">CROPDMGEXP</td>
+<td align="left">chr</td>
+<td align="left">Crops damage multiplier</td>
+</tr>
+</tbody>
+</table>
+<p>Create a new dataset from these columns:</p>
+<pre class="r"><code>storm &lt;- raw.storm %&gt;% select(one_of(c(&quot;BGN_DATE&quot;, &quot;BGN_TIME&quot;, &quot;END_DATE&quot;, &quot;END_TIME&quot;, &quot;STATE&quot;, &quot;EVTYPE&quot;, &quot;FATALITIES&quot;, &quot;INJURIES&quot;, &quot;PROPDMG&quot;, &quot;PROPDMGEXP&quot;, &quot;CROPDMG&quot;, &quot;CROPDMGEXP&quot;)))
+
+colnames(storm) &lt;- tolower(colnames(storm))</code></pre>
+<p>Convert multipliers in <code>PROPDMGEXP</code> and <code>CROPDMGEXP</code> columns into numeric values:</p>
+<pre class="r"><code># A helper function is needed here
+storm$propdmgexp &lt;- toupper(storm$propdmgexp)
+storm$propdmgexp[storm$propdmgexp==&quot;B&quot;] &lt;- 9
+storm$propdmgexp[storm$propdmgexp==&quot;M&quot;] &lt;- 6
+storm$propdmgexp[storm$propdmgexp==&quot;K&quot;] &lt;- 3
+storm$propdmgexp[storm$propdmgexp==&quot;H&quot;] &lt;- 2
+storm$propdmgexp[storm$propdmgexp==&quot;?&quot; | storm$propdmgexp==&quot;+&quot; | storm$propdmgexp==&quot;-&quot;] &lt;- 0
+storm$propdmgexp[is.na(storm$propdmgexp)] &lt;- 0
+storm$propdmgexp &lt;- as.numeric(storm$propdmgexp)
+storm$cropdmgexp &lt;- toupper(storm$cropdmgexp)
+storm$cropdmgexp[storm$cropdmgexp==&quot;B&quot;] &lt;- 9
+storm$cropdmgexp[storm$cropdmgexp==&quot;M&quot;] &lt;- 6
+storm$cropdmgexp[storm$cropdmgexp==&quot;K&quot;] &lt;- 3
+storm$cropdmgexp[storm$cropdmgexp==&quot;H&quot;] &lt;- 2
+storm$cropdmgexp[storm$cropdmgexp==&quot;?&quot; | storm$cropdmgexp==&quot;+&quot; | storm$cropdmgexp==&quot;-&quot;] &lt;- 0
+storm$cropdmgexp[is.na(storm$cropdmgexp)] &lt;- 0
+storm$cropdmgexp &lt;- as.numeric(storm$cropdmgexp)</code></pre>
+<p>Apply the multipliers:</p>
+<pre class="r"><code>storm &lt;- storm %&gt;% mutate(property.damage=propdmg * 10 ^ propdmgexp)
+storm &lt;- storm %&gt;% mutate(property.damage=cropdmg * 10 ^ cropdmgexp)</code></pre>
 </div>
 <div id="results" class="section level2">
 <h2>Results</h2>

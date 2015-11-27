@@ -122,7 +122,12 @@ CROPDMGEXP | chr | Crops damage multiplier
 Create a new dataset from these columns:
 
 ```{r, cache=TRUE}
-storm <- raw.storm %>% select(one_of(c("BGN_DATE", "BGN_TIME", "END_DATE", "END_TIME", "STATE", "EVTYPE", "FATALITIES", "INJURIES", "PROPDMG", "PROPDMGEXP", "CROPDMG", "CROPDMGEXP")))
+storm <- raw.storm %>% select(one_of(c("BGN_DATE", "BGN_TIME", 
+                                       "END_DATE", "END_TIME", 
+                                       "STATE", "EVTYPE", 
+                                       "FATALITIES", "INJURIES", 
+                                       "PROPDMG", "PROPDMGEXP", 
+                                       "CROPDMG", "CROPDMGEXP")))
 
 colnames(storm) <- tolower(colnames(storm))
 ```
