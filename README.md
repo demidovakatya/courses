@@ -1,5 +1,7 @@
 # Reproducible Research Peer Assessment 2
 
+:closed_book: The result is located [here](https://github.com/demidovakatya/repdata-peer-assessment-2/blob/master/analysis.md).
+
 ## Introduction
 
 Storms and other severe weather events can cause both public health and economic problems for communities and municipalities. Many severe events can result in fatalities, injuries, and property damage, and preventing such outcomes to the extent possible is a key concern.
