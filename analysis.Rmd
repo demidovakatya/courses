@@ -74,9 +74,11 @@ if (!file.exists("StormData.rds")) {
   }
   storm <- fread("StormData.csv", na.strings = c("NA", ""))
   saveRDS(storm, "StormData.rds")
+  # The csv file is 535.6 MB
+  file.remove("StormData.csv")
 }
 
-# Load the 
+# Load the object into workspace
 if (!exists("storm")) {
   storm <- readRDS("StormData.rds")
 }
