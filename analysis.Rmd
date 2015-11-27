@@ -225,7 +225,7 @@ head(event.types, n = 10)
 ```
 
 Events causing most fatalities:
-```{r}
+```{r, fig.height=8, fig.width=10}
 fatality.events <- storm %>% group_by(evtype) %>% summarise(fatalities=sum(fatalities)) %>% top_n(20) %>% arrange(desc(fatalities))
 fatality.events
 
@@ -233,7 +233,7 @@ qplot(evtype, fatalities, data=fatality.events, geom="bar", stat="identity", xla
 ```
 
 Events causing most injuries:
-```{r}
+```{r, fig.height=8, fig.width=10}
 injury.events <- storm %>% group_by(evtype) %>% summarise(injuries=sum(injuries)) %>% top_n(20) %>% arrange(desc(injuries))
 injury.events
 
@@ -241,15 +241,15 @@ qplot(evtype, injuries, data=injury.events, geom="bar", stat="identity", xlab="E
 ```
 
 Events causing most property damage:
-```{r}
+```{r, fig.height=8, fig.width=10}
 property.damage.events <- storm %>% group_by(evtype) %>% summarise(property.damage=sum(propdmg)) %>% top_n(20) %>% arrange(desc(property.damage))
 property.damage.events
 
-qplot(evtype, property.damage/10^9, data=property.damage.events, geom="bar", stat="identity", xlab="Event type", ylab="Property damage cost ($ billions)", main="20 events causing most property damage (mln $)", fill=property.damage) + scale_fill_continuous(low="green", high="black") + theme(axis.text.x = element_text(angle = 90, hjust = 1), legend.position="none")
+qplot(evtype, property.damage/10^9, data=property.damage.events, geom="bar", stat="identity", xlab="Event type", ylab="Property damage cost ($ billions)", main="20 events causing most property damage", fill=property.damage) + scale_fill_continuous(low="green", high="black") + theme(axis.text.x = element_text(angle = 90, hjust = 1), legend.position="none")
 ```
 
 Events causing most crop damage:
-```{r}
+```{r, fig.height=8, fig.width=10}
 crop.damage.events <- storm %>% group_by(evtype) %>% summarise(crop.damage=sum(cropdmg)) %>% top_n(20) %>% arrange(desc(crop.damage))
 crop.damage.events
 
