@@ -42,9 +42,13 @@ The events in the database start in the year 1950 and end in November 2011. In t
 ```{r, results='hide'}
 echo = TRUE # to ensure that all code will be shown
 
+options(scipen = 2)
+
 library(dplyr)
 library(tidyr)
 library(ggplot2)
+library(data.table)
+library(R.utils)
 ```
 
 ## Import the data
@@ -61,7 +65,6 @@ The following chunk of code checks if there is an RDS file (if there isn't, it c
 if (!file.exists("StormData.rds")) {
   # If we don't have the csv, we need to unpack the .bz2 file
   if (!file.exists("StormData.csv")) {
-    library(R.utils)
     # If we don't have the .bz2 file, we need to download it
     if (!file.exists("StormData.csv.bz2")) {
       download.file("https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2FStormData.csv.bz2",
@@ -69,7 +72,6 @@ if (!file.exists("StormData.rds")) {
     }
     bunzip2("StormData.csv.bz2")
   }
-  library(data.table)
   raw.storm <- fread("StormData.csv", na.strings = c("NA", ""))
   saveRDS(storm, "StormData.rds")
   file.remove("StormData.csv")
@@ -106,10 +108,7 @@ These variables may be useful for further analysis:
 
 Variable name | Class | Explanation
 --------------|-------|------------
-BGN_DATE | chr | The beginning date of the event
-BGN_TIME | chr | The beginning time of the event
-END_DATE | chr | The ending date of the event
-END_TIME | chr | The ending time of the event
+BGN_DATE | chr | Date when the event began
 STATE | chr | State where the event happened
 EVTYPE | chr | Event type
 FATALITIES | num | Number of fatalities caused by the event
@@ -122,17 +121,12 @@ CROPDMGEXP | chr | Crops damage multiplier
 Create a new dataset from these columns:
 
 ```{r, cache=TRUE}
-storm <- raw.storm %>% select(one_of(c("BGN_DATE", "BGN_TIME", 
-                                       "END_DATE", "END_TIME", 
-                                       "STATE", "EVTYPE", 
-                                       "FATALITIES", "INJURIES", 
-                                       "PROPDMG", "PROPDMGEXP", 
-                                       "CROPDMG", "CROPDMGEXP")))
+storm <- raw.storm %>% select(one_of(c("BGN_DATE", "STATE", "EVTYPE", "FATALITIES", "INJURIES", "PROPDMG", "CROPDMG", "PROPDMGEXP", "CROPDMGEXP")))
 
 colnames(storm) <- tolower(colnames(storm))
 ```
 
-Convert multipliers in `PROPDMGEXP` and `CROPDMGEXP` columns into numeric values:
+Convert multipliers in `propdmgexp` and `cropdmgexp` columns into numeric values:
 
 ```{r, cache=TRUE}
 # A helper function is needed here
@@ -158,10 +152,23 @@ storm$cropdmgexp <- as.numeric(storm$cropdmgexp)
 Apply the multipliers:
 
 ```{r, cache=TRUE}
-storm <- storm %>% mutate(property.damage=propdmg * 10 ^ propdmgexp)
-storm <- storm %>% mutate(property.damage=cropdmg * 10 ^ cropdmgexp)
+storm <- storm %>% mutate(propdmg=propdmg * 10 ^ propdmgexp)
+storm <- storm %>% mutate(cropdmg=cropdmg * 10 ^ cropdmgexp)
+
+# Remove ~dmgexp columns
+storm <- storm %>% select(-ends_with("dmgexp"))
 ```
+
+Convert `state` and `evtype` into factor variables:
+
 ```{r, cache=TRUE}
+storm$state <- as.factor(storm$state)
+storm$evtype <- as.factor(storm$evtype)
+```
+
+Convert dates:
+```{r, cache=TRUE}
+storm$bgn_date <- as.Date(storm$bgn_date, format = "%m/%d/%Y %H:%M:%S")
 ```
 ## Results
 Results
