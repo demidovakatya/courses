@@ -42,14 +42,12 @@ are a total of 17,568 observations in this dataset.
 
 
 ```r
-# Download the package
-if (!file.exists("activity.zip")) {
-  url <- "https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2Factivity.zip"
-  download.file(url, "activity.zip", method = "curl")
-}
-
-# Unzip the package
+# Download and unzip the package
 if (!file.exists("activity.csv")) {
+  if (!file.exists("activity.zip")) {
+    url <- "https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2Factivity.zip"
+    download.file(url, "activity.zip", method = "curl")
+  }
   unzip("activity.zip")
 }
 

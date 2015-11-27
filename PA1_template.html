@@ -234,14 +234,12 @@ are a total of 17,568 observations in this dataset.</p>
 <li>Load the data (i.e. <code>read.csv()</code>)</li>
 </ul>
 
-<pre><code class="r"># Download the package
-if (!file.exists(&quot;activity.zip&quot;)) {
-  url &lt;- &quot;https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2Factivity.zip&quot;
-  download.file(url, &quot;activity.zip&quot;, method = &quot;curl&quot;)
-}
-
-# Unzip the package
+<pre><code class="r"># Download and unzip the package
 if (!file.exists(&quot;activity.csv&quot;)) {
+  if (!file.exists(&quot;activity.zip&quot;)) {
+    url &lt;- &quot;https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2Factivity.zip&quot;
+    download.file(url, &quot;activity.zip&quot;, method = &quot;curl&quot;)
+  }
   unzip(&quot;activity.zip&quot;)
 }
 
