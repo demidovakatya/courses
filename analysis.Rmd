@@ -55,11 +55,31 @@ After reading in the original CSV file, we save the dataset as an RDS file so we
 *These tips were found at the Coursera Discussion Forums. Many thanks to my coursemates*
 
 ```{r, cache=TRUE, results='hide'}
-# Import the data
-storm <- fread("StormData.csv", na.strings = c("NA", ""))
+# Download and import the data
 
-saveRDS(storm, "StormData.rds")
-storm <- readRDS("StormData.rds")
+# In two words, we check if there is the .rds file,
+# and if not, we create it (from csv which is created by unpacking the bz2)
+# and create the 'storm' dataframe.
+
+if (!file.exists("StormData.rds")) {
+  # If we don't have the csv, we need to unpack the .bz2 file
+  if (!file.exists("StormData.csv")) {
+    library(R.utils)
+    # If we don't have the .bz2 file, we need to download it
+    if (!file.exists("StormData.csv.bz2")) {
+      download.file("https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2FStormData.csv.bz2",
+                    "StormData.csv.bz2")
+    }
+    bunzip2("StormData.csv.bz2")
+  }
+  storm <- fread("StormData.csv", na.strings = c("NA", ""))
+  saveRDS(storm, "StormData.rds")
+}
+
+# Load the 
+if (!exists("storm")) {
+  storm <- readRDS("StormData.rds")
+}
 
 #============================================================== Create a subset ???????
 
