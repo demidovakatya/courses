@@ -170,5 +170,42 @@ Convert dates:
 ```{r, cache=TRUE}
 storm$bgn_date <- as.Date(storm$bgn_date, format = "%m/%d/%Y %H:%M:%S")
 ```
+
+The last thing is to tidy up the `evtype` column. Let's save it to a separate variable and then have a look at it:
+```{r, cache=TRUE}
+event.types <- data.frame(table(storm$evtype))
+event.types <- event.types %>% arrange(Var1)
+```
+
+We can see similar values, for example:
+* "Freezing rain"
+* "Freezing Rain"
+* "FREEZING RAIN"
+* "FREEZING RAIN AND SLEET"
+
+or:
+* "HIGH WIND/SEAS"
+* "HIGH WIND/WIND CHILL"
+* "HIGH WIND/WIND CHILL/BLIZZARD" 
+* "HIGH WINDS"
+* "HIGH WINDS 55"
+* "HIGH WINDS 57"
+* "HIGH WINDS 58"
+* "HIGH WINDS 63"
+* "HIGH WINDS 66"                 
+* "HIGH WINDS 67".
+
+From my point of view, these values may be considered equal. So, I'll convert all values in `evtype` column to uppercase strings, trim them, and delete punctuation and digits.
+
+```{r}
+storm$evtype <- toupper(storm$evtype)
+storm$evtype <- gsub("[[:digit:]]+", "", storm$evtype)
+storm$evtype <- gsub("&", " AND ", storm$evtype)
+storm$evtype <- gsub("[[:punct:]]+", " ", storm$evtype)
+storm$evtype <- gsub("^\\s+|\\s+$|\\s\\s+", "", storm$evtype)
+
+storm$evtype <- as.factor(storm$evtype)
+```
+
 ## Results
 Results
