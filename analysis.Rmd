@@ -1,7 +1,7 @@
 ---
 title: 'Reproducible Research: Peer Assessment 2'
 author: "Katya Demidova"
-date: "13 November 2015"
+date: "28 November 2015"
 output: html_document
 ---
 Your document should have a title that briefly summarizes your data analysis
@@ -49,6 +49,7 @@ library(tidyr)
 library(ggplot2)
 library(data.table)
 library(R.utils)
+library(knitr)
 ```
 
 ## Import the data
@@ -121,7 +122,8 @@ CROPDMGEXP | chr | Crops damage multiplier
 Create a new dataset from these columns:
 
 ```{r, cache=TRUE}
-storm <- raw.storm %>% select(one_of(c("BGN_DATE", "STATE", "EVTYPE", "FATALITIES", "INJURIES", "PROPDMG", "CROPDMG", "PROPDMGEXP", "CROPDMGEXP")))
+storm <- raw.storm %>% 
+  select(one_of(c("BGN_DATE", "STATE", "EVTYPE", "FATALITIES", "INJURIES", "PROPDMG", "CROPDMG", "PROPDMGEXP", "CROPDMGEXP")))
 
 colnames(storm) <- tolower(colnames(storm))
 ```
@@ -176,22 +178,22 @@ head(data.frame(table(storm$evtype)), n=20)
 ```
 
 We can see similar values, for example:
-* "Freezing rain"
-* "Freezing Rain"
-* "FREEZING RAIN"
-* "FREEZING RAIN AND SLEET"
+- "Freezing rain"
+- "Freezing Rain"
+- "FREEZING RAIN"
+- "FREEZING RAIN AND SLEET"
 
 or:
-* "HIGH WIND/SEAS"
-* "HIGH WIND/WIND CHILL"
-* "HIGH WIND/WIND CHILL/BLIZZARD" 
-* "HIGH WINDS"
-* "HIGH WINDS 55"
-* "HIGH WINDS 57"
-* "HIGH WINDS 58"
-* "HIGH WINDS 63"
-* "HIGH WINDS 66"                 
-* "HIGH WINDS 67".
+- "HIGH WIND/SEAS"
+- "HIGH WIND/WIND CHILL"
+- "HIGH WIND/WIND CHILL/BLIZZARD" 
+- "HIGH WINDS"
+- "HIGH WINDS 55"
+- "HIGH WINDS 57"
+- "HIGH WINDS 58"
+- "HIGH WINDS 63"
+- "HIGH WINDS 66"                 
+- "HIGH WINDS 67".
 
 From my point of view, these values may be considered equal. So, I'll convert all values in `evtype` column to uppercase strings, trim them, and delete punctuation and digits.
 
@@ -221,37 +223,53 @@ event.types <- storm %>% group_by(evtype) %>%
   summarise(fatalities = sum(fatalities), injuries = sum(injuries),
             propdmg = sum(propdmg), cropdmg = sum(cropdmg))
 
-head(event.types, n = 10)
+kable(head(event.types, n = 10))
 ```
 
-Events causing most fatalities:
+### Events causing most fatalities:
 ```{r, fig.height=8, fig.width=10}
-fatality.events <- storm %>% group_by(evtype) %>% summarise(fatalities=sum(fatalities)) %>% top_n(20) %>% arrange(desc(fatalities))
-fatality.events
+fatality.events <- storm %>% group_by(evtype) %>% 
+  summarise(fatalities=sum(fatalities)) %>% 
+  top_n(20, wt = fatalities) %>% 
+  arrange(desc(fatalities))
+
+kable(fatality.events)
 
 qplot(evtype, fatalities, data=fatality.events, geom="bar", stat="identity", xlab="Event type", main="20 events causing most fatalities", fill=fatalities) + scale_fill_continuous(low="red", high="black") + theme(axis.text.x = element_text(angle = 90, hjust = 1), legend.position="none")
 ```
 
-Events causing most injuries:
+### Events causing most injuries:
 ```{r, fig.height=8, fig.width=10}
-injury.events <- storm %>% group_by(evtype) %>% summarise(injuries=sum(injuries)) %>% top_n(20) %>% arrange(desc(injuries))
-injury.events
+injury.events <- storm %>% group_by(evtype) %>% 
+  summarise(injuries=sum(injuries)) %>% 
+  top_n(20, wt = injuries) %>% 
+  arrange(desc(injuries))
+
+kable(injury.events)
 
 qplot(evtype, injuries, data=injury.events, geom="bar", stat="identity", xlab="Event type", main="20 events causing most injuries", fill=injuries) + scale_fill_continuous(low="white", high="darkblue") + theme(axis.text.x = element_text(angle = 90, hjust = 1), legend.position="none")
 ```
 
-Events causing most property damage:
+### Events causing most property damage:
 ```{r, fig.height=8, fig.width=10}
-property.damage.events <- storm %>% group_by(evtype) %>% summarise(property.damage=sum(propdmg)) %>% top_n(20) %>% arrange(desc(property.damage))
-property.damage.events
+property.damage.events <- storm %>% group_by(evtype) %>%
+  summarise(property.damage=sum(propdmg)) %>% 
+  top_n(20, wt = property.damage) %>% 
+  arrange(desc(property.damage))
+
+kable(property.damage.events)
 
 qplot(evtype, property.damage/10^9, data=property.damage.events, geom="bar", stat="identity", xlab="Event type", ylab="Property damage cost ($ billions)", main="20 events causing most property damage", fill=property.damage) + scale_fill_continuous(low="green", high="black") + theme(axis.text.x = element_text(angle = 90, hjust = 1), legend.position="none")
 ```
 
-Events causing most crop damage:
+### Events causing most crop damage:
 ```{r, fig.height=8, fig.width=10}
-crop.damage.events <- storm %>% group_by(evtype) %>% summarise(crop.damage=sum(cropdmg)) %>% top_n(20) %>% arrange(desc(crop.damage))
-crop.damage.events
+crop.damage.events <- storm %>% group_by(evtype) %>% 
+  summarise(crop.damage=sum(cropdmg)) %>% 
+  top_n(20, wt = crop.damage) %>% 
+  arrange(desc(crop.damage))
+
+kable(crop.damage.events)
 
 qplot(evtype, crop.damage/10^9, data=crop.damage.events, geom="bar", stat="identity", xlab="Event type", ylab = "Crop damage cost ($ billions)", main="20 events causing most crop damage", fill=crop.damage) + scale_fill_continuous(low="yellow", high="black") + theme(axis.text.x = element_text(angle = 90, hjust = 1), legend.position="none")
 ```
