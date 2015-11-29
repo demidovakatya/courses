@@ -273,8 +273,21 @@ median(daily.filled.steps$total.steps)
 
 As we can see in the figure below, the new dataset *slightly* differs from the original dataset:
 
+
+```r
+par(mfrow=c(1,2))
+hist(daily.steps$total.steps, breaks = 20, xlab = "", 
+     main = "total steps per day\nNAs omitted", col="red")
+hist(daily.filled.steps$total.steps, breaks = 20, xlab = "", 
+     main = "total steps per day\nNAs filled", col="green")
+```
+
 <img src="figure/unnamed-chunk-11-1.png" title="plot of chunk unnamed-chunk-11" alt="plot of chunk unnamed-chunk-11" style="display: block; margin: auto;" />
 
+
+```r
+cbind(na.omitted = summary(daily.steps[,2]), na.filled = summary(daily.filled.steps[,2]))
+```
 
 ```
 ##         na.omitted na.filled
@@ -294,14 +307,32 @@ If we look at summaries of these two datasets, we may notice that only `Min.` an
 
 This is why I think choosing mean instead of medium is tricky. If we fill the dataset with means for the corresponding intervals, everything would change drastically:
 
+
+```r
+bad.filled.activity <- merge(activity, interval.steps)
+bad.filled.activity$steps <- ifelse(is.na(bad.filled.activity$steps), 
+                                bad.filled.activity$average.steps, 
+                                bad.filled.activity$steps)
+bad.daily.filled.steps <- aggregate(bad.filled.activity$steps, 
+                                list(bad.filled.activity$date), 
+                         FUN = sum, na.rm = TRUE)
+colnames(bad.daily.filled.steps) <- c("day", "total.steps")
+hist(bad.daily.filled.steps$total.steps, breaks = 20, xlab = "Number of steps", main = "Histogram of the total number\nof steps taken each day", col="yellow")
+```
+
 ![plot of chunk unnamed-chunk-13](figure/unnamed-chunk-13-1.png) 
 
 ```r
 # Mean and median
+mean(bad.daily.filled.steps$total.steps)
 ```
 
 ```
 ## [1] 10766.19
+```
+
+```r
+median(bad.daily.filled.steps$total.steps)
 ```
 
 ```
@@ -339,5 +370,5 @@ xyplot(average.steps ~ interval | daytype, data = week.steps,
        main = "Average daily activity pattern for weekends and weekdays")
 ```
 
-![plot of chunk unnamed-chunk-16](figure/unnamed-chunk-16-1.png) 
+![plot of chunk unnamed-chunk-15](figure/unnamed-chunk-15-1.png) 
 

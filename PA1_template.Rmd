@@ -88,7 +88,7 @@ For this part of the assignment, we ignore the missing values in the dataset.
 
 * Make a histogram of the total number of steps taken each day
 
-```{r}
+```{r, fig.width=10}
 # Create a dataframe with summarized data
 daily.steps <- aggregate(activity$steps, list(activity$date), 
                          FUN = sum, na.rm = TRUE)
@@ -113,7 +113,7 @@ median(daily.steps$total.steps)
 
 * Make a time series plot (i.e. `type = "l"`) of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all days (y-axis)
 
-```{r}
+```{r, fig.width=10}
 interval.steps <- aggregate(activity$steps, 
                             by = list(activity$interval), 
                             FUN = mean, na.rm = TRUE)
@@ -164,7 +164,7 @@ filled.activity$new.steps <- ifelse(is.na(filled.activity$steps),
 
 * Make a histogram of the total number of steps taken each day. Calculate and report the mean and median total number of steps taken per day. 
 
-```{r}
+```{r, fig.width=10}
 daily.filled.steps <- aggregate(filled.activity$new.steps, 
                                 list(filled.activity$date), 
                                 FUN = sum, na.rm = TRUE)
@@ -182,7 +182,7 @@ median(daily.filled.steps$total.steps)
 
 As we can see in the figure below, the new dataset *slightly* differs from the original dataset:
 
-```{r echo=FALSE, fig.width=8, fig.align='center'}
+```{r fig.width=10, fig.align='center'}
 par(mfrow=c(1,2))
 hist(daily.steps$total.steps, breaks = 20, xlab = "", 
      main = "total steps per day\nNAs omitted", col="red")
@@ -190,7 +190,7 @@ hist(daily.filled.steps$total.steps, breaks = 20, xlab = "",
      main = "total steps per day\nNAs filled", col="green")
 ```
 
-```{r echo=F}
+```{r}
 cbind(na.omitted = summary(daily.steps[,2]), na.filled = summary(daily.filled.steps[,2]))
 ```
 
@@ -202,7 +202,7 @@ If we look at summaries of these two datasets, we may notice that only `Min.` an
 
 This is why I think choosing mean instead of medium is tricky. If we fill the dataset with means for the corresponding intervals, everything would change drastically:
 
-```{r echo=F}
+```{r, fig.width=10}
 bad.filled.activity <- merge(activity, interval.steps)
 bad.filled.activity$steps <- ifelse(is.na(bad.filled.activity$steps), 
                                 bad.filled.activity$average.steps, 
@@ -215,8 +215,6 @@ hist(bad.daily.filled.steps$total.steps, breaks = 20, xlab = "Number of steps", 
 ```
 ```{r}
 # Mean and median
-```
-```{r echo=F}
 mean(bad.daily.filled.steps$total.steps)
 median(bad.daily.filled.steps$total.steps)
 ```
@@ -237,7 +235,7 @@ There are some differences in activity patterns between weekdays and weekends, a
 
 I think, the daily activity patterns are pretty understandable, though these plots give us an opportunity to literally see these patterns and the differences between them.
 
-```{r, fig.height=6}
+```{r, fig.height=6, fig.width=10}
 week.steps <- aggregate(filled.activity$new.steps, 
                         by = list(filled.activity$daytype, 
                                   filled.activity$interval),
