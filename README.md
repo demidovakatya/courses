@@ -2,8 +2,7 @@
 
 ## Introduction
 
-The overall **goal** here is to examine how household energy usage
-varies over a 2-day period in February, 2007. 
+The overall **goal** here is to examine how household energy usage varies over a 2-day period in February, 2007. 
 
 The **task** was to reconstruct four plots, all of which were constructed using the base plotting system ([:book: read more about the assignment](https://github.com/rdpeng/ExData_Plotting1)).
 
@@ -39,8 +38,7 @@ This assignment uses data from the <a href="http://archive.ics.uci.edu/ml/">UC I
 * <b>Description</b>: Measurements of electric power consumption in one household with a one-minute sampling rate over a period of almost 4 years. Different electrical quantities and some sub-metering values are available.
 
 
-The following descriptions of the 9 variables in the dataset are taken
-from the <a href="https://archive.ics.uci.edu/ml/datasets/Individual+household+electric+power+consumption">UCI web site</a>:
+The following descriptions of the 9 variables in the dataset are taken from the <a href="https://archive.ics.uci.edu/ml/datasets/Individual+household+electric+power+consumption">UCI web site</a>:
 
 <ol>
 <li><b>Date</b>: Date in format dd/mm/yyyy </li>
