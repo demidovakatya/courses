@@ -1,7 +1,8 @@
 # :books: Statistical Inference Course Project
 
-1. [Assignment](#assignment)
-2. [Sample Project Report Structure](#sample-project-report-structure)
+Table of contents:
+* [Assignment](#assignment)
+* [Sample Project Report Structure](#sample-project-report-structure)
 
 This is the project for the statistical inference class. In it, you will use simulation to explore inference and do some simple inferential data analysis. The project consists of two parts:
 
