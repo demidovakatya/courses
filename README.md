@@ -11,11 +11,11 @@ This is the project for the statistical inference class. In it, you will use sim
 
 You will create a report to answer the questions. Given the nature of the series, ideally you'll use knitr to create the reports and convert to a pdf. (I will post a very simple introduction to knitr). However, feel free to use whatever software that you would like to create your pdf. 
 
-Each pdf report should be no more than 3 pages with 3 pages of supporting appendix material if needed (code, figures, etcetera).  
+*Each pdf report should be no more than 3 pages with 3 pages of supporting appendix material if needed (code, figures, etcetera).*
 
 # Assignment
 
-In this project you will investigate the exponential distribution in R and compare it with the Central Limit Theorem. The exponential distribution can be simulated in R with rexp(n, lambda) where lambda is the rate parameter. The mean of exponential distribution is 1/lambda and the standard deviation is also 1/lambda. Set lambda = 0.2 for all of the simulations. You will investigate the distribution of averages of 40 exponentials. Note that you will need to do a thousand simulations.
+In this project you will investigate the exponential distribution in R and compare it with the Central Limit Theorem. The exponential distribution can be simulated in R with `rexp(n, lambda)` where lambda is the rate parameter. The mean of exponential distribution is 1/lambda and the standard deviation is also 1/lambda. *Set lambda = 0.2 for all of the simulations.( You will investigate the distribution of averages of 40 exponentials. Note that you will need to do a thousand simulations.
 
 Illustrate via simulation and associated explanatory text the properties of the distribution of the mean of 40 exponentials.  You should
 1. Show the sample mean and compare it to the theoretical mean of the distribution.
@@ -35,10 +35,7 @@ hist(mns)
 ```
 This distribution looks far more Gaussian than the original uniform distribution!
 
-
-This exercise is asking you to use your knowledge of the theory given in class to relate the two distributions.  
-Confused?  Try re-watching video lecture 07 for a starter on how to complete this project.
-
+This exercise is asking you to use your knowledge of the theory given in class to relate the two distributions. Confused? Try re-watching video lecture 07 for a starter on how to complete this project.
 
 ## Sample Project Report Structure
 
