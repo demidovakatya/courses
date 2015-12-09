@@ -23,6 +23,15 @@ Your report must be:
 
 ## Peer Grading
 
-- The criteria that your classmates will use to evaluate and grade your work are shown below. 
+- The criteria that your classmates will use to evaluate and grade your work are shown below:
+ - interpret the coefficients correctly
+ - do some exploratory data analyses 
+ - fit multiple models and detail their strategy for model selection
+ - answer the questions of interest or detail why the question(s) is (are) not answerable
+ - do a residual plot and some diagnostics
+ - quantify the uncertainty in their conclusions and/or perform an inference correctly
+ - make the report brief (about 2 pages long) for the main body of the report and no longer than 5 with supporting appendix of figures
+ - include an executive summary
+ - do the report in Rmd (knitr)
 - Each criteria is binary: (1 point = criteria met acceptably; 0 points = criteria not met acceptably)
 - Your Course Project score will be the sum of the points and will count as 40% of your final grade in the course. 
