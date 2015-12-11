@@ -18,6 +18,22 @@ In point 3, focus on the difference between the distribution of a large collecti
 
 ## Simulate the data
 
+Set the workspace
+```{r}
+library(ggplot2)
+```
+
+The requirements are:
+- Set `lambda = 0.2` for all of the simulations.
+- Investigate the distribution of averages of 40 exponentials.
+- Do a thousand simulations.
+
+```{r}
+nosim <- 1000
+n <- 40
+lambda <- 0.2
+```
+
 ## 1. Show the sample mean and compare it to the theoretical mean of the distribution.
 
 ## 2. Show how variable the sample is (via variance) and compare it to the theoretical variance of the distribution.
