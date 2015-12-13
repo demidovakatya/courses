@@ -4,21 +4,19 @@ author: "Katya Demidova"
 date: "28 November 2015"
 output: html_document
 ---
-Your document should have a title that briefly summarizes your data analysis
 
 ## Synopsis
 
-Synopsis: Immediately after the title, there should be a synopsis which describes and summarizes your analysis in at most 10 complete sentences.
+The goal of this project is to analyze how severe weather events affect public health and economy of the United States. Our research addresses two main questions:
 
-The analysis document must have at least one figure containing a plot. Your analyis must have no more than three figures. Figures may have multiple plots in them (i.e. panel plots), but there cannot be more than three figures total.
+1. which types of events are most harmful with respect to population health?
 
-You must show all your code for the work in your analysis document. This may make the document a bit verbose, but that is okay. In general, you should ensure that echo = TRUE for every code chunk (this is the default setting in knitr).
+2. which types of events have the greatest economic consequences?
 
-### Questions
+We have found out that tornadoes are significantly more harmful to population health than any other type of events; floods, lightnings, excessive heat and thunderstorm winds cause many injuries and fatalities as well.
 
-1. Across the United States, which types of events (as indicated in the `EVTYPE` variable) are most harmful with respect to population health?
-
-2. Across the United States, which types of events have the greatest economic consequences?
+Floods, hurricane typhoons, tornadoes, and storm surges cause most property damage (40-140 $ billions). And the most harmful for crops are drought, floods, and ice storms. 
+Summing up, tornadoes and floods cause dramatically huge public health and economic problems for communities and municipalities, and preventing such outcomes to the extent possible is a key concern.
 
 ## Data
 

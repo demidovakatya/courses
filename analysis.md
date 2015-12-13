@@ -1,24 +1,22 @@
 ---
 title: 'Reproducible Research: Peer Assessment 2'
 author: "Katya Demidova"
-date: "13 November 2015"
+date: "28 November 2015"
 output: html_document
 ---
-Your document should have a title that briefly summarizes your data analysis
 
 ## Synopsis
 
-Synopsis: Immediately after the title, there should be a synopsis which describes and summarizes your analysis in at most 10 complete sentences.
+The goal of this project is to analyze how severe weather events affect public health and economy of the United States. Our research addresses two main questions:
 
-The analysis document must have at least one figure containing a plot. Your analyis must have no more than three figures. Figures may have multiple plots in them (i.e. panel plots), but there cannot be more than three figures total.
+1. which types of events are most harmful with respect to population health?
 
-You must show all your code for the work in your analysis document. This may make the document a bit verbose, but that is okay. In general, you should ensure that echo = TRUE for every code chunk (this is the default setting in knitr).
+2. which types of events have the greatest economic consequences?
 
-### Questions
+We have found out that tornadoes are significantly more harmful to population health than any other type of events; floods, lightnings, excessive heat and thunderstorm winds cause many injuries and fatalities as well.
 
-1. Across the United States, which types of events (as indicated in the `EVTYPE` variable) are most harmful with respect to population health?
-
-2. Across the United States, which types of events have the greatest economic consequences?
+Floods, hurricane typhoons, tornadoes, and storm surges cause most property damage (40-140 $ billions). And the most harmful for crops are drought, floods, and ice storms. 
+Summing up, tornadoes and floods cause dramatically huge public health and economic problems for communities and municipalities, and preventing such outcomes to the extent possible is a key concern.
 
 ## Data
 
@@ -46,10 +44,84 @@ echo = TRUE # to ensure that all code will be shown
 options(scipen = 1)
 
 library(dplyr)
+```
+
+```
+## 
+## Attaching package: 'dplyr'
+## 
+## The following objects are masked from 'package:stats':
+## 
+##     filter, lag
+## 
+## The following objects are masked from 'package:base':
+## 
+##     intersect, setdiff, setequal, union
+```
+
+```r
 library(tidyr)
 library(ggplot2)
+```
+
+```
+## Need help? Try the ggplot2 mailing list: http://groups.google.com/group/ggplot2.
+```
+
+```r
 library(data.table)
+```
+
+```
+## data.table 1.9.6  For help type ?data.table or https://github.com/Rdatatable/data.table/wiki
+## The fastest way to learn (by data.table authors): https://www.datacamp.com/courses/data-analysis-the-data-table-way
+## 
+## Attaching package: 'data.table'
+## 
+## The following objects are masked from 'package:dplyr':
+## 
+##     between, last
+```
+
+```r
 library(R.utils)
+```
+
+```
+## Loading required package: R.oo
+## Loading required package: R.methodsS3
+## R.methodsS3 v1.7.0 (2015-02-19) successfully loaded. See ?R.methodsS3 for help.
+## R.oo v1.19.0 (2015-02-27) successfully loaded. See ?R.oo for help.
+## 
+## Attaching package: 'R.oo'
+## 
+## The following objects are masked from 'package:methods':
+## 
+##     getClasses, getMethods
+## 
+## The following objects are masked from 'package:base':
+## 
+##     attach, detach, gc, load, save
+## 
+## R.utils v2.1.0 (2015-05-27) successfully loaded. See ?R.utils for help.
+## 
+## Attaching package: 'R.utils'
+## 
+## The following object is masked from 'package:tidyr':
+## 
+##     extract
+## 
+## The following object is masked from 'package:utils':
+## 
+##     timestamp
+## 
+## The following objects are masked from 'package:base':
+## 
+##     cat, commandArgs, getOption, inherits, isOpen, parse, warnings
+```
+
+```r
+library(knitr)
 ```
 
 ## Import the data
@@ -211,7 +283,8 @@ Create a new dataset from these columns:
 
 
 ```r
-storm <- raw.storm %>% select(one_of(c("BGN_DATE", "STATE", "EVTYPE", "FATALITIES", "INJURIES", "PROPDMG", "CROPDMG", "PROPDMGEXP", "CROPDMGEXP")))
+storm <- raw.storm %>% 
+  select(one_of(c("BGN_DATE", "STATE", "EVTYPE", "FATALITIES", "INJURIES", "PROPDMG", "CROPDMG", "PROPDMGEXP", "CROPDMGEXP")))
 
 colnames(storm) <- tolower(colnames(storm))
 ```
@@ -294,22 +367,22 @@ head(data.frame(table(storm$evtype)), n=20)
 ```
 
 We can see similar values, for example:
-* "Freezing rain"
-* "Freezing Rain"
-* "FREEZING RAIN"
-* "FREEZING RAIN AND SLEET"
+- "Freezing rain"
+- "Freezing Rain"
+- "FREEZING RAIN"
+- "FREEZING RAIN AND SLEET"
 
 or:
-* "HIGH WIND/SEAS"
-* "HIGH WIND/WIND CHILL"
-* "HIGH WIND/WIND CHILL/BLIZZARD" 
-* "HIGH WINDS"
-* "HIGH WINDS 55"
-* "HIGH WINDS 57"
-* "HIGH WINDS 58"
-* "HIGH WINDS 63"
-* "HIGH WINDS 66"                 
-* "HIGH WINDS 67".
+- "HIGH WIND/SEAS"
+- "HIGH WIND/WIND CHILL"
+- "HIGH WIND/WIND CHILL/BLIZZARD" 
+- "HIGH WINDS"
+- "HIGH WINDS 55"
+- "HIGH WINDS 57"
+- "HIGH WINDS 58"
+- "HIGH WINDS 63"
+- "HIGH WINDS 66"                 
+- "HIGH WINDS 67".
 
 From my point of view, these values may be considered equal. So, I'll convert all values in `evtype` column to uppercase strings, trim them, and delete punctuation and digits.
 
@@ -341,63 +414,59 @@ event.types <- storm %>% group_by(evtype) %>%
   summarise(fatalities = sum(fatalities), injuries = sum(injuries),
             propdmg = sum(propdmg), cropdmg = sum(cropdmg))
 
-head(event.types, n = 10)
+kable(head(event.types, n = 10))
 ```
 
-```
-##                       evtype fatalities injuries     propdmg    cropdmg
-## 1                    TORNADO       5633    91346 56947380676  414953270
-## 2                  TSTM WIND        504     6957  4493127495  554007350
-## 3                       HAIL         15     1361 15735819513 3026044473
-## 4              FREEZING RAIN          7       23     8146500          0
-## 5                       SNOW          5       31    14827550      10000
-## 6      ICE STORM FLASH FLOOD          0        2           0          0
-## 7                   SNOW ICE          0        0       30000          0
-## 8               WINTER STORM        206     1321  6688497251   26944000
-## 9  HURRICANE OPAL HIGH WINDS          2        0   100000000   10000000
-## 10        THUNDERSTORM WINDS         64      909  1944695859  190654788
-```
 
-Events causing most fatalities:
 
-```r
-fatality.events <- storm %>% group_by(evtype) %>% summarise(fatalities=sum(fatalities)) %>% top_n(20) %>% arrange(desc(fatalities))
-```
+|evtype                    | fatalities| injuries|     propdmg|    cropdmg|
+|:-------------------------|----------:|--------:|-----------:|----------:|
+|TORNADO                   |       5633|    91346| 56947380676|  414953270|
+|TSTM WIND                 |        504|     6957|  4493127495|  554007350|
+|HAIL                      |         15|     1361| 15735819513| 3026044473|
+|FREEZING RAIN             |          7|       23|     8146500|          0|
+|SNOW                      |          5|       31|    14827550|      10000|
+|ICE STORM FLASH FLOOD     |          0|        2|           0|          0|
+|SNOW ICE                  |          0|        0|       30000|          0|
+|WINTER STORM              |        206|     1321|  6688497251|   26944000|
+|HURRICANE OPAL HIGH WINDS |          2|        0|   100000000|   10000000|
+|THUNDERSTORM WINDS        |         64|      909|  1944695859|  190654788|
 
-```
-## Selecting by fatalities
-```
+### Events causing most fatalities:
 
 ```r
-fatality.events
+fatality.events <- storm %>% group_by(evtype) %>% 
+  summarise(fatalities=sum(fatalities)) %>% 
+  top_n(20, wt = fatalities) %>% 
+  arrange(desc(fatalities))
+
+kable(fatality.events)
 ```
 
-```
-## Source: local data table [20 x 2]
-## 
-##                     evtype fatalities
-##                     (fctr)      (dbl)
-## 1                  TORNADO       5633
-## 2           EXCESSIVE HEAT       1903
-## 3              FLASH FLOOD        978
-## 4                     HEAT        937
-## 5                LIGHTNING        817
-## 6                TSTM WIND        504
-## 7                    FLOOD        470
-## 8              RIP CURRENT        368
-## 9                HIGH WIND        248
-## 10               AVALANCHE        224
-## 11            WINTER STORM        206
-## 12            RIP CURRENTS        204
-## 13               HEAT WAVE        172
-## 14            EXTREME COLD        162
-## 15       THUNDERSTORM WIND        133
-## 16              HEAVY SNOW        127
-## 17 EXTREME COLD WIND CHILL        125
-## 18               HIGH SURF        104
-## 19             STRONG WIND        103
-## 20                BLIZZARD        101
-```
+
+
+|evtype                  | fatalities|
+|:-----------------------|----------:|
+|TORNADO                 |       5633|
+|EXCESSIVE HEAT          |       1903|
+|FLASH FLOOD             |        978|
+|HEAT                    |        937|
+|LIGHTNING               |        817|
+|TSTM WIND               |        504|
+|FLOOD                   |        470|
+|RIP CURRENT             |        368|
+|HIGH WIND               |        248|
+|AVALANCHE               |        224|
+|WINTER STORM            |        206|
+|RIP CURRENTS            |        204|
+|HEAT WAVE               |        172|
+|EXTREME COLD            |        162|
+|THUNDERSTORM WIND       |        133|
+|HEAVY SNOW              |        127|
+|EXTREME COLD WIND CHILL |        125|
+|HIGH SURF               |        104|
+|STRONG WIND             |        103|
+|BLIZZARD                |        101|
 
 ```r
 qplot(evtype, fatalities, data=fatality.events, geom="bar", stat="identity", xlab="Event type", main="20 events causing most fatalities", fill=fatalities) + scale_fill_continuous(low="red", high="black") + theme(axis.text.x = element_text(angle = 90, hjust = 1), legend.position="none")
@@ -405,46 +474,41 @@ qplot(evtype, fatalities, data=fatality.events, geom="bar", stat="identity", xla
 
 ![plot of chunk unnamed-chunk-13](figure/unnamed-chunk-13-1.png) 
 
-Events causing most injuries:
+### Events causing most injuries:
 
 ```r
-injury.events <- storm %>% group_by(evtype) %>% summarise(injuries=sum(injuries)) %>% top_n(20) %>% arrange(desc(injuries))
+injury.events <- storm %>% group_by(evtype) %>% 
+  summarise(injuries=sum(injuries)) %>% 
+  top_n(20, wt = injuries) %>% 
+  arrange(desc(injuries))
+
+kable(injury.events)
 ```
 
-```
-## Selecting by injuries
-```
 
-```r
-injury.events
-```
 
-```
-## Source: local data table [20 x 2]
-## 
-##                evtype injuries
-##                (fctr)    (dbl)
-## 1             TORNADO    91346
-## 2           TSTM WIND     6957
-## 3               FLOOD     6789
-## 4      EXCESSIVE HEAT     6525
-## 5           LIGHTNING     5230
-## 6                HEAT     2100
-## 7           ICE STORM     1975
-## 8         FLASH FLOOD     1777
-## 9   THUNDERSTORM WIND     1488
-## 10               HAIL     1361
-## 11       WINTER STORM     1321
-## 12  HURRICANE TYPHOON     1275
-## 13          HIGH WIND     1138
-## 14         HEAVY SNOW     1021
-## 15           WILDFIRE      911
-## 16 THUNDERSTORM WINDS      909
-## 17           BLIZZARD      805
-## 18                FOG      734
-## 19   WILD FOREST FIRE      545
-## 20         DUST STORM      440
-```
+|evtype             | injuries|
+|:------------------|--------:|
+|TORNADO            |    91346|
+|TSTM WIND          |     6957|
+|FLOOD              |     6789|
+|EXCESSIVE HEAT     |     6525|
+|LIGHTNING          |     5230|
+|HEAT               |     2100|
+|ICE STORM          |     1975|
+|FLASH FLOOD        |     1777|
+|THUNDERSTORM WIND  |     1488|
+|HAIL               |     1361|
+|WINTER STORM       |     1321|
+|HURRICANE TYPHOON  |     1275|
+|HIGH WIND          |     1138|
+|HEAVY SNOW         |     1021|
+|WILDFIRE           |      911|
+|THUNDERSTORM WINDS |      909|
+|BLIZZARD           |      805|
+|FOG                |      734|
+|WILD FOREST FIRE   |      545|
+|DUST STORM         |      440|
 
 ```r
 qplot(evtype, injuries, data=injury.events, geom="bar", stat="identity", xlab="Event type", main="20 events causing most injuries", fill=injuries) + scale_fill_continuous(low="white", high="darkblue") + theme(axis.text.x = element_text(angle = 90, hjust = 1), legend.position="none")
@@ -452,46 +516,41 @@ qplot(evtype, injuries, data=injury.events, geom="bar", stat="identity", xlab="E
 
 ![plot of chunk unnamed-chunk-14](figure/unnamed-chunk-14-1.png) 
 
-Events causing most property damage:
+### Events causing most property damage:
 
 ```r
-property.damage.events <- storm %>% group_by(evtype) %>% summarise(property.damage=sum(propdmg)) %>% top_n(20) %>% arrange(desc(property.damage))
+property.damage.events <- storm %>% group_by(evtype) %>%
+  summarise(property.damage=sum(propdmg)) %>% 
+  top_n(20, wt = property.damage) %>% 
+  arrange(desc(property.damage))
+
+kable(property.damage.events)
 ```
 
-```
-## Selecting by property.damage
-```
 
-```r
-property.damage.events
-```
 
-```
-## Source: local data table [20 x 2]
-## 
-##                       evtype property.damage
-##                       (fctr)           (dbl)
-## 1                      FLOOD    144657709807
-## 2          HURRICANE TYPHOON     69305840000
-## 3                    TORNADO     56947380676
-## 4                STORM SURGE     43323536000
-## 5                FLASH FLOOD     16823223978
-## 6                       HAIL     15735819513
-## 7                  HURRICANE     11868319010
-## 8             TROPICAL STORM      7703890550
-## 9               WINTER STORM      6688497251
-## 10                 HIGH WIND      5270056295
-## 11               RIVER FLOOD      5118945500
-## 12                  WILDFIRE      4765114000
-## 13          STORM SURGE TIDE      4641188000
-## 14                 TSTM WIND      4493127495
-## 15                 ICE STORM      3944927860
-## 16         THUNDERSTORM WIND      3483122472
-## 17            HURRICANE OPAL      3172846000
-## 18          WILD FOREST FIRE      3001829500
-## 19 HEAVY RAIN SEVERE WEATHER      2500000000
-## 20        THUNDERSTORM WINDS      1944695859
-```
+|evtype                    | property.damage|
+|:-------------------------|---------------:|
+|FLOOD                     |    144657709807|
+|HURRICANE TYPHOON         |     69305840000|
+|TORNADO                   |     56947380676|
+|STORM SURGE               |     43323536000|
+|FLASH FLOOD               |     16823223978|
+|HAIL                      |     15735819513|
+|HURRICANE                 |     11868319010|
+|TROPICAL STORM            |      7703890550|
+|WINTER STORM              |      6688497251|
+|HIGH WIND                 |      5270056295|
+|RIVER FLOOD               |      5118945500|
+|WILDFIRE                  |      4765114000|
+|STORM SURGE TIDE          |      4641188000|
+|TSTM WIND                 |      4493127495|
+|ICE STORM                 |      3944927860|
+|THUNDERSTORM WIND         |      3483122472|
+|HURRICANE OPAL            |      3172846000|
+|WILD FOREST FIRE          |      3001829500|
+|HEAVY RAIN SEVERE WEATHER |      2500000000|
+|THUNDERSTORM WINDS        |      1944695859|
 
 ```r
 qplot(evtype, property.damage/10^9, data=property.damage.events, geom="bar", stat="identity", xlab="Event type", ylab="Property damage cost ($ billions)", main="20 events causing most property damage", fill=property.damage) + scale_fill_continuous(low="green", high="black") + theme(axis.text.x = element_text(angle = 90, hjust = 1), legend.position="none")
@@ -499,46 +558,41 @@ qplot(evtype, property.damage/10^9, data=property.damage.events, geom="bar", sta
 
 ![plot of chunk unnamed-chunk-15](figure/unnamed-chunk-15-1.png) 
 
-Events causing most crop damage:
+### Events causing most crop damage:
 
 ```r
-crop.damage.events <- storm %>% group_by(evtype) %>% summarise(crop.damage=sum(cropdmg)) %>% top_n(20) %>% arrange(desc(crop.damage))
+crop.damage.events <- storm %>% group_by(evtype) %>% 
+  summarise(crop.damage=sum(cropdmg)) %>% 
+  top_n(20, wt = crop.damage) %>% 
+  arrange(desc(crop.damage))
+
+kable(crop.damage.events)
 ```
 
-```
-## Selecting by crop.damage
-```
 
-```r
-crop.damage.events
-```
 
-```
-## Source: local data table [20 x 2]
-## 
-##               evtype crop.damage
-##               (fctr)       (dbl)
-## 1            DROUGHT 13972566000
-## 2              FLOOD  5661968450
-## 3        RIVER FLOOD  5029459000
-## 4          ICE STORM  5022113500
-## 5               HAIL  3026044473
-## 6          HURRICANE  2741910000
-## 7  HURRICANE TYPHOON  2607872800
-## 8        FLASH FLOOD  1421317100
-## 9       EXTREME COLD  1312973000
-## 10      FROST FREEZE  1094186000
-## 11        HEAVY RAIN   733399800
-## 12    TROPICAL STORM   678346000
-## 13         HIGH WIND   638571300
-## 14         TSTM WIND   554007350
-## 15    EXCESSIVE HEAT   492402000
-## 16            FREEZE   456725000
-## 17           TORNADO   414953270
-## 18 THUNDERSTORM WIND   414846050
-## 19              HEAT   401461500
-## 20   DAMAGING FREEZE   296230000
-```
+|evtype            | crop.damage|
+|:-----------------|-----------:|
+|DROUGHT           | 13972566000|
+|FLOOD             |  5661968450|
+|RIVER FLOOD       |  5029459000|
+|ICE STORM         |  5022113500|
+|HAIL              |  3026044473|
+|HURRICANE         |  2741910000|
+|HURRICANE TYPHOON |  2607872800|
+|FLASH FLOOD       |  1421317100|
+|EXTREME COLD      |  1312973000|
+|FROST FREEZE      |  1094186000|
+|HEAVY RAIN        |   733399800|
+|TROPICAL STORM    |   678346000|
+|HIGH WIND         |   638571300|
+|TSTM WIND         |   554007350|
+|EXCESSIVE HEAT    |   492402000|
+|FREEZE            |   456725000|
+|TORNADO           |   414953270|
+|THUNDERSTORM WIND |   414846050|
+|HEAT              |   401461500|
+|DAMAGING FREEZE   |   296230000|
 
 ```r
 qplot(evtype, crop.damage/10^9, data=crop.damage.events, geom="bar", stat="identity", xlab="Event type", ylab = "Crop damage cost ($ billions)", main="20 events causing most crop damage", fill=crop.damage) + scale_fill_continuous(low="yellow", high="black") + theme(axis.text.x = element_text(angle = 90, hjust = 1), legend.position="none")
