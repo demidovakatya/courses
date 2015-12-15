@@ -31,9 +31,9 @@
 
 5. Which of the following is the label we give a column that the "outside world" uses to look up a particular row?
 
-- **Primary key**
+- Primary key
 - Local key
-- Logical key
+- **Logical key**
 - Foreign key
 - Remote key
 
@@ -50,13 +50,13 @@
 - INSERT_AUTO_PROVIDE
 - AUTO_INCREMENT
 - ASSERT_UNIQUE
-- AUTOINCREMENT
+- **AUTOINCREMENT**
 
 8. What is the SQL keyword that reconnects rows that have foreign keys with the corresponding data in the table that the foreign key points to?
 
 - COUNT
 - APPEND
-- JOIN
+- **JOIN**
 - CONNECT
 - CONSTRAINT
 
@@ -66,13 +66,13 @@
 - Leaving out the ON clause when joining two tables is an SQL syntax error
 - The rows of the left table are connected to the rows in the right table when their primary key matches
 - You get no rows at all
-- The number of rows you get is the number of rows in the first table times the number of rows in the second table
+- **The number of rows you get is the number of rows in the first table times the number of rows in the second table**
 
 10. When you are doing a SELECT with a JOIN across multiple tables with identical column names, how do you distinguish the column names?
 
 - tablename['columnname']
 - tablename->columnname
 - tablename/columnname
-- tablename.columnname
+- **tablename.columnname**
 
 
