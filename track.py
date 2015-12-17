@@ -69,8 +69,10 @@ stuff = ET.parse(fname)
 all = stuff.findall('dict/dict/dict')
 print 'Dict count:', len(all)
 for entry in all:
+    # if we don't have a track id, it's 100% not a track entry
     if ( lookup(entry, 'Track ID') is None ) : continue
 
+    # so what should we look for?
     name = lookup(entry, 'Name')
     artist = lookup(entry, 'Artist')
     album = lookup(entry, 'Album')
@@ -78,14 +80,18 @@ for entry in all:
     rating = lookup(entry, 'Rating')
     length = lookup(entry, 'Total Time')
 
+    # because fuck that it's not even a real track
     if name is None or artist is None or album is None :
         continue
 
+    # sharing our success
     print name, artist, album, count, rating, length
 
+    # add to Artist
     cur.execute('''INSERT OR IGNORE INTO Artist (name)
         VALUES ( ? )''', ( artist, ) )
     cur.execute('SELECT id FROM Artist WHERE name = ? ', (artist, ))
+    # Fetches the next row of a query result set, returning a single sequence, or None when no more data is available.
     artist_id = cur.fetchone()[0]
 
     cur.execute('''INSERT OR IGNORE INTO Album (title, artist_id)
@@ -97,5 +103,7 @@ for entry in all:
         (title, album_id, len, rating, count)
         VALUES ( ?, ?, ?, ?, ? )''',
         ( name, album_id, length, rating, count ) )
+
+    # So now we have three tables
 
     conn.commit()
