@@ -33,6 +33,12 @@ lambda <- 0.2
 # generate simulations
 sims <- data.frame(replicate(nosim, rexp(n, lambda)))
 
+# calculate the averages
+means <- data.frame(sapply(sims, mean))
+
+ggplot(data = means, aes(x = means)) + 
+  geom_bar(binwidth = 0.1, aes(fill=..count..)) +  
+  ggtitle("Distribution of simulated averages of 40 exponentials")
 ```
 
 ## Sample Mean versus Theoretical Mean
@@ -46,28 +52,39 @@ theor.mean
 
 Next, we will evaluate the sample mean:
 ```{r}
-means <- sapply(sims, mean)
-sample.mean <- mean(means)
+sample.mean <- mean(means$means)
 sample.mean
 ```
 
-As we can see, our sample mean (`r sample.mean`) is very close to the theoretical mean (`r theor.mean`). Let's look at the sample mean distribution and sample and theoretical means:
+Let's add the sample mean and the theoretical mean to the plot we've constructed before:
 
 ```{r}
-means <- data.frame(means)
 ggplot(data = means, aes(x = means)) + 
   geom_bar(binwidth = 0.1, aes(fill=..count..)) + 
-  geom_vline(aes(xintercept = sample.mean), colour="black", alpha=1, size = 2) +
-  geom_vline(aes(xintercept = theor.mean), colour="red", alpha=0.5, size = 2) + 
-  ggtitle("Sample mean (black) vs. Theoretical mean (red)")
+  geom_vline(aes(xintercept = sample.mean), colour="black", alpha=1, size = 1) +
+  geom_vline(aes(xintercept = theor.mean), colour="white", alpha=0.75, size = 1) + 
+  ggtitle("Sample mean (black) vs. Theoretical mean (white)")
 ```
+
+The center of mean distributions (`r sample.mean`) is very close to the theoretical mean (`r theor.mean`). 
 
 ## Sample Variance versus Theoretical Variance
 
-The standard deviation of exponential distribution is `1 / lambda`. So, the theoretical variance would equal to `sd ^ 2`:
+Sample variance of averages of simulations:
 
 ```{r}
-theor.variance <- (1 / lambda) ^ 2
+sample.sd <- sd(means$means)
+sample.variance <- var(means$means)
+sample.variance
+```
+
+The standard deviation of exponential distribution is `1 / lambda`. So, theoretical standard deviation of the sample means would equal to `(1 / lambda) / sqrt(n)`, where `n` is the number of exponentials (which is 40).
+
+Theoretical variance of the sample means:
+
+```{r}
+theor.sd <- (1 / lambda) / sqrt(n)
+theor.variance <- ((1 / lambda) / sqrt(n)) ^ 2 
 ```
 
 Include figures (output from R) with titles. Highlight the variances you are comparing. Include text that explains your understanding of the differences of the variances.
