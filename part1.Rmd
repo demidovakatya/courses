@@ -110,3 +110,5 @@ ggplot(data = means, aes(sample = means)) +
        y = "Actual values")
 ```
 From the look of this QQ plot, we can make the conclusion that the distribution of actual data (sample means) is approximately normal.
+
+We have investigated the exponential distribution in R and compared it with the Central Limit Theorem. We have compared the sample mean to the theoretical mean, the variability of the mean of 40 exponentials to the theoretical variance, and from that we concluded that the distribution of sample means behaved as predicted by the Central Limit Theorem.
