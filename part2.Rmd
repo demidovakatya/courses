@@ -5,3 +5,34 @@ date: "10 December 2015"
 output: html_document
 ---
 
+
+In this part of the course project we're going to analyze the ToothGrowth data from the R `datasets` package. Description of this data set: the response is the length of odontoblasts (teeth) in each of 10 guinea pigs at each of three dose levels of Vitamin C (0.5, 1, and 2 mg) with each of two delivery methods (orange juice or ascorbic acid).
+
+```{r}
+library(datasets)
+tg <- ToothGrowth
+str(tg)
+```
+
+The ToothGrowth data is a data frame with 60 observations of 3 variables:
+
+* `len`: tooth length (numeric),
+* `supp`: supplement type (factor with 2 levels `OJ` and `VC`, orange juice and ascorbic acid respectively),
+* `dose`: dose of Vitamin C in miligrams (numeric).
+
+```{r}
+ggplot(data = tg, aes(as.factor(dose), len)) + geom_point(aes(colour=supp), size=4) + ggtitle("Tooth growth by dose of Vitamin C\n") + facet_grid(. ~ supp)
+```
+
+The plot above could help us with comparing tooth growth by `supp` and `dose`:
+* it is clear from the plot that the higher the dose - the larger the teeth, in other words, it looks like there is a positive correlation between dose level and tooth length in guinea pigs;
+* we might also assume that orange juice causes larger tooth growth than ascorbic acid, though it is not clear from the data
+
+2. Provide a basic summary of the data.
+3. Use confidence intervals and/or hypothesis tests to compare tooth growth by supp and dose. (Only use the techniques from class, even if there's other approaches worth considering)
+4. State your conclusions and the assumptions needed for your conclusions. 
+Some criteria that you will be evaluated on
+1. Did you  perform an exploratory data analysis of at least a single plot or table highlighting basic features of the data?
+2. Did the student perform some relevant confidence intervals and/or tests?
+Were the results of the tests and/or intervals interpreted in the context of the problem correctly? 
+3. Did the student describe the assumptions needed for their conclusions?
