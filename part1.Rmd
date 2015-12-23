@@ -5,23 +5,18 @@ date: "10 December 2015"
 output: html_document
 ---
 
-Investigate the exponential distribution in R and compare it with the Central Limit Theorem. The exponential distribution can be simulated in R with `rexp(n, lambda)` where `lambda` is the rate parameter. 
+## Overview
 
-The mean of exponential distribution is `1/lambda` and the standard deviation is also `1/lambda`. Set `lambda = 0.2` for all of the simulations. Investigate the distribution of averages of 40 exponentials. Do a thousand simulations.
+The main goal of this document is to investigate the exponential distribution in R and compare it with the Central Limit Theorem. We'll illustrate via simulation and associated explanatory text the properties of the distribution of the mean of 40 exponentials.
 
-Illustrate via simulation and associated explanatory text the properties of the distribution of the mean of 40 exponentials.
-
-1. Show the sample mean and compare it to the theoretical mean of the distribution.
-2. Show how variable the sample is (via variance) and compare it to the theoretical variance of the distribution.
-3. Show that the distribution is approximately normal.
-In point 3, focus on the difference between the distribution of a large collection of random exponentials and the distribution of a large collection of averages of 40 exponentials.
-
-## Simulate the data
+## Simulation
 
 Set the workspace
 ```{r}
 library(ggplot2)
 ```
+
+The exponential distribution can be simulated in R with `rexp(n, lambda)` where `lambda` is the rate parameter. 
 
 The requirements are:
 - Set `lambda = 0.2` for all of the simulations.
@@ -29,13 +24,54 @@ The requirements are:
 - Do a thousand simulations.
 
 ```{r}
+set.seed(11)
+
 nosim <- 1000
 n <- 40
 lambda <- 0.2
+
+# generate simulations
+sims <- data.frame(replicate(nosim, rexp(n, lambda)))
+
 ```
 
-## 1. Show the sample mean and compare it to the theoretical mean of the distribution.
+## Sample Mean versus Theoretical Mean
 
-## 2. Show how variable the sample is (via variance) and compare it to the theoretical variance of the distribution.
+The mean of exponential distribution is `1 / lambda`. So, in our case it would be:
 
-## 3. Show that the distribution is approximately normal.
+```{r}
+theor.mean <- 1 / lambda
+theor.mean
+```
+
+Next, we will evaluate the sample mean:
+```{r}
+means <- sapply(sims, mean)
+sample.mean <- mean(means)
+sample.mean
+```
+
+As we can see, our sample mean (`r sample.mean`) is very close to the theoretical mean (`r theor.mean`). Let's look at the sample mean distribution and sample and theoretical means:
+
+```{r}
+means <- data.frame(means)
+ggplot(data = means, aes(x = means)) + 
+  geom_bar(binwidth = 0.1, aes(fill=..count..)) + 
+  geom_vline(aes(xintercept = sample.mean), colour="black", alpha=1, size = 2) +
+  geom_vline(aes(xintercept = theor.mean), colour="red", alpha=0.5, size = 2) + 
+  ggtitle("Sample mean (black) vs. Theoretical mean (red)")
+```
+
+## Sample Variance versus Theoretical Variance
+
+The standard deviation of exponential distribution is `1 / lambda`. So, the theoretical variance would equal to `sd ^ 2`:
+
+```{r}
+theor.variance <- (1 / lambda) ^ 2
+```
+
+Include figures (output from R) with titles. Highlight the variances you are comparing. Include text that explains your understanding of the differences of the variances.
+
+## Distribution
+
+Via figures and text, explain how one can tell the distribution is approximately normal.
