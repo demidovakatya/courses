@@ -5,14 +5,16 @@ date: "10 December 2015"
 output: html_document
 ---
 
+## Overview
 
 In this part of the course project we're going to analyze the ToothGrowth data from the R `datasets` package. Description of this data set: the response is the length of odontoblasts (teeth) in each of 10 guinea pigs at each of three dose levels of Vitamin C (0.5, 1, and 2 mg) with each of two delivery methods (orange juice or ascorbic acid).
 
-## Loading the data
+## Loading the data; basic summary
 
 ```{r}
 library(ggplot2)
 library(dplyr)
+options(scipen=99)
 ```
 Let us load the data set and perform some basic exploratory data analyses.
 
@@ -25,13 +27,15 @@ str(tg)
 The ToothGrowth data is a data frame with 60 observations of 3 variables:
 
 * `len`: tooth length (numeric),
-* `supp`: supplement type (factor with 2 levels `OJ` and `VC`, orange juice and ascorbic acid respectively),
+* `supp`: supplement type / delivery method (factor with 2 levels `OJ` and `VC`, orange juice and ascorbic acid respectively),
 * `dose`: dose of Vitamin C in miligrams (numeric).
+
+Basic summary of data:
 
 ```{r}
 head(tg)
-kable(summary(tg))
 
+summary(tg$len)
 table(tg$supp)
 table(tg$dose) # looks like factor
 ```
@@ -45,7 +49,7 @@ str(tg)
 ## Exploratory data analysis
 
 ```{r}
-ggplot(data = tg, aes(supp, len)) + geom_boxplot(aes(fill = supp)) + ggtitle("Tooth growth by supplement type") + ylab("tooth length") + xlab("Supplement type")
+ggplot(data = tg, aes(supp, len)) + geom_boxplot(aes(fill = supp)) + ggtitle("Tooth growth by supplement type") + ylab("Tooth length") + xlab("Supplement type (orange juice/ascorbic acid)")
 
 ggplot(data = tg, aes(dose, len)) + geom_boxplot(aes(fill = dose)) + ggtitle("Tooth growth by dose") + ylab("Tooth length") + xlab("Dose of Vitamin C (miligrams)")
 
@@ -67,7 +71,23 @@ As mentioned above, there seems to be a positive correlation between dose level 
 tg %>% group_by(dose) %>% summarise(mean(len))
 ```
 
+To compare tooth growth by `dose` and check if there is a statistically significant difference between the means, we will use t-tests:
 
+```{r}
+with(tg, t.test(len[dose=="0.5"], len[dose=="1"]))
+with(tg, t.test(len[dose=="1"], len[dose=="2"]))
+with(tg, t.test(len[dose=="0.5"], len[dose=="2"]))
+```
+
+P-values of these t-tests, respectively:
+
+```{r}
+with(tg, t.test(len[dose=="0.5"], len[dose=="1"]))$p.value
+with(tg, t.test(len[dose=="1"], len[dose=="2"]))$p.value
+with(tg, t.test(len[dose=="0.5"], len[dose=="2"]))$p.value
+```
+
+From these numbers, we can make a conclusion that **dosage of Vitamin C affects tooth growth in guinea pigs**.
 
 ### Tooth growth by supplement type
 
@@ -83,12 +103,4 @@ To compare tooth growth by `supp` and check if there is a statistically signific
 with(tg, t.test(len[supp=="OJ"], len[supp=="VC"]))
 ```
 
-The resulting p-value is `0.06063`. Though it is very close to `0.05` (most common alpha-level), the difference between the means is **not** significant.
-
-3. Use confidence intervals and/or hypothesis tests to compare tooth growth by supp and dose. (Only use the techniques from class, even if there's other approaches worth considering)
-4. State your conclusions and the assumptions needed for your conclusions. 
-Some criteria that you will be evaluated on
-1. Did you  perform an exploratory data analysis of at least a single plot or table highlighting basic features of the data?
-2. Did the student perform some relevant confidence intervals and/or tests?
-Were the results of the tests and/or intervals interpreted in the context of the problem correctly? 
-3. Did the student describe the assumptions needed for their conclusions?
+The resulting p-value is `0.06063`. Though it is very close to `0.05` (most common alpha-level), the difference between the means is **not** significant. So, **delivery method doesn't affect tooth growth in guinea pigs**.
