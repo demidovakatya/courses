@@ -1,0 +1,27 @@
+---
+title: "Regression Models Course Project"
+author: "Katya Demidova"
+date: "23 December 2015"
+output: pdf_document
+---
+
+## Overview
+
+The main goal of this project is to explore the relationship between a set of variables and miles per gallon (MPG) for *Motor Trend*, a magazine about the automobile industry. We are particularly interested in the following two questions:
+
+* "Is an automatic or manual transmission better for MPG"
+* "Quantify the MPG difference between automatic and manual transmissions"
+
+## Exploratory data analysis
+
+To answer these questions, we will use the `mtcars` data set. This data was extracted from the 1974 *Motor Trend* US magazine. It comprises fuel consumption and 10 aspects of automobile design and performance for 32 automobiles (1973–74 models).
+
+The `mtcars` data set has 32 observations of 11 variables:
+```{r}
+str(mtcars)
+head(mtcars)
+```
+
+## Is an automatic or manual transmission better for MPG
+
+## Quantify the MPG difference between automatic and manual transmissions
