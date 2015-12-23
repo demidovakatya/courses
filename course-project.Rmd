@@ -2,26 +2,115 @@
 title: "Regression Models Course Project"
 author: "Katya Demidova"
 date: "23 December 2015"
-output: pdf_document
+output: html_document
 ---
 
 ## Overview
 
-The main goal of this project is to explore the relationship between a set of variables and miles per gallon (MPG) for *Motor Trend*, a magazine about the automobile industry. We are particularly interested in the following two questions:
+The main goal of this project is to explore the relationship between a set of variables and miles per gallon (MPG) from the `mtcars` data set. We are particularly interested in the following two questions:
 
 * "Is an automatic or manual transmission better for MPG"
-* "Quantify the MPG difference between automatic and manual transmissions"
+* "Quantify the MPG difference between automatic and manual transmissions".
 
-## Exploratory data analysis
+Short summary:
+
+* Cars with manual transmission have significantlly more miles per gallon than cars with automatic transmission;
+* Manual transmission is better for MPG by 1.8 compared to automatic transmission (adj. by `cyl`, `hp`, `wt`).
+
+## Loading and exploring the data
+
+```{r}
+library(ggplot2)
+library(datasets)
+```
 
 To answer these questions, we will use the `mtcars` data set. This data was extracted from the 1974 *Motor Trend* US magazine. It comprises fuel consumption and 10 aspects of automobile design and performance for 32 automobiles (1973–74 models).
 
 The `mtcars` data set has 32 observations of 11 variables:
 ```{r}
 str(mtcars)
-head(mtcars)
 ```
 
-## Is an automatic or manual transmission better for MPG
+In this work we will be interested in following variables: 
+* `mpg`:	Miles/(US) gallon (numeric),
+* `am`:	Transmission (0 = automatic, 1 = manual) (numeric).
 
-## Quantify the MPG difference between automatic and manual transmissions
+```{r}
+summary(mtcars$mpg)
+```
+
+The histogram of MPG can be seen in appendix.
+
+```{r}
+# factor the am variable for convenience
+mtcars$am <- factor(mtcars$am, labels = c("automatic", "manual"))
+# factor some other variables as well
+mtcars$cyl <- factor(mtcars$cyl)
+mtcars$vs <- factor(mtcars$vs)
+mtcars$gear <- factor(mtcars$gear)
+mtcars$carb <- factor(mtcars$carb)
+```
+
+## Analysis
+
+In our further analysis, we will focus on relationship between MPG and transmission (`mpg` and `am`), with `mpg` as the outcome and `am` as the predictor. As we can see in the boxplot of MPG by transmission type, there is an increase in MPG when transmission is manual comparing to automatic transmission:
+
+```{r}
+ggplot(aes(am, mpg, fill=am), data = mtcars) + 
+  geom_boxplot() + 
+  ggtitle("Boxplot of MPG by transmission type") + 
+  ylab("MPG") + xlab("Transmission type") + 
+  theme_update(legend.position=c(0.85, 0.15))
+```
+
+To find out if this increase is statistically significant, we will perform a t-test (assuming that the distribution is normal):
+```{r}
+t.test(mpg ~ am, data = mtcars)
+```
+
+With p-value of `0.001374`, we can see that this difference is significant.
+
+### Linear regression model
+
+```{r}
+lin.model <- lm(mpg ~ am, data = mtcars)
+summary(lin.model)
+```
+
+The intercept coefficient (`r coef(lin.model)[1]`) is the empirical mean of MPG for cars with automatic transmissions. The `am` coefficient (`r coef(lin.model)[2]`) is the mean increase of MPG for cars with manual transmissions. The mean MPG for cars with manual transmissions is `intercept` + `am` = `r sum(coef(lin.model))[1]+ coef(lin.model)[2]`.
+
+The p-value is `0.000285`, which means that there is a significant difference in MPG between groups with different transmission. 
+
+The adjusted R-squared is `r summary(lin.model)$adj.r.squared`, which means that only ~34% of the variability is explained by this model. This percentage is relatively small, so we should find out which of other variables could be predictors in our model.
+
+### Multivariate regression model
+
+To begin with, we will build a model with `mpg` as the outcome and all other variables as predictors. Next, we will use this model as the initial model in the stepwise search by `step` algorithm.
+
+```{r results='hide'}
+init.model <- lm(mpg ~ ., data = mtcars)
+step.model <- step(init.model)
+```
+```{r}
+summary(step.model)
+```
+
+The best model found by the `step` algorithm contains `cyl`, `hp`, `wt`, and `am` variables. 
+
+```{r}
+anova(lin.model, step.model)
+```
+We have compared this model with the linear model. From the results above, we can tell that there are significant differences between two models, in other words, `cyl`, `hp`, and `wt` variables contribute to the model.
+
+So with these three variables as confounders, adjusted R-squared is `r summary(step.model)$adj.r.squared`, meaning 84% of the variability is explained.
+
+* Is an automatic or manual transmission better for MPG?
+* Quantify the MPG difference between automatic and manual transmissions.
+
+## Appendix
+```{r}
+head(mtcars)
+```
+```{r results='hide'}
+ggplot(aes(mpg), data = mtcars) + geom_histogram() + ggtitle("Histogram of MPG")
+```
