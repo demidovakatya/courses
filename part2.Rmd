@@ -104,3 +104,15 @@ with(tg, t.test(len[supp=="OJ"], len[supp=="VC"]))
 ```
 
 The resulting p-value is `0.06063`. Though it is very close to `0.05` (most common alpha-level), the difference between the means is **not** significant. So, **delivery method doesn't affect tooth growth in guinea pigs**.
+
+### Tooth growth by supplement type and dosage
+
+Now, let us compare tooth growth by delivery method (`supp`) in groups with different dosage:
+
+```{r}
+with(tg, t.test(len[supp=="OJ" & dose=="0.5"], len[supp=="VC" & dose=="0.5"]))$p.value
+with(tg, t.test(len[supp=="OJ" & dose=="1"], len[supp=="VC" & dose=="1"]))$p.value
+with(tg, t.test(len[supp=="OJ" & dose=="2"], len[supp=="VC" & dose=="2"]))$p.value
+```
+
+As we can see, delivery method **does affect** tooth growth in guinea pigs when dosage is 0.5 or 1, with **orange juice causing more tooth growth**. However, **when dosage is 2 miligrams, orange juice does not significantly differ from ascorbic acid**. If we take into consideration the fact that this dosage causes largest tooth growth, these two supplement types are equally successful.
