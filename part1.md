@@ -12,7 +12,8 @@ The main goal of this document is to investigate the exponential distribution in
 ## Simulation
 
 Set the workspace
-```{r}
+
+```r
 library(ggplot2)
 ```
 
@@ -23,7 +24,8 @@ The requirements are:
 - Investigate the distribution of averages of 40 exponentials.
 - Do a thousand simulations.
 
-```{r}
+
+```r
 set.seed(123)
 
 nosim <- 1000
@@ -40,24 +42,37 @@ means <- data.frame(means)
 ggplot(data = means, aes(x = means)) + geom_bar(binwidth = 0.1, aes(fill=..count..)) +ggtitle("Distribution of simulated averages of 40 exponentials") + theme(legend.position = "none")
 ```
 
+![plot of chunk unnamed-chunk-2](figure/unnamed-chunk-2-1.png) 
+
 ## Sample Mean versus Theoretical Mean
 
 The mean of exponential distribution is `1 / lambda`. Given the Central Limit Theorem, our expected mean would be:
 
-```{r}
+
+```r
 theor.mean <- 1 / lambda
 theor.mean
 ```
 
+```
+## [1] 5
+```
+
 Next, we will evaluate the sample mean:
-```{r}
+
+```r
 sample.mean <- mean(means$means)
 sample.mean
 ```
 
+```
+## [1] 5.011911
+```
+
 Let's add the sample mean and the theoretical mean to the plot we've constructed before:
 
-```{r}
+
+```r
 ggplot(data = means, aes(x = means)) + 
   geom_bar(binwidth = 0.1, aes(fill=..count..)) + 
   geom_vline(aes(xintercept = sample.mean), colour="black", size = 1) +
@@ -65,7 +80,9 @@ ggplot(data = means, aes(x = means)) +
   ggtitle("Sample mean (black) vs. Theoretical mean (white)") + theme(legend.position = "none")
 ```
 
-The center of mean distributions (`r sample.mean`) is very close to the theoretical mean (`r theor.mean`). 
+![plot of chunk unnamed-chunk-5](figure/unnamed-chunk-5-1.png) 
+
+The center of mean distributions (5.0119113) is very close to the theoretical mean (5). 
 
 ## Sample Variance versus Theoretical Variance
 
@@ -73,27 +90,38 @@ The standard deviation of exponential distribution is `1 / lambda`. Given the Ce
 
 Theoretical variance of the sample means:
 
-```{r}
+
+```r
 theor.variance <- ((1 / lambda) / sqrt(n)) ^ 2 
 theor.sd <- sqrt(theor.variance)
 theor.variance
 ```
 
+```
+## [1] 0.625
+```
+
 Sample variance of averages of simulations:
 
-```{r}
+
+```r
 sample.sd <- sd(means$means)
 sample.variance <- var(means$means)
 sample.variance
 ```
 
-Sample standard deviation (`r sample.sd`) is close to the theoretical standard deviation (`r theor.sd`). Sample and expected variances (`r sample.variance` and `r theor.variance`) also look similar (since variances are measured in square units, standard deviations are preferred).
+```
+## [1] 0.6004928
+```
+
+Sample standard deviation (0.7749147) is close to the theoretical standard deviation (0.7905694). Sample and expected variances (0.6004928 and 0.625) also look similar (since variances are measured in square units, standard deviations are preferred).
 
 ## Distribution
 
 Given the Central Limit Theorem, the distribution of the means should be approximately normal. Let's look at this figure:
 
-```{r}
+
+```r
 ggplot(data = means, aes(x = means)) + 
   geom_histogram(binwidth = 0.1, aes(y=..density.., fill=..density..)) +  
   geom_vline(aes(xintercept = sample.mean)) +
@@ -101,12 +129,17 @@ ggplot(data = means, aes(x = means)) +
   ggtitle("Density of sample means vs. Normal distribution") + theme(legend.position = "none")
 ```
 
+![plot of chunk unnamed-chunk-8](figure/unnamed-chunk-8-1.png) 
+
 Indeed, density of calculated means is somehow similar to a normal (bell-shaped) curve (its mean and sd were calculated earlier). We could also build a QQ plot:
-```{r}
+
+```r
 ggplot(data = means, aes(sample = means)) + 
   stat_qq(size=4, alpha=0.25) + 
   labs(title = "QQ plot for sample distribution of the means\nagainst theoretical distribution", 
        x = "Expected normal values", 
        y = "Actual values")
 ```
+
+![plot of chunk unnamed-chunk-9](figure/unnamed-chunk-9-1.png) 
 From the look of this QQ plot, we can make the conclusion that the distribution of actual data (sample means) is approximately normal.
