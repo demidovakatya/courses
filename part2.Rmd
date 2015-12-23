@@ -8,6 +8,14 @@ output: html_document
 
 In this part of the course project we're going to analyze the ToothGrowth data from the R `datasets` package. Description of this data set: the response is the length of odontoblasts (teeth) in each of 10 guinea pigs at each of three dose levels of Vitamin C (0.5, 1, and 2 mg) with each of two delivery methods (orange juice or ascorbic acid).
 
+## Loading the data
+
+```{r}
+library(ggplot2)
+library(dplyr)
+```
+Let us load the data set and perform some basic exploratory data analyses.
+
 ```{r}
 library(datasets)
 tg <- ToothGrowth
@@ -21,14 +29,62 @@ The ToothGrowth data is a data frame with 60 observations of 3 variables:
 * `dose`: dose of Vitamin C in miligrams (numeric).
 
 ```{r}
-ggplot(data = tg, aes(as.factor(dose), len)) + geom_point(aes(colour=supp), size=4) + ggtitle("Tooth growth by dose of Vitamin C\n") + facet_grid(. ~ supp)
+head(tg)
+kable(summary(tg))
+
+table(tg$supp)
+table(tg$dose) # looks like factor
 ```
 
-The plot above could help us with comparing tooth growth by `supp` and `dose`:
-* it is clear from the plot that the higher the dose - the larger the teeth, in other words, it looks like there is a positive correlation between dose level and tooth length in guinea pigs;
-* we might also assume that orange juice causes larger tooth growth than ascorbic acid, though it is not clear from the data
+Though the `dose` variable is numeric in the original data set, we think it would be more convenient if we coerced this variable to a factor:
+```{r}
+tg$dose <- as.factor(tg$dose)
+str(tg)
+```
 
-2. Provide a basic summary of the data.
+## Exploratory data analysis
+
+```{r}
+ggplot(data = tg, aes(supp, len)) + geom_boxplot(aes(fill = supp)) + ggtitle("Tooth growth by supplement type") + ylab("tooth length") + xlab("Supplement type")
+
+ggplot(data = tg, aes(dose, len)) + geom_boxplot(aes(fill = dose)) + ggtitle("Tooth growth by dose") + ylab("Tooth length") + xlab("Dose of Vitamin C (miligrams)")
+
+ggplot(data = tg, aes(dose, len)) + geom_point(aes(colour = supp), size=4) + ggtitle("Tooth growth by dose of Vitamin C\nwith different delivery methods") + ylab("tooth length") + facet_grid(. ~ supp)
+```
+
+The plots above could help us with comparing tooth growth by `supp` and `dose`:
+
+* it is clear from the plots that the higher the dose, the larger the teeth, in other words, it looks like there is a positive correlation between dose level and tooth length in guinea pigs;
+* we might also make an assumption that orange juice causes larger tooth growth than ascorbic acid.
+
+## Statistical Inference
+
+### Tooth growth by dose level
+
+As mentioned above, there seems to be a positive correlation between dose level and tooth length in guinea pigs. Mean values of tooth length by dose:
+
+```{r}
+tg %>% group_by(dose) %>% summarise(mean(len))
+```
+
+
+
+### Tooth growth by supplement type
+
+We have made an assumption that that orange juice causes larger tooth growth than ascorbic acid. Mean values of tooth length by supplement type:
+
+```{r}
+tg %>% group_by(supp) %>% summarise(mean(len))
+```
+
+To compare tooth growth by `supp` and check if there is a statistically significant difference between the means, we will use a t-test:
+
+```{r}
+with(tg, t.test(len[supp=="OJ"], len[supp=="VC"]))
+```
+
+The resulting p-value is `0.06063`. Though it is very close to `0.05` (most common alpha-level), the difference between the means is **not** significant.
+
 3. Use confidence intervals and/or hypothesis tests to compare tooth growth by supp and dose. (Only use the techniques from class, even if there's other approaches worth considering)
 4. State your conclusions and the assumptions needed for your conclusions. 
 Some criteria that you will be evaluated on
