@@ -1,33 +1,22 @@
+# History files
+.Rhistory
+.Rapp.history
 
-.Rproj.user/783A01F2/sdb/prop/45B610E8
-
-.Rproj.user/783A01F2/sdb/prop/INDEX
-
-.Rproj.user/783A01F2/sdb/s-BE770E9F/4C7BBCE6
-
-.Rproj.user/783A01F2/sdb/s-BE770E9F/A074AC2E
-
+# Session Data files
 .RData
 
-.Rhistory
+# Example code in package build process
+*-Ex.R
 
-*.pper
+# RStudio files
+.Rproj.user/
 
-.Rproj.user/783A01F2/saved_source_markers
+# produced vignettes
+vignettes/*.html
+vignettes/*.pdf
 
-.Rproj.user/783A01F2/sdb/per/t/4C7BBCE6
+# OAuth2 token, see https://github.com/hadley/httr/releases/tag/v0.3
+.httr-oauth
+statinference-course-project.Rproj
 
-.Rproj.user/783A01F2/sdb/per/t/24BE77B
-
-.Rproj.user/783A01F2/sdb/s-BE770E9F/24BE77B
-
-.Rproj.user/783A01F2/sdb/s-BE770E9F/24BE77B
-
-*.Rdata
-
-.Rproj.user/783A01F2/sdb/per/t/E7FB1732
-
-.Rproj.user/783A01F2/sdb/s-BE770E9F/lock_file
-
-.Rproj.user/783A01F2/sdb/s-BE770E9F/E7FB1732
-.Rproj.user*
+.Rproj.user/783A01F2/sdb/prop/INDEX
