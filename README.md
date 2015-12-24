@@ -1,6 +1,6 @@
 # Reproducible Research Peer Assessment 2
 
-:closed_book: The result is located [here](https://github.com/demidovakatya/repdata-peer-assessment-2/blob/master/analysis.md).
+:closed_book: The result is located here:  [.md](https://github.com/demidovakatya/repdata-peer-assessment-2/blob/master/analysis.md), [.html](https://github.com/demidovakatya/repdata-peer-assessment-2/blob/master/analysis.html), [RPubs](http://rpubs.com/cotique/repdata-peer-assessment-2).
 
 ## Introduction
 
