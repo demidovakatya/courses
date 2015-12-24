@@ -1,13 +1,20 @@
 ---
 title: "Statistical Inference Course Project Part 1"
 author: "Katya Demidova"
-date: "10 December 2015"
-output: pdf_document
+date: "24 December 2015"
+output:
+  html_document:
+    fig_height: 6
+    fig_width: 8
+    fig.align: center
+    style: style.css
+    warning: no
+  pdf_document: default
 ---
 
 ## Overview
 
-The main goal of this document is to investigate the exponential distribution in R and compare it with the Central Limit Theorem. We'll illustrate via simulation and associated explanatory text the properties of the distribution of the mean of 40 exponentials.
+The main goal of this document is to investigate the exponential distribution in R and compare it with the Central Limit Theorem. We'll illustrate via simulation and associated explanatory text the properties of the distribution of the mean of 40 exponentials and show that it behaves as predicted by the CLT.
 
 ## Simulation
 
@@ -19,6 +26,7 @@ library(ggplot2)
 The exponential distribution can be simulated in R with `rexp(n, lambda)` where `lambda` is the rate parameter. 
 
 The requirements are:
+
 - Set `lambda = 0.2` for all of the simulations.
 - Investigate the distribution of averages of 40 exponentials.
 - Do a thousand simulations.
@@ -30,14 +38,15 @@ nosim <- 1000
 n <- 40
 lambda <- 0.2
 
-# generate simulations
 sims <- data.frame(replicate(nosim, rexp(n, lambda)))
 
-# calculate the averages
 means <- sapply(sims, mean)
 means <- data.frame(means)
 
-ggplot(data = means, aes(x = means)) + geom_bar(binwidth = 0.1, aes(fill=..count..)) +ggtitle("Distribution of simulated averages of 40 exponentials") + theme(legend.position = "none")
+dist <- ggplot(data = means, aes(x = means)) + theme(legend.position = "none") +
+  geom_histogram(binwidth=0.1, aes(fill = ..count..))
+  
+dist + ggtitle("Distribution of simulated averages of 40 exponentials") 
 ```
 
 ## Sample Mean versus Theoretical Mean
@@ -45,24 +54,20 @@ ggplot(data = means, aes(x = means)) + geom_bar(binwidth = 0.1, aes(fill=..count
 The mean of exponential distribution is `1 / lambda`. Given the Central Limit Theorem, our expected mean would be:
 
 ```{r}
-theor.mean <- 1 / lambda
-theor.mean
+(theor.mean <- 1 / lambda)
 ```
 
 Next, we will evaluate the sample mean:
 ```{r}
-sample.mean <- mean(means$means)
-sample.mean
+(sample.mean <- mean(means$means))
 ```
 
 Let's add the sample mean and the theoretical mean to the plot we've constructed before:
 
 ```{r}
-ggplot(data = means, aes(x = means)) + 
-  geom_bar(binwidth = 0.1, aes(fill=..count..)) + 
-  geom_vline(aes(xintercept = sample.mean), colour="black", size = 1) +
-  geom_vline(aes(xintercept = theor.mean), colour="white", alpha=1, size = 1) +
-  ggtitle("Sample mean (black) vs. Theoretical mean (white)") + theme(legend.position = "none")
+dist + ggtitle("Sample mean (yellow line) vs. Theoretical mean (red)") +
+  geom_vline(aes(xintercept = sample.mean), colour="yellow", size = 1) +
+  geom_vline(aes(xintercept = theor.mean), colour="red", alpha=1, size = 1)
 ```
 
 The center of mean distributions (`r sample.mean`) is very close to the theoretical mean (`r theor.mean`). 
@@ -74,17 +79,15 @@ The standard deviation of exponential distribution is `1 / lambda`. Given the Ce
 Theoretical variance of the sample means:
 
 ```{r}
-theor.variance <- ((1 / lambda) / sqrt(n)) ^ 2 
+(theor.variance <- ((1 / lambda) / sqrt(n)) ^ 2 )
 theor.sd <- sqrt(theor.variance)
-theor.variance
 ```
 
 Sample variance of averages of simulations:
 
 ```{r}
 sample.sd <- sd(means$means)
-sample.variance <- var(means$means)
-sample.variance
+(sample.variance <- var(means$means))
 ```
 
 Sample standard deviation (`r sample.sd`) is close to the theoretical standard deviation (`r theor.sd`). Sample and expected variances (`r sample.variance` and `r theor.variance`) also look similar (since variances are measured in square units, standard deviations are preferred).
@@ -94,11 +97,9 @@ Sample standard deviation (`r sample.sd`) is close to the theoretical standard d
 Given the Central Limit Theorem, the distribution of the means should be approximately normal. Let's look at this figure:
 
 ```{r}
-ggplot(data = means, aes(x = means)) + 
-  geom_histogram(binwidth = 0.1, aes(y=..density.., fill=..density..)) +  
-  geom_vline(aes(xintercept = sample.mean)) +
+dist + geom_vline(aes(xintercept = sample.mean)) +
   stat_function(fun = dnorm, args = list(mean = theor.mean, sd = theor.sd)) +
-  ggtitle("Density of sample means vs. Normal distribution") + theme(legend.position = "none")
+  ggtitle("Density of sample means vs. Normal distribution")
 ```
 
 Indeed, density of calculated means is somehow similar to a normal (bell-shaped) curve (its mean and sd were calculated earlier). We could also build a QQ plot:
