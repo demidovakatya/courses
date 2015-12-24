@@ -2,7 +2,10 @@
 title: "Statistical Inference Course Project Part 2"
 author: "Katya Demidova"
 date: "10 December 2015"
-output: html_document
+output: 
+  pdf_document: 
+    fig_height: 3
+    fig_width: 5
 ---
 
 ## Overview
@@ -11,14 +14,12 @@ In this part of the course project we're going to analyze the ToothGrowth data f
 
 ## Loading the data; basic summary
 
-```{r}
+Let us load the data set and perform some basic exploratory data analyses.
+
+```{r start, echo = F}
 library(ggplot2)
 library(dplyr)
 options(scipen=99)
-```
-Let us load the data set and perform some basic exploratory data analyses.
-
-```{r}
 library(datasets)
 tg <- ToothGrowth
 str(tg)
@@ -32,27 +33,27 @@ The ToothGrowth data is a data frame with 60 observations of 3 variables:
 
 Basic summary of data:
 
-```{r}
+```{r, echo = F}
 head(tg)
-
 summary(tg$len)
-table(tg$supp)
-table(tg$dose) # looks like factor
 ```
 
-Though the `dose` variable is numeric in the original data set, we think it would be more convenient if we coerced this variable to a factor:
-```{r}
+Though the `dose` variable is numeric in the original data set, we think it would be more convenient if we coerced this variable to a factor.
+```{r, echo=F}
 tg$dose <- as.factor(tg$dose)
-str(tg)
 ```
 
 ## Exploratory data analysis
 
-```{r}
+```{r plot1, echo=F}
 ggplot(data = tg, aes(supp, len)) + geom_boxplot(aes(fill = supp)) + ggtitle("Tooth growth by supplement type") + ylab("Tooth length") + xlab("Supplement type (orange juice/ascorbic acid)")
+```
 
+```{r plot2, echo=F}
 ggplot(data = tg, aes(dose, len)) + geom_boxplot(aes(fill = dose)) + ggtitle("Tooth growth by dose") + ylab("Tooth length") + xlab("Dose of Vitamin C (miligrams)")
+```
 
+```{r plot3, echo=F}
 ggplot(data = tg, aes(dose, len)) + geom_point(aes(colour = supp), size=4) + ggtitle("Tooth growth by dose of Vitamin C\nwith different delivery methods") + ylab("tooth length") + facet_grid(. ~ supp)
 ```
 
@@ -67,7 +68,7 @@ The plots above could help us with comparing tooth growth by `supp` and `dose`:
 
 As mentioned above, there seems to be a positive correlation between dose level and tooth length in guinea pigs. Mean values of tooth length by dose:
 
-```{r}
+```{r, echo=F}
 tg %>% group_by(dose) %>% summarise(mean(len))
 ```
 
@@ -81,7 +82,7 @@ with(tg, t.test(len[dose=="0.5"], len[dose=="2"]))
 
 P-values of these t-tests, respectively:
 
-```{r}
+```{r pvalues, echo=F}
 with(tg, t.test(len[dose=="0.5"], len[dose=="1"]))$p.value
 with(tg, t.test(len[dose=="1"], len[dose=="2"]))$p.value
 with(tg, t.test(len[dose=="0.5"], len[dose=="2"]))$p.value
@@ -93,7 +94,7 @@ From these numbers, we can make a conclusion that **dosage of Vitamin C affects 
 
 We have made an assumption that that orange juice causes larger tooth growth than ascorbic acid. Mean values of tooth length by supplement type:
 
-```{r}
+```{r, echo=F}
 tg %>% group_by(supp) %>% summarise(mean(len))
 ```
 
@@ -109,10 +110,43 @@ The resulting p-value is `0.06063`. Though it is very close to `0.05` (most comm
 
 Now, let us compare tooth growth by delivery method (`supp`) in groups with different dosage:
 
-```{r}
+```{r by.supp, echo=F}
 with(tg, t.test(len[supp=="OJ" & dose=="0.5"], len[supp=="VC" & dose=="0.5"]))$p.value
 with(tg, t.test(len[supp=="OJ" & dose=="1"], len[supp=="VC" & dose=="1"]))$p.value
 with(tg, t.test(len[supp=="OJ" & dose=="2"], len[supp=="VC" & dose=="2"]))$p.value
 ```
 
 As we can see, delivery method **does affect** tooth growth in guinea pigs when dosage is 0.5 or 1, with **orange juice causing more tooth growth**. However, **when dosage is 2 miligrams, orange juice does not significantly differ from ascorbic acid**. If we take into consideration the fact that this dosage causes largest tooth growth, these two supplement types are equally successful.
+
+## Appendix
+
+```{r, ref.label="start", eval = F}
+library(ggplot2)
+library(dplyr)
+options(scipen=99)
+library(datasets)
+tg <- ToothGrowth
+str(tg)
+```
+
+```{r, ref.label="plot1", eval=F}
+ggplot(data = tg, aes(supp, len)) + geom_boxplot(aes(fill = supp)) + ggtitle("Tooth growth by supplement type") + ylab("Tooth length") + xlab("Supplement type (orange juice/ascorbic acid)")
+```
+```{r, ref.label="plot2", eval=F}
+ggplot(data = tg, aes(dose, len)) + geom_boxplot(aes(fill = dose)) + ggtitle("Tooth growth by dose") + ylab("Tooth length") + xlab("Dose of Vitamin C (miligrams)")
+```
+```{r, ref.label="plot3", eval=F}
+ggplot(data = tg, aes(dose, len)) + geom_point(aes(colour = supp), size=4) + ggtitle("Tooth growth by dose of Vitamin C\nwith different delivery methods") + ylab("tooth length") + facet_grid(. ~ supp)
+```
+
+```{r, ref.label="pvalues", eval=F}
+with(tg, t.test(len[dose=="0.5"], len[dose=="1"]))$p.value
+with(tg, t.test(len[dose=="1"], len[dose=="2"]))$p.value
+with(tg, t.test(len[dose=="0.5"], len[dose=="2"]))$p.value
+```
+
+```{r, ref.label="by.supp", eval=F}
+with(tg, t.test(len[supp=="OJ" & dose=="0.5"], len[supp=="VC" & dose=="0.5"]))$p.value
+with(tg, t.test(len[supp=="OJ" & dose=="1"], len[supp=="VC" & dose=="1"]))$p.value
+with(tg, t.test(len[supp=="OJ" & dose=="2"], len[supp=="VC" & dose=="2"]))$p.value
+```
