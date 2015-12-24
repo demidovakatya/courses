@@ -1,8 +1,12 @@
 ---
-title: 'Reproducible Research: Peer Assessment 2'
+title: 'Most Dangerous Weather Events'
 author: "Katya Demidova"
 date: "24 December 2015"
-output: html_document
+output: 
+  html_document: 
+    fig_height: 8
+    fig_width: 10
+    css: style.css
 ---
 
 ## Synopsis
@@ -38,7 +42,7 @@ The events in the database start in the year 1950 and end in November 2011. In t
 
 ## Setting up
 
-```{r, results='hide'}
+```{r, message = F}
 library(dplyr)
 library(tidyr)
 library(ggplot2)
@@ -46,51 +50,39 @@ library(data.table)
 library(R.utils)
 library(knitr)
 
-echo = TRUE # to ensure that all code will be shown
-
 options(scipen = 1)
 ```
 
 ## Import the data
 
-The CSV file is very large (561.6 MB), so to load the data for the first time we use `fread()` method. In R Documentation `fread {data.table}` is described as similar to `read.table` but faster and more convenient.
+The analysis starts from loading the `.csv.bz2` file and unpacking it:
 
-After reading in the original CSV file, we save the dataset as an RDS file so we could restore the dataset via `readRDS()`. `readRDS()` is considered faster than other `read` methods.
+```{r, message=FALSE, warning=FALSE, cache=TRUE, results='hide'}
+url <- "https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2FStormData.csv.bz2"
 
-The following chunk of code checks if there is an RDS file (if there isn't, it creates it (from the CSV file which is created by unpacking the BZ2 package)) and loads the data into workspace.
-
-```{r, cache=TRUE, results='hide'}
-# Download and import the data
-
-if (!file.exists("StormData.rds")) {
-  # If we don't have the csv, we need to unpack the .bz2 file
-  if (!file.exists("StormData.csv")) {
-    # If we don't have the .bz2 file, we need to download it
-    if (!file.exists("StormData.csv.bz2")) {
-      download.file("https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2FStormData.csv.bz2",
-                    "StormData.csv.bz2")
-    }
-    bunzip2("StormData.csv.bz2")
-  }
-  raw.storm <- fread("StormData.csv", na.strings = c("NA", ""))
-  saveRDS(storm, "StormData.rds")
-  file.remove("StormData.csv")
+if (!file.exists("StormData.csv.bz2")) {
+  download.file(url, "StormData.csv.bz2")
 }
 
-# Load the data into workspace unless we it already exists
-if (!exists("raw.storm")) {
-  raw.storm <- readRDS("StormData.rds")
+if (!file.exists("StormData.csv")) {
+bunzip2("StormData.csv.bz2")
 }
+
+raw.storm <- fread("StormData.csv", na.strings = c("NA", ""))
+
+rm(url)
 
 ```
+
+Another way to import this data can be seen in Appendix. 
 
 ## Data Processing
 
 Quick overview of the internal structure of the dataset and its first three rows:
 
 ```{r, cache=TRUE}
-str(raw.storm)
 head(raw.storm, n = 3)
+str(raw.storm)
 ```
 
 ### Selecting columns
@@ -102,7 +94,7 @@ dim(raw.storm)
 names(raw.storm)
 ```
 
-Since these column names are not obvious, I've made an attempt to explain these variables. You can see the results in [this table](https://github.com/demidovakatya/repdata-peer-assessment-2/blob/master/variable_explanation.md).
+These column names were not obvious for me, so I've made an attempt to explain these variables. You can see the results in [this table](https://github.com/demidovakatya/repdata-peer-assessment-2/blob/master/variable_explanation.md).
 
 These variables may be useful for further analysis:
 
@@ -121,17 +113,18 @@ CROPDMGEXP | chr | Crops damage multiplier
 Create a new dataset from these columns:
 
 ```{r, cache=TRUE}
-columns <- c("BGN_DATE", "STATE", "EVTYPE", 
-             "FATALITIES", "INJURIES", "PROPDMG", 
-             "CROPDMG", "PROPDMGEXP", "CROPDMGEXP")
+columns <- c("BGN_DATE", "EVTYPE", "FATALITIES", "INJURIES", 
+             "PROPDMG", "CROPDMG", "PROPDMGEXP", "CROPDMGEXP")
 storm <- select(tbl_df(raw.storm), one_of(columns))
 
 colnames(storm) <- tolower(colnames(storm))
 
-# rm(raw.storm, columns)
+rm(raw.storm, columns)
 ```
 
 ### Removing old events
+
+Information from the NOAA's website ([source](https://www.ncdc.noaa.gov/stormevents/details.jsp)):
 
 Event Types Available: 
 
@@ -139,9 +132,7 @@ Event Types Available:
 
 2. Tornado, Thunderstorm Wind and Hail: From 1955 through 1992, only tornado, thunderstorm wind and hail events were keyed from the paper publications into digital data. From 1993 to 1995, only tornado, thunderstorm wind and hail events have been extracted from the Unformatted Text Files.
 
-3. All Event Types: From 1996 to present, 48 event types are recorded as defined in NWS Directive 10-1605. ([source](https://www.ncdc.noaa.gov/stormevents/details.jsp))
-
-*Raw list of these event types is located [here](https://gist.github.com/demidovakatya/8bd24a471d36def5971e).* 
+3. All Event Types: From 1996 to present, 48 event types are recorded as defined in NWS Directive 10-1605. 
 
 From this information, we can conclude that years 1950-1995 should be removed from the data set, otherwise the analysis can be incorrect.
 
@@ -151,7 +142,6 @@ storm$bgn_date <- as.Date(storm$bgn_date, format = "%m/%d/%Y %H:%M:%S")
 
 # subset only new data
 storm <- subset(storm, bgn_date > as.Date("1996-01-01"))
-nrow(storm)
 ```
 
 ### Damage cost multipliers
@@ -191,18 +181,20 @@ storm$propdmg[is.na(storm$propdmg)] <- 0
 storm$cropdmg[is.na(storm$cropdmg)] <- 0
 
 storm <- storm %>% subset(fatalities!=0 | injuries!=0 | propdmg!=0 | cropdmg!=0)
-nrow(storm) # down to 201313 observations
 ```
 
 ### Tidying event types
 
 The last thing is to tidy up the `evtype` column.  Let's save it to a separate variable and then have a look at it:
+
 ```{r}
 events <- storm$evtype
 head(data.frame(table(events)), n=20)
 ```
 
-There are 174 different event types due to similar values like these:
+At this point of our analysis, there are 174 different event types. But as we have mentioned before, there are only 48 types of weather events. A list of these event types is located [here](https://gist.github.com/demidovakatya/8bd24a471d36def5971e). 
+
+There are so many unique values of `evtype` due to similar values like these:
 
 - "Freezing rain"
 - "Freezing Rain"
@@ -213,7 +205,7 @@ or
 - BLOW OUT TIDE 
 - BLOW OUT TIDES
 
-But as we have mentioned before, there are only 48 types of weather events. So, I'll convert all values in `evtype` column to uppercase strings, trim them, and delete punctuation and digits.
+Tidying up this column will make our analysis more accurate and trustworthy. To begin with, we will convert all values in `evtype` column to uppercase strings, trim them, and delete punctuation and digits.
 
 ```{r}
 
@@ -225,8 +217,9 @@ events <- gsub("[[:punct:]]+", " ", events)
 events <- gsub("^\\s+|\\s+$|\\s\\s+", "", events)
 ```
 
-Next, we will replace incorrect values with correct ones (from the NOAA paper) with help of code you can see in Appendix (~300 lines).
-```{r echo=F}
+Next, we will replace incorrect values with the correct ones (from the NOAA paper) by performing code you can see in Appendix.
+
+```{r replacement, echo=F, eval=TRUE}
 events[events=="TSTM WIND" | events=="THUNDERSTORM" |
       events=="THUNDERSTORM WINDG" | events=="THUNDERSTORMS"] <- "THUNDERSTORM WIND"
 
@@ -361,32 +354,34 @@ unique(events)
 storm$evtype <- events
 ```
 
+By the end of this data processing section we have removed ~700,000 rows with incomplete or irrelevant information, which should increase the productivity of following section.
+
+The clean data set has `r nrow(storm)` observations of 6 variables:
+
+```{r}
+str(storm)
+```
 
 ## Results
 
-There are two questions to be answered in the assignment:
-
-1. Across the United States, which types of events are most harmful with respect to population health?
-2. Across the United States, which types of events have the greatest economic consequences?
-
-
 ### Most harmful to population health events
 
-```{r, fig.height=8, fig.width=10}
-dangerous.events <- storm %>% group_by(evtype) %>% 
-  summarise(fatalities=sum(fatalities), injuries=sum(injuries)) %>% 
+```{r}
+health <- storm %>% 
+  group_by(evtype) %>% 
+  summarise(fatalities = sum(fatalities), injuries = sum(injuries)) %>% 
   top_n(15, wt = fatalities + injuries)
 
-ggplot(data = dangerous.events, aes(evtype, fatalities + injuries)) + 
-  geom_bar(stat = "identity") + coord_flip() + 
-  xlab("Event type") + ggtitle("15 events causing most harm to population health") 
+ggplot(data = health, aes(evtype, fatalities + injuries)) + geom_bar(stat = "identity") + 
+  coord_flip() + xlab("Event type") + ggtitle("15 events causing most harm to population health") 
 ```
 
 Events causing most fatalities:
 
 ```{r}
-storm %>% group_by(evtype) %>% 
-  summarise(fatalities=sum(fatalities)) %>% 
+storm %>% 
+  group_by(evtype) %>% 
+  summarise(fatalities = sum(fatalities)) %>% 
   top_n(10, wt = fatalities) %>% 
   arrange(desc(fatalities))
 ```
@@ -394,32 +389,38 @@ storm %>% group_by(evtype) %>%
 Events causing most injuries:
 
 ```{r}
-storm %>% group_by(evtype) %>% 
-  summarise(injuries=sum(injuries)) %>% 
+storm %>% 
+  group_by(evtype) %>% 
+  summarise(injuries = sum(injuries)) %>% 
   top_n(10, wt = injuries) %>% 
   arrange(desc(injuries))
 ```
 
 ### Events causing most property damage:
-```{r, fig.height=8, fig.width=10}
-property.damage.events <- storm %>% group_by(evtype) %>%
-  summarise(property.damage=sum(propdmg)) %>% 
-  top_n(15, wt = property.damage) %>% 
-  arrange(desc(property.damage))
+```{r}
+property <- storm %>% 
+  group_by(evtype) %>%
+  summarise(damage = sum(propdmg)) %>% 
+  top_n(15, wt = damage) %>% 
+  arrange(desc(damage))
 
-ggplot(aes(evtype, property.damage/10^9, fill=evtype), data=property.damage.events) + geom_bar(stat="identity") + xlab("Event type")+ ylab("Property damage cost ($ billions)") + ggtitle("15 events causing most property damage") + theme(legend.position="none") + coord_flip()
+ggplot(aes(evtype, damage/10^9, fill=evtype), data=property) + geom_bar(stat="identity") + 
+  xlab("Event type")+ ylab("Property damage cost ($ billions)") + 
+  ggtitle("15 events causing most property damage") + theme(legend.position="none") + coord_flip()
 ```
 
 Events causing most property damage are: flood/flash flood, hurricane/typhoon, coastal flood, tornado, and hail.
 
 ### Events causing most crop damage:
-```{r, fig.height=8, fig.width=10}
-crop.damage.events <- storm %>% group_by(evtype) %>% 
-  summarise(crop.damage=sum(cropdmg)) %>% 
-  top_n(15, wt = crop.damage) %>% 
-  arrange(desc(crop.damage))
+```{r}
+crop <- storm %>% group_by(evtype) %>% 
+  summarise(damage=sum(cropdmg)) %>% 
+  top_n(15, wt = damage) %>% 
+  arrange(desc(damage))
 
-ggplot(aes(evtype, crop.damage/10^9, fill=evtype), data=crop.damage.events) + geom_bar(stat="identity") + xlab("Event type")+ ylab("Crop damage cost ($ billions)") + ggtitle("15 events causing most crop damage") + theme(legend.position="none") + coord_flip()
+ggplot(aes(evtype, damage/10^9, fill=evtype), data=crop) + geom_bar(stat="identity") + 
+  xlab("Event type")+ ylab("Crop damage cost ($ billions)") + 
+  ggtitle("15 events causing most crop damage") + theme(legend.position="none") + coord_flip()
 
 ```
 
@@ -427,13 +428,47 @@ Events causing most crop damage are: drought, flood/flash flood, hurricane/typho
 
 ## Conclusion
 
-The most harmful for population health events are: tornado, flood/flash flood, excessive heat, thunderstorm wind, and lightning.
+The most **harmful for population health** events are: tornado, flood/flash flood, excessive heat, thunderstorm wind, and lightning.
 
-The greatest economic consequences have: drought, flood/flash flood, coastal flood hurricane/typhoon, tornado, hail, and frost/freeze. Floods and hurricanes/typhoons are harmful for both property and crops, while drought deals the most damage to crops and much less - to property.
+The greatest **economic consequences** have: drought, flood/flash flood, coastal flood hurricane/typhoon, tornado, hail, and frost/freeze. Floods and hurricanes/typhoons are harmful for both property and crops, while drought deals the most damage to crops and much less - to property.
 
 ## Appendix
 
-```{r}
+### Import of the data
+
+The CSV file is very large (561.6 MB), so to load the data for the first time we use `fread()` method. In R Documentation `fread {data.table}` is described as similar to `read.table` but faster and more convenient.
+
+After reading in the original CSV file, we save the dataset as an RDS file so we could restore the dataset via `readRDS()`. `readRDS()` is considered faster than other `read` methods.
+
+The following chunk of code checks if there is an RDS file (if there isn't, it creates it (from the CSV file which is created by unpacking the BZ2 package)) and loads the data into workspace.
+
+```{r, eval=FALSE}
+# Download and import the data
+
+if (!file.exists("StormData.rds")) {
+  # If we don't have the csv, we need to unpack the .bz2 file
+  if (!file.exists("StormData.csv")) {
+    # If we don't have the .bz2 file, we need to download it
+    if (!file.exists("StormData.csv.bz2")) {
+      download.file(url, "StormData.csv.bz2")
+    }
+    bunzip2("StormData.csv.bz2")
+  }
+  raw.storm <- fread("StormData.csv", na.strings = c("NA", ""))
+  saveRDS(storm, "StormData.rds")
+  file.remove("StormData.csv")
+}
+
+# Load the data into workspace unless it already exists
+if (!exists("raw.storm")) {
+  raw.storm <- readRDS("StormData.rds")
+}
+
+```
+
+### Evtype replacement
+
+```{r, ref.label="replacement", eval=FALSE, echo=TRUE}
 events[events=="TSTM WIND" | events=="THUNDERSTORM" |
       events=="THUNDERSTORM WINDG" | events=="THUNDERSTORMS"] <- "THUNDERSTORM WIND"
 
