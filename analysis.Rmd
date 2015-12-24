@@ -1,7 +1,7 @@
 ---
 title: 'Reproducible Research: Peer Assessment 2'
 author: "Katya Demidova"
-date: "28 November 2015"
+date: "24 December 2015"
 output: html_document
 ---
 
@@ -123,41 +123,49 @@ storm <- select(tbl_df(raw.storm), one_of(columns))
 
 colnames(storm) <- tolower(colnames(storm))
 
-rm(raw.storm, columns)
+# rm(raw.storm, columns)
+```
+Event Types Available: 
+
+1. Tornado: From 1950 through 1954, only tornado events were recorded.
+
+2. Tornado, Thunderstorm Wind and Hail: From 1955 through 1992, only tornado, thunderstorm wind and hail events were keyed from the paper publications into digital data. From 1993 to 1995, only tornado, thunderstorm wind and hail events have been extracted from the Unformatted Text Files.
+
+3. All Event Types: From 1996 to present, 48 event types are recorded as defined in NWS Directive 10-1605. ([source](https://www.ncdc.noaa.gov/stormevents/details.jsp))
+
+*Raw list of these event types is located [here](https://gist.github.com/demidovakatya/8bd24a471d36def5971e).* 
+
+From this information, we can conclude that years 1950-1995 should be removed from the data set, otherwise the analysis can be incorrect.
+
+```{r}
+# convert bgn_date to date format
+storm$bgn_date <- as.Date(storm$bgn_date, format = "%m/%d/%Y %H:%M:%S")
+
+# subset only new data
+storm <- subset(storm, bgn_date > as.Date("1996-01-01"))
 ```
 
-Convert multipliers in `propdmgexp` and `cropdmgexp` columns into numeric values:
+Convert multipliers in `propdmgexp` and `cropdmgexp` columns into numeric values and apply these multipliers:
 
 ```{r, cache=TRUE}
-# A helper function is needed here
+
 storm$propdmgexp <- toupper(storm$propdmgexp)
-storm$cropdmgexp <- toupper(storm$cropdmgexp)
-
-# multiplier <- 
-storm$propdmgexp[storm$propdmgexp=="B"] <- 9
-storm$propdmgexp[storm$propdmgexp=="M"] <- 6
-storm$propdmgexp[storm$propdmgexp=="K"] <- 3
-storm$propdmgexp[storm$propdmgexp=="H"] <- 2
-storm$propdmgexp[storm$propdmgexp=="?" | storm$propdmgexp=="+" | storm$propdmgexp=="-"] <- 0
-storm$propdmgexp[is.na(storm$propdmgexp)] <- 0
+storm$propdmgexp[storm$propdmgexp == "0"] <- 1
+storm$propdmgexp[storm$propdmgexp == "K"] <- 1000
+storm$propdmgexp[storm$propdmgexp == "M"] <- 1000000
+storm$propdmgexp[storm$propdmgexp == "B"] <- 1000000000
 storm$propdmgexp <- as.numeric(storm$propdmgexp)
+storm <- storm %>% mutate(propdmg=propdmg * propdmgexp)
 
-storm$cropdmgexp[storm$cropdmgexp=="B"] <- 9
-storm$cropdmgexp[storm$cropdmgexp=="M"] <- 6
-storm$cropdmgexp[storm$cropdmgexp=="K"] <- 3
-storm$cropdmgexp[storm$cropdmgexp=="H"] <- 2
-storm$cropdmgexp[storm$cropdmgexp=="?" | storm$cropdmgexp=="+" | storm$cropdmgexp=="-"] <- 0
-storm$cropdmgexp[is.na(storm$cropdmgexp)] <- 0
+storm$cropdmgexp <- toupper(storm$cropdmgexp)
+storm$cropdmgexp[storm$cropdmgexp == "0"] <- 1
+storm$cropdmgexp[storm$cropdmgexp == "K"] <- 1000
+storm$cropdmgexp[storm$cropdmgexp == "M"] <- 1000000
+storm$cropdmgexp[storm$cropdmgexp == "B"] <- 1000000000
 storm$cropdmgexp <- as.numeric(storm$cropdmgexp)
 
-```
 
-Apply the multipliers:
-
-```{r, cache=TRUE}
-storm <- storm %>% mutate(propdmg=propdmg * 10 ^ propdmgexp)
-# storm <- storm %>% mutate(propdmg=propdmg * multiplier[propdmgexp])
-storm <- storm %>% mutate(cropdmg=cropdmg * 10 ^ cropdmgexp)
+storm <- storm %>% mutate(cropdmg=cropdmg * cropdmgexp)
 
 # Remove ~dmgexp columns
 storm <- storm %>% select(-ends_with("dmgexp"))
@@ -169,47 +177,45 @@ Convert `state` into factor variable:
 storm$state <- as.factor(storm$state)
 ```
 
-Convert dates:
+The last thing is to tidy up the `evtype` column.  Let's save it to a separate variable and then have a look at it:
 ```{r, cache=TRUE}
-storm$bgn_date <- as.Date(storm$bgn_date, format = "%m/%d/%Y %H:%M:%S")
+events <- storm$evtype
+head(data.frame(table(events)), n=20)
 ```
 
-The last thing is to tidy up the `evtype` column. Let's save it to a separate variable and then have a look at it:
-```{r, cache=TRUE}
-head(data.frame(table(storm$evtype)), n=20)
-```
-
-We can see similar values, for example:
+There are hundreds of different event types due to similar values like these:
 - "Freezing rain"
 - "Freezing Rain"
 - "FREEZING RAIN"
-- "FREEZING RAIN AND SLEET"
 
-or:
-- "HIGH WIND/SEAS"
-- "HIGH WIND/WIND CHILL"
-- "HIGH WIND/WIND CHILL/BLIZZARD" 
-- "HIGH WINDS"
-- "HIGH WINDS 55"
-- "HIGH WINDS 57"
-- "HIGH WINDS 58"
-- "HIGH WINDS 63"
-- "HIGH WINDS 66"                 
-- "HIGH WINDS 67".
+or 
 
-From my point of view, these values may be considered equal. So, I'll convert all values in `evtype` column to uppercase strings, trim them, and delete punctuation and digits.
+- BLOW OUT TIDE 
+- BLOW OUT TIDES
+
+But as we have mentioned before, there are only 48 types of weather events. So, I'll convert all values in `evtype` column to uppercase strings, trim them, and delete punctuation and digits.
 
 ```{r}
-storm$evtype <- toupper(storm$evtype)
-storm$evtype <- gsub("[[:digit:]]+", "", storm$evtype)
-storm$evtype <- gsub("&", " AND ", storm$evtype)
-storm$evtype <- gsub("[[:punct:]]+", " ", storm$evtype)
-storm$evtype <- gsub("^\\s+|\\s+$|\\s\\s+", "", storm$evtype)
 
-storm$evtype <- as.factor(storm$evtype)
+
+# trim, clean from punctuation
+events <- toupper(events)
+events <- gsub("[[:digit:]]+", "", events)
+events <- gsub("&", " AND ", events)
+events <- gsub("[[:punct:]]+", " ", events)
+events <- gsub("^\\s+|\\s+$|\\s\\s+", "", events)
+
+# replace some values
+events[events=="TSTM WIND" | events=="THUNDERSTORM" |
+      events=="THUNDERSTORM WINDG" | events=="THUNDERSTORMS"] <- "THUNDERSTORM WIND"
+events[events=="MARINE TSTM WIND"] <- "MARINE THUNDERSTORM WIND"
+events[grep(events, "SUMMARY")] 
+
+events <- data.frame(events)
+
 ```
 
-Now we still have things like `AVALANCHE` and `AVALANCE`, but we their input in insignificant.
+
 
 ## Results
 
@@ -218,37 +224,32 @@ There are two questions to be answered in the assignment:
 1. Across the United States, which types of events are most harmful with respect to population health?
 2. Across the United States, which types of events have the greatest economic consequences?
 
-To begin with, I'll create a table containing data summarized by event type:
 
-```{r}
-storm <- tbl_df(storm)
-event.types <- storm %>% group_by(evtype) %>% 
-  summarise(fatalities = sum(fatalities), injuries = sum(injuries),
-            propdmg = sum(propdmg), cropdmg = sum(cropdmg))
+### Most harmful to population health events
 
-kable(head(event.types, n = 10))
-```
-
-### Events causing most fatalities:
 ```{r, fig.height=8, fig.width=10}
 dangerous.events <- storm %>% group_by(evtype) %>% 
   summarise(fatalities=sum(fatalities), injuries=sum(injuries)) %>% 
   top_n(15, wt = fatalities + injuries)
 
-# ggplot(aes(evtype, fatalities, fill = fatalities), data = fatality.events) + 
-#   geom_bar(stat = "identity") + xlab("Event type") + ggtitle("15 events causing most fatalities") + scale_fill_continuous(low="red", high="black") + theme(axis.text.x = element_text(angle = 90, hjust = 1), legend.position="none")
+ggplot(data = dangerous.events, aes(evtype, fatalities + injuries)) + 
+  geom_bar(stat = "identity") + coord_flip() + 
+  xlab("Event type") + ggtitle("15 events causing most harm to population health") 
 ```
+### Events causing most fatalities:
+```{r}
+storm %>% group_by(evtype) %>% 
+  summarise(fatalities=sum(fatalities)) %>% 
+  top_n(15, wt = fatalities) %>% 
+  arrange(desc(fatalities))
 
+```
 ### Events causing most injuries:
-```{r, fig.height=8, fig.width=10}
-injury.events <- storm %>% group_by(evtype) %>% 
+```{r}
+storm %>% group_by(evtype) %>% 
   summarise(injuries=sum(injuries)) %>% 
   top_n(15, wt = injuries) %>% 
   arrange(desc(injuries))
-
-kable(injury.events)
-
-ggplot(aes(evtype, injuries, fill = injuries), data = injury.events) + geom_bar(stat = "identity") + xlab("Event type") + ggtitle("15 events causing most injuries") + scale_fill_continuous(low="blue", high="black") + theme(axis.text.x = element_text(angle = 90, hjust = 1), legend.position="none")
 
 ```
 
@@ -259,7 +260,7 @@ property.damage.events <- storm %>% group_by(evtype) %>%
   top_n(15, wt = property.damage) %>% 
   arrange(desc(property.damage))
 
-kable(property.damage.events)
+property.damage.events
 
 ggplot(aes(evtype, property.damage/10^9, fill=evtype), data=property.damage.events) + geom_bar(stat="identity") + xlab("Event type")+ ylab("Property damage cost ($ billions)") + ggtitle("15 events causing most property damage") + theme(axis.text.x = element_text(angle = 90, hjust = 1)) + coord_flip()
 ```
@@ -271,7 +272,7 @@ crop.damage.events <- storm %>% group_by(evtype) %>%
   top_n(15, wt = crop.damage) %>% 
   arrange(desc(crop.damage))
 
-kable(crop.damage.events)
+crop.damage.events
 
 ggplot(aes(evtype, crop.damage/10^9, fill=evtype), data=crop.damage.events) + geom_bar(stat="identity") + xlab("Event type")+ ylab("Crop damage cost ($ billions)") + ggtitle("15 events causing most crop damage") + theme(axis.text.x = element_text(angle = 90, hjust = 1)) + coord_flip()
 
