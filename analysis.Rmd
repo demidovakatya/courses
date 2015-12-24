@@ -118,10 +118,12 @@ CROPDMGEXP | chr | Crops damage multiplier
 Create a new dataset from these columns:
 
 ```{r, cache=TRUE}
-storm <- raw.storm %>% 
-  select(one_of(c("BGN_DATE", "STATE", "EVTYPE", "FATALITIES", "INJURIES", "PROPDMG", "CROPDMG", "PROPDMGEXP", "CROPDMGEXP")))
+columns <- c("BGN_DATE", "STATE", "EVTYPE", "FATALITIES", "INJURIES", "PROPDMG", "CROPDMG", "PROPDMGEXP", "CROPDMGEXP")
+storm <- select(tbl_df(raw.storm), one_of(columns))
 
 colnames(storm) <- tolower(colnames(storm))
+
+rm(raw.storm, columns)
 ```
 
 Convert multipliers in `propdmgexp` and `cropdmgexp` columns into numeric values:
@@ -129,6 +131,9 @@ Convert multipliers in `propdmgexp` and `cropdmgexp` columns into numeric values
 ```{r, cache=TRUE}
 # A helper function is needed here
 storm$propdmgexp <- toupper(storm$propdmgexp)
+storm$cropdmgexp <- toupper(storm$cropdmgexp)
+
+# multiplier <- 
 storm$propdmgexp[storm$propdmgexp=="B"] <- 9
 storm$propdmgexp[storm$propdmgexp=="M"] <- 6
 storm$propdmgexp[storm$propdmgexp=="K"] <- 3
@@ -136,7 +141,7 @@ storm$propdmgexp[storm$propdmgexp=="H"] <- 2
 storm$propdmgexp[storm$propdmgexp=="?" | storm$propdmgexp=="+" | storm$propdmgexp=="-"] <- 0
 storm$propdmgexp[is.na(storm$propdmgexp)] <- 0
 storm$propdmgexp <- as.numeric(storm$propdmgexp)
-storm$cropdmgexp <- toupper(storm$cropdmgexp)
+
 storm$cropdmgexp[storm$cropdmgexp=="B"] <- 9
 storm$cropdmgexp[storm$cropdmgexp=="M"] <- 6
 storm$cropdmgexp[storm$cropdmgexp=="K"] <- 3
@@ -151,6 +156,7 @@ Apply the multipliers:
 
 ```{r, cache=TRUE}
 storm <- storm %>% mutate(propdmg=propdmg * 10 ^ propdmgexp)
+# storm <- storm %>% mutate(propdmg=propdmg * multiplier[propdmgexp])
 storm <- storm %>% mutate(cropdmg=cropdmg * 10 ^ cropdmgexp)
 
 # Remove ~dmgexp columns
@@ -215,6 +221,7 @@ There are two questions to be answered in the assignment:
 To begin with, I'll create a table containing data summarized by event type:
 
 ```{r}
+storm <- tbl_df(storm)
 event.types <- storm %>% group_by(evtype) %>% 
   summarise(fatalities = sum(fatalities), injuries = sum(injuries),
             propdmg = sum(propdmg), cropdmg = sum(cropdmg))
@@ -224,15 +231,12 @@ kable(head(event.types, n = 10))
 
 ### Events causing most fatalities:
 ```{r, fig.height=8, fig.width=10}
-fatality.events <- storm %>% group_by(evtype) %>% 
-  summarise(fatalities=sum(fatalities)) %>% 
-  top_n(15, wt = fatalities) %>% 
-  arrange(desc(fatalities))
+dangerous.events <- storm %>% group_by(evtype) %>% 
+  summarise(fatalities=sum(fatalities), injuries=sum(injuries)) %>% 
+  top_n(15, wt = fatalities + injuries)
 
-kable(fatality.events)
-
-ggplot(aes(evtype, fatalities, fill = fatalities), data = fatality.events) + 
-  geom_bar(stat = "identity") + xlab("Event type") + ggtitle("15 events causing most fatalities") + scale_fill_continuous(low="red", high="black") + theme(axis.text.x = element_text(angle = 90, hjust = 1), legend.position="none")
+# ggplot(aes(evtype, fatalities, fill = fatalities), data = fatality.events) + 
+#   geom_bar(stat = "identity") + xlab("Event type") + ggtitle("15 events causing most fatalities") + scale_fill_continuous(low="red", high="black") + theme(axis.text.x = element_text(angle = 90, hjust = 1), legend.position="none")
 ```
 
 ### Events causing most injuries:
@@ -257,7 +261,7 @@ property.damage.events <- storm %>% group_by(evtype) %>%
 
 kable(property.damage.events)
 
-ggplot(aes(evtype, property.damage/10^9, fill=property.damage), data=property.damage.events) + geom_bar(stat="identity") + xlab("Event type")+ ylab("Property damage cost ($ billions)") + ggtitle("15 events causing most property damage") + scale_fill_continuous(low="green", high="black") + theme(axis.text.x = element_text(angle = 90, hjust = 1), legend.position="none")
+ggplot(aes(evtype, property.damage/10^9, fill=evtype), data=property.damage.events) + geom_bar(stat="identity") + xlab("Event type")+ ylab("Property damage cost ($ billions)") + ggtitle("15 events causing most property damage") + theme(axis.text.x = element_text(angle = 90, hjust = 1)) + coord_flip()
 ```
 
 ### Events causing most crop damage:
@@ -269,6 +273,6 @@ crop.damage.events <- storm %>% group_by(evtype) %>%
 
 kable(crop.damage.events)
 
-ggplot(aes(evtype, crop.damage/10^9, fill=crop.damage), data=crop.damage.events) + geom_bar(stat="identity") + xlab("Event type")+ ylab("Crop damage cost ($ billions)") + ggtitle("15 events causing most crop damage") + scale_fill_continuous(low="green", high="black") + theme(axis.text.x = element_text(angle = 90, hjust = 1), legend.position="none")
+ggplot(aes(evtype, crop.damage/10^9, fill=evtype), data=crop.damage.events) + geom_bar(stat="identity") + xlab("Event type")+ ylab("Crop damage cost ($ billions)") + ggtitle("15 events causing most crop damage") + theme(axis.text.x = element_text(angle = 90, hjust = 1)) + coord_flip()
 
 ```
