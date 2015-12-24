@@ -81,8 +81,6 @@ if (!exists("raw.storm")) {
   raw.storm <- readRDS("StormData.rds")
 }
 
-#============================================================== Create a subset ???????
-
 ```
 
 ## Data Processing
@@ -205,7 +203,7 @@ storm$evtype <- gsub("^\\s+|\\s+$|\\s\\s+", "", storm$evtype)
 storm$evtype <- as.factor(storm$evtype)
 ```
 
-Now we still have things like `AVALANCHE` and `AVALANCE`, but we can consider them insignificant.
+Now we still have things like `AVALANCHE` and `AVALANCE`, but we their input in insignificant.
 
 ## Results
 
@@ -228,46 +226,49 @@ kable(head(event.types, n = 10))
 ```{r, fig.height=8, fig.width=10}
 fatality.events <- storm %>% group_by(evtype) %>% 
   summarise(fatalities=sum(fatalities)) %>% 
-  top_n(20, wt = fatalities) %>% 
+  top_n(15, wt = fatalities) %>% 
   arrange(desc(fatalities))
 
 kable(fatality.events)
 
-qplot(evtype, fatalities, data=fatality.events, geom="bar", stat="identity", xlab="Event type", main="20 events causing most fatalities", fill=fatalities) + scale_fill_continuous(low="red", high="black") + theme(axis.text.x = element_text(angle = 90, hjust = 1), legend.position="none")
+ggplot(aes(evtype, fatalities, fill = fatalities), data = fatality.events) + 
+  geom_bar(stat = "identity") + xlab("Event type") + ggtitle("15 events causing most fatalities") + scale_fill_continuous(low="red", high="black") + theme(axis.text.x = element_text(angle = 90, hjust = 1), legend.position="none")
 ```
 
 ### Events causing most injuries:
 ```{r, fig.height=8, fig.width=10}
 injury.events <- storm %>% group_by(evtype) %>% 
   summarise(injuries=sum(injuries)) %>% 
-  top_n(20, wt = injuries) %>% 
+  top_n(15, wt = injuries) %>% 
   arrange(desc(injuries))
 
 kable(injury.events)
 
-qplot(evtype, injuries, data=injury.events, geom="bar", stat="identity", xlab="Event type", main="20 events causing most injuries", fill=injuries) + scale_fill_continuous(low="white", high="darkblue") + theme(axis.text.x = element_text(angle = 90, hjust = 1), legend.position="none")
+ggplot(aes(evtype, injuries, fill = injuries), data = injury.events) + geom_bar(stat = "identity") + xlab("Event type") + ggtitle("15 events causing most injuries") + scale_fill_continuous(low="blue", high="black") + theme(axis.text.x = element_text(angle = 90, hjust = 1), legend.position="none")
+
 ```
 
 ### Events causing most property damage:
 ```{r, fig.height=8, fig.width=10}
 property.damage.events <- storm %>% group_by(evtype) %>%
   summarise(property.damage=sum(propdmg)) %>% 
-  top_n(20, wt = property.damage) %>% 
+  top_n(15, wt = property.damage) %>% 
   arrange(desc(property.damage))
 
 kable(property.damage.events)
 
-qplot(evtype, property.damage/10^9, data=property.damage.events, geom="bar", stat="identity", xlab="Event type", ylab="Property damage cost ($ billions)", main="20 events causing most property damage", fill=property.damage) + scale_fill_continuous(low="green", high="black") + theme(axis.text.x = element_text(angle = 90, hjust = 1), legend.position="none")
+ggplot(aes(evtype, property.damage/10^9, fill=property.damage), data=property.damage.events) + geom_bar(stat="identity") + xlab("Event type")+ ylab("Property damage cost ($ billions)") + ggtitle("15 events causing most property damage") + scale_fill_continuous(low="green", high="black") + theme(axis.text.x = element_text(angle = 90, hjust = 1), legend.position="none")
 ```
 
 ### Events causing most crop damage:
 ```{r, fig.height=8, fig.width=10}
 crop.damage.events <- storm %>% group_by(evtype) %>% 
   summarise(crop.damage=sum(cropdmg)) %>% 
-  top_n(20, wt = crop.damage) %>% 
+  top_n(15, wt = crop.damage) %>% 
   arrange(desc(crop.damage))
 
 kable(crop.damage.events)
 
-qplot(evtype, crop.damage/10^9, data=crop.damage.events, geom="bar", stat="identity", xlab="Event type", ylab = "Crop damage cost ($ billions)", main="20 events causing most crop damage", fill=crop.damage) + scale_fill_continuous(low="yellow", high="black") + theme(axis.text.x = element_text(angle = 90, hjust = 1), legend.position="none")
+ggplot(aes(evtype, crop.damage/10^9, fill=crop.damage), data=crop.damage.events) + geom_bar(stat="identity") + xlab("Event type")+ ylab("Crop damage cost ($ billions)") + ggtitle("15 events causing most crop damage") + scale_fill_continuous(low="green", high="black") + theme(axis.text.x = element_text(angle = 90, hjust = 1), legend.position="none")
+
 ```
