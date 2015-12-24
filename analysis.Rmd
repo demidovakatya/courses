@@ -92,6 +92,8 @@ str(raw.storm)
 head(raw.storm, n = 3)
 ```
 
+### Selecting columns
+
 There are 37 columns and 902297 rows in this dataset.
 
 ```{r, cache=TRUE}
@@ -125,6 +127,9 @@ colnames(storm) <- tolower(colnames(storm))
 
 # rm(raw.storm, columns)
 ```
+
+### Removing old events
+
 Event Types Available: 
 
 1. Tornado: From 1950 through 1954, only tornado events were recorded.
@@ -144,6 +149,8 @@ storm$bgn_date <- as.Date(storm$bgn_date, format = "%m/%d/%Y %H:%M:%S")
 # subset only new data
 storm <- subset(storm, bgn_date > as.Date("1996-01-01"))
 ```
+
+### Damage cost multipliers
 
 Convert multipliers in `propdmgexp` and `cropdmgexp` columns into numeric values and apply these multipliers:
 
@@ -170,12 +177,19 @@ storm <- storm %>% mutate(cropdmg=cropdmg * cropdmgexp)
 # Remove ~dmgexp columns
 storm <- storm %>% select(-ends_with("dmgexp"))
 ```
+### Removing empty rows
 
-Convert `state` into factor variable:
+Since we are not going to analyse lowest damage, we will remove rows where damage equals to 0:
 
-```{r, cache=TRUE}
-storm$state <- as.factor(storm$state)
+```{r}
+# replace NAs with 0
+storm$propdmg[is.na(storm$propdmg)] <- 0
+storm$cropdmg[is.na(storm$cropdmg)] <- 0
+
+storm <- storm %>% subset(fatalities!=0 | injuries!=0 | propdmg!=0 | cropdmg!=0)
 ```
+
+### Tidying event types
 
 The last thing is to tidy up the `evtype` column.  Let's save it to a separate variable and then have a look at it:
 ```{r, cache=TRUE}
@@ -183,7 +197,8 @@ events <- storm$evtype
 head(data.frame(table(events)), n=20)
 ```
 
-There are hundreds of different event types due to similar values like these:
+There are 174 different event types due to similar values like these:
+
 - "Freezing rain"
 - "Freezing Rain"
 - "FREEZING RAIN"
@@ -197,24 +212,196 @@ But as we have mentioned before, there are only 48 types of weather events. So, 
 
 ```{r}
 
-
 # trim, clean from punctuation
 events <- toupper(events)
 events <- gsub("[[:digit:]]+", "", events)
 events <- gsub("&", " AND ", events)
 events <- gsub("[[:punct:]]+", " ", events)
 events <- gsub("^\\s+|\\s+$|\\s\\s+", "", events)
+```
 
-# replace some values
+```{r echo=F}
 events[events=="TSTM WIND" | events=="THUNDERSTORM" |
       events=="THUNDERSTORM WINDG" | events=="THUNDERSTORMS"] <- "THUNDERSTORM WIND"
 events[events=="MARINE TSTM WIND"] <- "MARINE THUNDERSTORM WIND"
-events[grep(events, "SUMMARY")] 
-
-events <- data.frame(events)
+events[events=="ASTRONOMICAL LOW TIDE"] <- "ASTRONOMICAL LOW TIDE"
+events[events=="AVALANCHE"] <- "AVALANCHE"
+events[events=="BLIZZARD"] <- "BLIZZARD"
+events[events=="COASTAL EROSION"] <- "COASTAL FLOOD"
+events[events=="COASTAL FLOOD"] <- "COASTAL FLOOD"
+events[events=="COASTAL FLOODING EROSION"] <- "COASTAL FLOOD"
+events[events=="COASTAL FLOODING"] <- "COASTAL FLOOD"
+events[events=="COASTAL STORM"] <- "COASTAL FLOOD"
+events[events=="COASTALFLOODING EROSION"] <- "COASTAL FLOOD"
+events[events=="COASTALSTORM"] <- "COASTAL FLOOD"
+events[events=="COLD TEMPERATURE"] <- "COLD/WIND CHILL"
+events[events=="COLD WEATHER"] <- "COLD/WIND CHILL"
+events[events=="COLD WIND CHILL"] <- "COLD/WIND CHILL"
+events[events=="COLD"] <- "COLD/WIND CHILL"
+events[events=="DAMAGING FREEZE"] <- "FROST/FREEZE"
+events[events=="DENSE FOG"] <- "DENSE FOG"
+events[events=="DOWNBURST"] <- "STRONG WIND"
+events[events=="DROUGHT"] <- "DROUGHT"
+events[events=="DRY MICROBURST"] <- "STRONG WIND"
+events[events=="DUST DEVIL"] <- "DUST DEVIL"
+events[events=="DUST STORM"] <- "DUST STORM"
+events[events=="EROSION CSTL FLOOD"] <- "COASTAL FLOOD"
+events[events=="EXCESSIVE HEAT"] <- "EXCESSIVE HEAT"
+events[events=="EXTREME COLD WIND CHILL"] <- "EXTREME COLD/WIND CHILL"
+events[events=="EXTREME COLD"] <- "EXTREME COLD/WIND CHILL"
+events[events=="EXTREME WINDCHILL"] <- "EXTREME COLD/WIND CHILL"
+events[events=="FLASH FLOOD FLOOD"] <- "FLOOD/FLASH FLOOD"
+events[events=="FLASH FLOOD"] <- "FLOOD/FLASH FLOOD"
+events[events=="FLOOD FLASH FLOOD"] <- "FLOOD/FLASH FLOOD"
+events[events=="FLOOD"] <- "FLOOD/FLASH FLOOD"
+events[events=="FREEZING FOG"] <- "FREEZING FOG"
+events[events=="FROST FREEZE"] <- "FROST/FREEZE"
+events[events=="FROST"] <- "FROST/FREEZE"
+events[events=="FUNNEL CLOUD"] <- "FUNNEL CLOUD"
+events[events=="HAIL"] <- "HAIL"
+events[events=="HEAT"] <- "HEAT"
+events[events=="HEAVY RAIN HIGH SURF"] <- "HEAVY RAIN"
+events[events=="HEAVY RAIN"] <- "HEAVY RAIN"
+events[events=="HEAVY SNOW SHOWER"] <- "HEAVY SNOW"
+events[events=="HEAVY SNOW"] <- "HEAVY SNOW"
+events[events=="HEAVY SURF AND WIND"] <- "HIGH SURF"
+events[events=="HEAVY SURF HIGH SURF"] <- "HIGH SURF"
+events[events=="HEAVY SURF"] <- "HIGH SURF"
+events[events=="HIGH SURF ADVISORY"] <- "HIGH SURF"
+events[events=="HIGH SURF"] <- "HIGH SURF"
+events[events=="HIGH WIND"] <- "HIGH WIND"
+events[events=="HIGH WINDG"] <- "HIGH WIND"
+events[events=="HIGH WINDS"] <- "HIGH WIND"
+events[events=="HURRICANE EDOUARD"] <- "HURRICANE/TYPHOON"
+events[events=="HURRICANE TYPHOON"] <- "HURRICANE/TYPHOON"
+events[events=="HURRICANE"] <- "HURRICANE/TYPHOON"
+events[events=="ICE STORM"] <- "ICE STORM"
+events[events=="LIGHTNING"] <- "LIGHTNING"
+events[events=="MARINE HAIL"] <- "MARINE HAIL"
+events[events=="MARINE HIGH WIND"] <- "MARINE HIGH WIND"
+events[events=="MARINE STRONG WIND"] <- "MARINE STRONG WIND"
+events[events=="MARINE THUNDERSTORM WIND"] <- "MARINE THUNDERSTORM WIND"
+events[events=="RIP CURRENT"] <- "RIP CURRENT"
+events[events=="RIP CURRENTS"] <- "RIP CURRENT"
+events[events=="SEICHE"] <- "SEICHE"
+events[events=="SMALL HAIL"] <- "HAIL"
+events[events=="STRONG WIND"] <- "STRONG WIND"
+events[events=="STRONG WINDS"] <- "STRONG WIND"
+events[events=="THUNDERSTORM WIND"] <- "THUNDERSTORM WIND"
+events[events=="TORNADO"] <- "TORNADO"
+events[events=="TROPICAL DEPRESSION"] <- "TROPICAL DEPRESSION"
+events[events=="TROPICAL STORM"] <- "TROPICAL STORM"
+events[events=="TSTM WIND AND LIGHTNING"] <- "THUNDERSTORM WIND"
+events[events=="TSTM WIND G"] <- "THUNDERSTORM WIND"
+events[events=="TSTM WIND HAIL"] <- "THUNDERSTORM WIND"
+events[events=="TSTM WINDG"] <- "THUNDERSTORM WIND"
+events[events=="TSUNAMI"] <- "TSUNAMI"
+events[events=="TYPHOON"] <- "HURRICANE/TYPHOON"
+events[events=="VOLCANIC ASH"] <- "VOLCANIC ASH"
+events[events=="WATERSPOUT"] <- "WATERSPOUT"
+events[events=="WILD FOREST FIRE"] <- "WILDFIRE"
+events[events=="WILDFIRE"] <- "WILDFIRE"
+events[events=="WINTER STORM"] <- "WINTER STORM"
+events[events=="WINTER WEATHER MIX"] <- "WINTER WEATHER"
+events[events=="WINTER WEATHER"] <- "WINTER WEATHER"
+events[events=="WINTRY MIX"] <- "WINTER WEATHER"
+events[events=="AGRICULTURAL FREEZE"] <- "FROST/FREEZE"
+events[events=="ASTRONOMICAL HIGH TIDE"] <- "HIGH SURF"
+events[events=="BEACH EROSION"] <- "OTHER"
+events[events=="BLACK ICE"] <- "OTHER"
+events[events=="BLOWING DUST"] <- "DUST STORM"
+events[events=="BLOWING SNOW"] <- "WINTER WEATHER"
+events[events=="BRUSH FIRE"] <- "WILDFIRE"
+events[events=="COLD AND SNOW"] <- "WINTER WEATHER"
+events[events=="DAM BREAK"] <- "FLOOD"
+events[events=="DENSE SMOKE"] <- "WILDFIRE"
+events[events=="DROWNING"] <- "FLOOD"
+events[events=="EARLY FROST"] <- "FROST/FREEZE"
+events[events=="EXCESSIVE SNOW"] <- "HEAVY SNOW"
+events[events=="EXTENDED COLD"] <- "EXTREME COLD/WIND CHILL"
+events[events=="FALLING SNOW ICE"] <- "HAIL"
+events[events=="FOG"] <- "DENSE FOG"
+events[events=="FREEZE"] <- "FROST/FREEZE"
+events[events=="FREEZING DRIZZLE"] <- "FROST/FREEZE"
+events[events=="FREEZING RAIN"] <- "FROST/FREEZE"
+events[events=="FREEZING SPRAY"] <- "FROST/FREEZE"
+events[events=="GLAZE"] <- "FROST/FREEZE"
+events[events=="GRADIENT WIND"] <- "STRONG WIND"
+events[events=="GUSTY WIND"] <- "STRONG WIND"
+events[events=="GUSTY WIND HAIL"] <- "STRONG WIND"
+events[events=="GUSTY WIND HVY RAIN"] <- "STRONG WIND"
+events[events=="GUSTY WIND RAIN"] <- "STRONG WIND"
+events[events=="GUSTY WINDS"] <- "STRONG WIND"
+events[events=="HARD FREEZE"] <- "FROST/FREEZE"
+events[events=="HAZARDOUS SURF"] <- "HIGH SURF"
+events[events=="HEAT WAVE"] <- "HEAT"
+events[events=="HEAVY SEAS"] <- "HIGH SURF"
+events[events=="HIGH SEAS"] <- "FLOOD"
+events[events=="HIGH SWELLS"] <- "FLOOD"
+events[events=="HIGH WATER"] <- "FLOOD"
+events[events=="HYPERTHERMIA EXPOSURE"] <- "HEAT"
+events[events=="HYPOTHERMIA EXPOSURE"] <- "COLD/WIND CHILL"
+events[events=="ICE JAM FLOODMINOR"] <- "WINTER WEATHER"
+events[events=="ICE ON ROAD"] <- "WINTER WEATHER"
+events[events=="ICE ROADS"] <- "WINTER WEATHER"
+events[events=="ICY ROADS"] <- "WINTER WEATHER"
+events[events=="LAKE EFFECT SNOW"] <- "WINTER WEATHER"
+events[events=="LAKESHORE FLOOD"] <- "LAKESHORE FLOOD"
+events[events=="LANDSLIDE"] <- "LANDSLIDE"
+events[events=="LANDSLIDES"] <- "LANDSLIDE"
+events[events=="LANDSLUMP"] <- "OTHER"
+events[events=="LANDSPOUT"] <- "TORNADO"
+events[events=="LATE SEASON SNOW"] <- "HEAVY SNOW"
+events[events=="LIGHT FREEZING RAIN"] <- "COLD/WIND CHILL"
+events[events=="LIGHT SNOW"] <- "WINTER WEATHER"
+events[events=="LIGHT SNOWFALL"] <- "WINTER WEATHER"
+events[events=="MARINE ACCIDENT"] <- "OTHER"
+events[events=="MICROBURST"] <- "STRONG WIND"
+events[events=="MIXED PRECIP"] <- "OTHER"
+events[events=="MIXED PRECIPITATION"] <- "OTHER"
+events[events=="MUD SLIDE"] <- "MUDSLIDE"
+events[events=="MUDSLIDE"] <- "MUDSLIDE"
+events[events=="MUDSLIDES"] <- "MUDSLIDE"
+events[events=="NON SEVERE WIND DAMAGE"] <- "HIGH WIND"
+events[events=="NON TSTM WIND"] <- "HIGH WIND"
+events[events=="OTHER"] <- "OTHER"
+events[events=="RAIN"] <- "HEAVY RAIN"
+events[events=="RAIN SNOW"] <- "WINTER WEATHER"
+events[events=="RECORD HEAT"] <- "EXCESSIVE HEAT"
+events[events=="RIVER FLOOD"] <- "FLOOD"
+events[events=="RIVER FLOODING"] <- "FLOOD"
+events[events=="ROCK SLIDE"] <- "LANDSLIDE"
+events[events=="ROGUE WAVE"] <- "HIGH SURF"
+events[events=="ROUGH SEAS"] <- "MARINE HIGH WIND"
+events[events=="ROUGH SURF"] <- "HIGH SURF"
+events[events=="SNOW"] <- "WINTER WEATHER"
+events[events=="SNOW AND ICE"] <- "WINTER WEATHER"
+events[events=="SNOW SQUALL"] <- "HEAVY SNOW"
+events[events=="SNOW SQUALLS"] <- "HEAVY SNOW"
+events[events=="STORM SURGE TIDE"] <- "COASTAL FLOOD"
+events[events=="STORM SURGE"] <- "COASTAL FLOOD"
+events[events=="TIDAL FLOODING"] <- "FLOOD"
+events[events=="TORRENTIAL RAINFALL"] <- "HEAVY RAIN"
+events[events=="UNSEASONABLE COLD"] <- "EXTREME COLD/WIND CHILL"
+events[events=="UNSEASONABLY COLD"] <- "EXTREME COLD/WIND CHILL"
+events[events=="UNSEASONABLY WARM"] <- "HEAT"
+events[events=="UNSEASONAL RAIN"] <- "HEAVY RAIN"
+events[events=="URBAN SML STREAM FLD"] <- "FLOOD"
+events[events=="WARM WEATHER"] <- "HEAT"
+events[events=="WET MICROBURST"] <- "STRONG WIND"
+events[events=="WHIRLWIND"] <- "TORNADO"
+events[events=="WIND"] <- "STRONG WIND"
+events[events=="WIND AND WAVE"] <- "HIGH SURF"
+events[events=="WIND DAMAGE"] <- "STRONG WIND"
+events[events=="WINDS"] <- "STRONG WIND"
 
 ```
 
+```{r}
+unique(events)
+
+storm$evtype <- events
+```
 
 
 ## Results
@@ -262,7 +449,7 @@ property.damage.events <- storm %>% group_by(evtype) %>%
 
 property.damage.events
 
-ggplot(aes(evtype, property.damage/10^9, fill=evtype), data=property.damage.events) + geom_bar(stat="identity") + xlab("Event type")+ ylab("Property damage cost ($ billions)") + ggtitle("15 events causing most property damage") + theme(axis.text.x = element_text(angle = 90, hjust = 1)) + coord_flip()
+ggplot(aes(evtype, property.damage/10^9, fill=evtype), data=property.damage.events) + geom_bar(stat="identity") + xlab("Event type")+ ylab("Property damage cost ($ billions)") + ggtitle("15 events causing most property damage") + theme(axis.text.x = element_text(angle = 90, hjust = 1), legend.position="none") + coord_flip()
 ```
 
 ### Events causing most crop damage:
@@ -274,6 +461,6 @@ crop.damage.events <- storm %>% group_by(evtype) %>%
 
 crop.damage.events
 
-ggplot(aes(evtype, crop.damage/10^9, fill=evtype), data=crop.damage.events) + geom_bar(stat="identity") + xlab("Event type")+ ylab("Crop damage cost ($ billions)") + ggtitle("15 events causing most crop damage") + theme(axis.text.x = element_text(angle = 90, hjust = 1)) + coord_flip()
+ggplot(aes(evtype, crop.damage/10^9, fill=evtype), data=crop.damage.events) + geom_bar(stat="identity") + xlab("Event type")+ ylab("Crop damage cost ($ billions)") + ggtitle("15 events causing most crop damage") + theme(axis.text.x = element_text(angle = 90, hjust = 1), legend.position="none") + coord_flip()
 
 ```
