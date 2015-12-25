@@ -9,7 +9,7 @@ You will create a report to answer the questions. Given the nature of the series
 
 **Each pdf report should be no more than 3 pages with 3 pages of supporting appendix material if needed (code, figures, etcetera).**
 
-Results
+Results:
 
 :cyclone: First part: [PDF](https://github.com/demidovakatya/statinference-course-project/blob/master/part1.pdf)
 
