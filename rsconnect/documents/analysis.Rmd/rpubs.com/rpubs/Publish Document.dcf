@@ -1,0 +1,7 @@
+name: Publish Document
+account: rpubs
+server: rpubs.com
+bundleId:
+        https://api.rpubs.com/api/v1/document/136938/f3bd8652ac7d440994044509dce47c27
+url: http://rpubs.com/cotique/136938
+when: 1451035901.71598
