@@ -19,4 +19,5 @@ for alignment in blast_rec.alignments:
             print(hsp.sbjct)
 
 # ****Alignment****
-# sequence: gi|927029471|gb|KR780036.1| Nicotiana tabacum cultivar zhongyan 100 mitochondrion, complete genome
+# sequence: gi|927029471|gb|KR780036.1| Nicotiana tabacum cultivar zhongyan 100
+# mitochondrion, complete genome
