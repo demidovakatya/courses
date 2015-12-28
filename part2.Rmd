@@ -3,11 +3,10 @@ title: "Statistical Inference Course Project Part 2"
 author: "Katya Demidova"
 date: "26 December 2015"
 output:
-  html_document: default
   pdf_document:
     fig_height: 3
     fig_width: 5
-    fig_align: center
+  html_document: default
 ---
 
 ## Overview
@@ -19,7 +18,7 @@ In this document we're going to use the ToothGrowth data from the R `datasets` p
 
 ## Load the Data and Basic Analysis
 
-```{r settings}
+```{r settings, echo=FALSE, message=FALSE}
 library(ggplot2)
 library(dplyr)
 options(scipen=2)
@@ -27,7 +26,7 @@ options(scipen=2)
 
 First, we will load the data and perform basic exploration:
 
-```{r load}
+```{r load, echo=FALSE}
 library(datasets)
 data(ToothGrowth)
 ```
@@ -44,7 +43,7 @@ The ToothGrowth data has 60 observations of 3 variables:
 * `supp`: supplement type / delivery method (factor with 2 levels `OJ` and `VC`, orange juice and ascorbic acid respectively),
 * `dose`: dose of Vitamin C in miligrams. This variable is factorised for convenience.
 
-```{r exploratoryplot}
+```{r exploratoryplot, fig.align='center', echo=FALSE}
 ggplot(data = ToothGrowth, aes(dose, len)) + geom_boxplot(aes(fill = supp)) + ggtitle("Tooth growth by dose of Vitamin C\nwith different delivery methods") + ylab("tooth length") + facet_grid(. ~ supp)
 ```
 
@@ -54,7 +53,7 @@ From the plot above, it is clear that there is a positive correlation between do
 
 ### Tooth Growth by Dose Level
 
-As mentioned above, there seems to be a positive correlation between dose level and tooth length in guinea pigs. To compare tooth growth by `dose` and check if there is a statistically significant difference between the means, we will use t-tests.
+As mentioned above, there seems to be a positive correlation between dose level and tooth length in guinea pigs. To compare tooth growth by `dose` and check if there is a statistically significant difference between the means, we will use t-tests (full results can be seen in Appendix).
 
 ```{r subsetbydose}
 # make three subsets
@@ -63,15 +62,15 @@ dose1or2 <- subset(ToothGrowth, dose == "1" | dose == "2")
 dose05or2 <- subset(ToothGrowth, dose == "0.5" | dose == "2")
 ```
 
-```{r testbydose}
+```{r testbydose, results='hide'}
 t.test(len ~ dose, data = dose05or2)
 t.test(len ~ dose, data = dose1or2)
 t.test(len ~ dose, data = dose05or2)
 ```
 
-P-values and confidence intervals of these t-tests, respectively:
+P-values and confidence intervals of these t-tests:
 
-```{r conclusionbydose}
+```{r conclusionbydose, echo=FALSE}
 compared.doses <- c("0.5 and 1", "1 and 2", "0.5 and 2")
 
 p.values <- c(t.test(len ~ dose, data = dose05or2)$p.value, 
@@ -118,13 +117,15 @@ dose1 <- subset(ToothGrowth, dose == "1")
 dose2 <- subset(ToothGrowth, dose == "2")
 ```
 
-```{r ttestbysuppanddose}
+```{r ttestbysuppanddose, results='hide'}
 t.test(len ~ supp, data = dose05)
 t.test(len ~ supp, data = dose1)
 t.test(len ~ supp, data = dose2)
 ```
 
-```{r conclusionbysuppanddose}
+P-values and confidence intervals of these t-tests:
+
+```{r conclusionbysuppanddose, echo=FALSE}
 doses <- c("0.5", "1", "2")
 
 p.values <- round(c(t.test(len ~ supp, data = dose05)$p.value, 
@@ -155,3 +156,71 @@ Assuming that (1) delivery method and dosage are randomly assigned, (2) populati
 In other words, if we needed our guinea pig to have long teeth, we could choose any delivery method and dosage of 2 mg.
 
 ## Appendix
+
+### Hidden Code Chunks
+```{r, ref.label = "settings", eval=FALSE}
+library(ggplot2)
+library(dplyr)
+options(scipen=2)
+```
+
+```{r, ref.label="load", eval=FALSE}
+library(datasets)
+data(ToothGrowth)
+```
+
+```{r ref.label="exploratoryplot", eval=FALSE}
+ggplot(data = ToothGrowth, aes(dose, len)) + geom_boxplot(aes(fill = supp)) + ggtitle("Tooth growth by dose of Vitamin C\nwith different delivery methods") + ylab("tooth length") + facet_grid(. ~ supp)
+```
+
+### Section Tooth Growth by Dose Level
+
+```{r ref.label="testbydose", eval=FALSE}
+t.test(len ~ dose, data = dose05or2)
+t.test(len ~ dose, data = dose1or2)
+t.test(len ~ dose, data = dose05or2)
+```
+
+```{r ref.label="conclusionbydose", eval=FALSE}
+compared.doses <- c("0.5 and 1", "1 and 2", "0.5 and 2")
+
+p.values <- c(t.test(len ~ dose, data = dose05or2)$p.value, 
+              t.test(len ~ dose, data = dose1or2)$p.value, 
+              t.test(len ~ dose, data = dose05or2)$p.value)
+
+conf.int.lower <- round(c(t.test(len ~ dose, data = dose05or2)$conf.int[1], 
+                    t.test(len ~ dose, data = dose1or2)$conf.int[1], 
+                    t.test(len ~ dose, data = dose05or2)$conf.int[1]), 3)
+
+conf.int.higher <- round(c(t.test(len ~ dose, data = dose05or2)$conf.int[2], 
+                    t.test(len ~ dose, data = dose1or2)$conf.int[2], 
+                    t.test(len ~ dose, data = dose05or2)$conf.int[2]), 3)
+
+data.frame(compared.doses, p.values, conf.int.lower, conf.int.higher)
+```
+
+### Section Tooth Growth by Dose Level and Supplement Type
+
+```{r ref.label="ttestbysuppanddose", eval=FALSE}
+t.test(len ~ supp, data = dose05)
+t.test(len ~ supp, data = dose1)
+t.test(len ~ supp, data = dose2)
+```
+
+```{r ref.label="conclusionbysuppanddose", eval=FALSE}
+doses <- c("0.5", "1", "2")
+
+p.values <- round(c(t.test(len ~ supp, data = dose05)$p.value, 
+              t.test(len ~ supp, data = dose1)$p.value, 
+              t.test(len ~ supp, data = dose2)$p.value), 5)
+
+conf.int.lower <- round(c(t.test(len ~ supp, data = dose05)$conf.int[1], 
+                    t.test(len ~ supp, data = dose1)$conf.int[1], 
+                    t.test(len ~ supp, data = dose2)$conf.int[1]), 3)
+
+conf.int.higher <- round(c(t.test(len ~ supp, data = dose05)$conf.int[2], 
+                    t.test(len ~ supp, data = dose1)$conf.int[2], 
+                    t.test(len ~ supp, data = dose2)$conf.int[2]), 3)
+
+data.frame(doses, p.values, conf.int.lower, conf.int.higher)
+```
