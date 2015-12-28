@@ -44,19 +44,19 @@ mtcars$gear <- factor(mtcars$gear)
 mtcars$carb <- factor(mtcars$carb)
 ```
 
-Next, we will explore correlations between all variables in the `mtcars` dataset. 
+Next, we will explore correlations between all variables in the `mtcars` dataset (Appendix - Figure: Correlations between variables). 
 
 ## Analysis
 
 We will further focus on relationship between MPG and transmission (`mpg` and `am`), with `mpg` as the outcome and `am` as the predictor. As can be seen in the boxplot of MPG by transmission type (Appendix - Figure: Boxplot of MPG by transmission type), there is an increase in MPG when transmission is manual comparing to automatic transmission.
 
-To find out if this increase is statistically significant, we will perform a t-test (assuming that the distribution is normal):
+To find out if this increase is statistically significant, we will perform a t-test (assuming that the distribution is normal) with the null hypothesis: mean MPG in cars with automatic transmission is the same as MPG in cars with manual transmission.
 
 ```{r ttest}
 t.test(mpg ~ am, data = mtcars)
 ```
 
-With p-value of `r t.test(mpg ~ am, data = mtcars)$p.value`, we can see that this difference is significant.
+With p-value of `r t.test(mpg ~ am, data = mtcars)$p.value`, we can reject the null hypothesis see that this difference is significant.
 
 ### Linear Regression Model
 
@@ -83,17 +83,9 @@ step.model <- step(init.model)
 summary(step.model)
 ```
 
-The best model found by the `step` algorithm contains `cyl`, `hp`, `wt`, and `am` variables. 
+The best model found by the `step` algorithm contains `cyl`, `hp`, `wt`, and `am` variables. We have compared this model with the linear model (Appendix - Figure: Comparing regression models). From the results, we can tell that there are significant differences between two models, in other words, `cyl`, `hp`, and `wt` variables increase acuuracy of the model.
 
-```{r}
-anova(lin.model, step.model)
-```
-We have compared this model with the linear model. From the results above, we can tell that there are significant differences between two models, in other words, `cyl`, `hp`, and `wt` variables contribute to the model.
-
-So with these three variables as confounders, adjusted R-squared is `r summary(step.model)$adj.r.squared`, meaning 84% of the variability is explained.
-
-* Is an automatic or manual transmission better for MPG?
-* Quantify the MPG difference between automatic and manual transmissions.
+With these three variables as confounders, adjusted R-squared is `r summary(step.model)$adj.r.squared`, meaning 84% of the variability is explained by the model above.
 
 ## Appendix
 
@@ -114,4 +106,9 @@ ggplot(aes(am, mpg, fill=am), data = mtcars) +
   geom_boxplot() + 
   ylab("MPG") + xlab("Transmission type") + 
   theme_update(legend.position=c(0.85, 0.15))
+```
+
+### Figure: Comparing regression models
+```{r comparemodels}
+anova(lin.model, step.model)
 ```
