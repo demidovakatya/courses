@@ -105,20 +105,47 @@ The resulting p-value is ``r t.test(len ~ supp, data = ToothGrowth)$p.value``. T
 
 We will compute means and standard deviations for 6 groups:
 
-```{r summary}
+```{r summarybysuppanddose}
 ToothGrowth %>% group_by(supp, dose) %>% summarise(mean(len), sd(len))
 ```
 
 Next, we will compare tooth growth by delivery method (`supp`) in groups with different dosage:
 
-```{r}
-with(ToothGrowth, t.test(len[supp=="OJ" & dose=="0.5"], len[supp=="VC" & dose=="0.5"]))$p.value
-with(ToothGrowth, t.test(len[supp=="OJ" & dose=="1"], len[supp=="VC" & dose=="1"]))$p.value
-with(ToothGrowth, t.test(len[supp=="OJ" & dose=="2"], len[supp=="VC" & dose=="2"]))$p.value
+```{r subsetbysuppanddose}
+# make three subsets
+dose05 <- subset(ToothGrowth, dose == "0.5")
+dose1 <- subset(ToothGrowth, dose == "1")
+dose2 <- subset(ToothGrowth, dose == "2")
 ```
 
-As we can see, delivery method **does affect** tooth growth in guinea pigs when dosage is 0.5 or 1, with **orange juice causing more tooth growth**. However, **when dosage is 2 miligrams, orange juice does not significantly differ from ascorbic acid**. If we take into consideration the fact that this dosage causes largest tooth growth, these two supplement types are equally successful.
+```{r ttestbysuppanddose}
+t.test(len ~ supp, data = dose05)
+t.test(len ~ supp, data = dose1)
+t.test(len ~ supp, data = dose2)
+```
+
+```{r conclusionbysuppanddose}
+doses <- c("0.5", "1", "2")
+
+p.values <- round(c(t.test(len ~ supp, data = dose05)$p.value, 
+              t.test(len ~ supp, data = dose1)$p.value, 
+              t.test(len ~ supp, data = dose2)$p.value), 5)
+
+conf.int.lower <- round(c(t.test(len ~ supp, data = dose05)$conf.int[1], 
+                    t.test(len ~ supp, data = dose1)$conf.int[1], 
+                    t.test(len ~ supp, data = dose2)$conf.int[1]), 3)
+
+conf.int.higher <- round(c(t.test(len ~ supp, data = dose05)$conf.int[2], 
+                    t.test(len ~ supp, data = dose1)$conf.int[2], 
+                    t.test(len ~ supp, data = dose2)$conf.int[2]), 3)
+
+data.frame(doses, p.values, conf.int.lower, conf.int.higher)
+```
+
+As we can see, delivery method **does affect** tooth growth in guinea pigs when dosage is 0.5 or 1, with **orange juice causing more tooth growth**. However, **when dosage is 2 miligrams, orange juice does not significantly differ from ascorbic acid**.
 
 ## Conclusions and assumptions
+
+
 
 ## Appendix

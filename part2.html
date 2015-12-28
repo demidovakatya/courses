@@ -167,7 +167,7 @@ dose05or2 &lt;- subset(ToothGrowth, dose == &quot;0.5&quot; | dose == &quot;2&qu
 ## mean in group 0.5   mean in group 2 
 ##            10.605            26.100</code></pre>
 <p>P-values and confidence intervals of these t-tests, respectively:</p>
-<pre class="r"><code>compared.doses &lt;- c(&quot;0.5 and 1&quot;, &quot;1 and 2&quot;, &quot;0.5 and 2&quot;)
+<pre class="r"><code>doses &lt;- c(&quot;0.5 and 1&quot;, &quot;1 and 2&quot;, &quot;0.5 and 2&quot;)
 
 p.values &lt;- c(t.test(len ~ dose, data = dose05or2)$p.value, 
               t.test(len ~ dose, data = dose1or2)$p.value, 
@@ -181,11 +181,11 @@ conf.int.higher &lt;- round(c(t.test(len ~ dose, data = dose05or2)$conf.int[2],
                     t.test(len ~ dose, data = dose1or2)$conf.int[2], 
                     t.test(len ~ dose, data = dose05or2)$conf.int[2]), 3)
 
-data.frame(compared.doses, p.values, conf.int.lower, conf.int.higher)</code></pre>
-<pre><code>##   compared.doses     p.values conf.int.lower conf.int.higher
-## 1      0.5 and 1 4.397525e-14        -18.156         -12.834
-## 2        1 and 2 1.906430e-05         -8.996          -3.734
-## 3      0.5 and 2 4.397525e-14        -18.156         -12.834</code></pre>
+data.frame(doses, p.values, conf.int.lower, conf.int.higher)</code></pre>
+<pre><code>##       doses     p.values conf.int.lower conf.int.higher
+## 1 0.5 and 1 4.397525e-14        -18.156         -12.834
+## 2   1 and 2 1.906430e-05         -8.996          -3.734
+## 3 0.5 and 2 4.397525e-14        -18.156         -12.834</code></pre>
 <p>From these numbers, we can reject all of three null hypotheses and make a conclusion that <strong>dosage of Vitamin C affects tooth growth in guinea pigs</strong>.</p>
 </div>
 <div id="tooth-growth-by-supplement-type" class="section level3">
@@ -221,6 +221,65 @@ data.frame(compared.doses, p.values, conf.int.lower, conf.int.higher)</code></pr
 ## 5     VC      1     16.77 2.515309
 ## 6     VC      2     26.14 4.797731</code></pre>
 <p>Next, we will compare tooth growth by delivery method (<code>supp</code>) in groups with different dosage:</p>
+<pre class="r"><code># make three subsets
+dose05 &lt;- subset(ToothGrowth, dose == &quot;0.5&quot;)
+dose1 &lt;- subset(ToothGrowth, dose == &quot;1&quot;)
+dose2 &lt;- subset(ToothGrowth, dose == &quot;2&quot;)</code></pre>
+<pre class="r"><code>t.test(len ~ supp, data = dose05)</code></pre>
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  len by supp
+## t = 3.1697, df = 14.969, p-value = 0.006359
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  1.719057 8.780943
+## sample estimates:
+## mean in group OJ mean in group VC 
+##            13.23             7.98</code></pre>
+<pre class="r"><code>t.test(len ~ supp, data = dose1)</code></pre>
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  len by supp
+## t = 4.0328, df = 15.358, p-value = 0.001038
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  2.802148 9.057852
+## sample estimates:
+## mean in group OJ mean in group VC 
+##            22.70            16.77</code></pre>
+<pre class="r"><code>t.test(len ~ supp, data = dose2)</code></pre>
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  len by supp
+## t = -0.046136, df = 14.04, p-value = 0.9639
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  -3.79807  3.63807
+## sample estimates:
+## mean in group OJ mean in group VC 
+##            26.06            26.14</code></pre>
+<pre class="r"><code>doses &lt;- c(&quot;0.5&quot;, &quot;1&quot;, &quot;2&quot;)
+
+p.values &lt;- c(t.test(len ~ supp, data = dose05)$p.value, 
+              t.test(len ~ supp, data = dose1)$p.value, 
+              t.test(len ~ supp, data = dose2)$p.value)
+
+conf.int.lower &lt;- round(c(t.test(len ~ supp, data = dose05)$conf.int[1], 
+                    t.test(len ~ supp, data = dose1)$conf.int[1], 
+                    t.test(len ~ supp, data = dose2)$conf.int[1]), 3)
+
+conf.int.higher &lt;- round(c(t.test(len ~ supp, data = dose05)$conf.int[2], 
+                    t.test(len ~ supp, data = dose1)$conf.int[2], 
+                    t.test(len ~ supp, data = dose2)$conf.int[2]), 3)
+
+data.frame(doses, p.values, conf.int.lower, conf.int.higher)</code></pre>
+<pre><code>##   doses    p.values conf.int.lower conf.int.higher
+## 1   0.5 0.006358607          1.719           8.781
+## 2     1 0.001038376          2.802           9.058
+## 3     2 0.963851589         -3.798           3.638</code></pre>
 <pre class="r"><code>with(ToothGrowth, t.test(len[supp==&quot;OJ&quot; &amp; dose==&quot;0.5&quot;], len[supp==&quot;VC&quot; &amp; dose==&quot;0.5&quot;]))$p.value</code></pre>
 <pre><code>## [1] 0.006358607</code></pre>
 <pre class="r"><code>with(ToothGrowth, t.test(len[supp==&quot;OJ&quot; &amp; dose==&quot;1&quot;], len[supp==&quot;VC&quot; &amp; dose==&quot;1&quot;]))$p.value</code></pre>
