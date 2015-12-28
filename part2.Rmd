@@ -146,6 +146,14 @@ As we can see, delivery method **does affect** tooth growth in guinea pigs when 
 
 ## Conclusions and assumptions
 
+From this analysis, we can make several conclusions:
+
+* higher doses of Vitamin C lead to larger tooth length in guinea pigs;
+* orange juice is a more successful delivery method (comparing to ascorbic acid) when dosage os either 0.5 or 1 mg;
+* when dosage is 2 mg, there is no significant difference between orange juice and ascorbic acid.
+
+In other words, if we needed our guinea pig to have long teeth, we could choose any delivery method and dosage of 2 mg.
+
 
 
 ## Appendix
