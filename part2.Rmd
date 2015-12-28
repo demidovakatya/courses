@@ -2,158 +2,123 @@
 title: "Statistical Inference Course Project Part 2"
 author: "Katya Demidova"
 date: "26 December 2015"
-output: 
-  pdf_document: 
+output:
+  html_document: default
+  pdf_document:
     fig_height: 3
     fig_width: 5
+    fig_align: center
 ---
 
 ## Overview
 
-In this part of the course project we're going to use the ToothGrowth data from the R `datasets` package. We will analyse if the response is the length of odontoblasts (teeth) in each of 10 guinea pigs is different:
+In this document we're going to use the ToothGrowth data from the R `datasets` package. We will analyse if the response is the length of odontoblasts (teeth) in each group of 10 guinea pigs is different:
 
 * at each of three dose levels of Vitamin C (0.5, 1, and 2 mg),
 * with each of two delivery methods (orange juice or ascorbic acid).
 
-## Exploratory data analysis
+## Load the Data and Basic Analysis
 
-```{r start, echo = F, message = F}
+```{r settings}
 library(ggplot2)
 library(dplyr)
-options(scipen=99)
-library(datasets)
-tg <- ToothGrowth
+options(scipen=2)
 ```
 
-The ToothGrowth data is a data frame with 60 observations of 3 variables:
+First, we will load the data and perform basic exploration:
+
+```{r load}
+library(datasets)
+data(ToothGrowth)
+```
+
+```{r basicexploration}
+head(ToothGrowth)
+summary(ToothGrowth)
+ToothGrowth$dose <- as.factor(ToothGrowth$dose) # coerce 'dose' to factor
+```
+
+The ToothGrowth data has 60 observations of 3 variables:
 
 * `len`: tooth length (numeric),
 * `supp`: supplement type / delivery method (factor with 2 levels `OJ` and `VC`, orange juice and ascorbic acid respectively),
-* `dose`: dose of Vitamin C in miligrams (numeric). This variable is factorised for convenience.
+* `dose`: dose of Vitamin C in miligrams. This variable is factorised for convenience.
 
-Basic summary of data can be seen in Appendix.
-
-```{r, echo=F}
-tg$dose <- as.factor(tg$dose)
+```{r exploratoryplot}
+ggplot(data = ToothGrowth, aes(dose, len)) + geom_boxplot(aes(fill = supp)) + ggtitle("Tooth growth by dose of Vitamin C\nwith different delivery methods") + ylab("tooth length") + facet_grid(. ~ supp)
 ```
 
-```{r plot3, echo=F, fig.align='center'}
-ggplot(data = tg, aes(dose, len)) + geom_point(aes(colour = supp), size=3) + ggtitle("Tooth growth by dose of Vitamin C\nwith different delivery methods") + ylab("tooth length") + facet_grid(. ~ supp)
-```
-
-The plot above could help us with comparing tooth growth by `supp` and `dose`:
-
-* it is clear from the plot that the higher the dose, the larger the teeth, in other words, it looks like there is a positive correlation between dose level and tooth length in guinea pigs;
-* we might also make an assumption that orange juice causes larger tooth growth than ascorbic acid.
+From the plot above, it is clear that there is a positive correlation between dose level and tooth length in guinea pigs. We might also make an assumption that orange juice causes larger tooth growth than ascorbic acid.
 
 ## Statistical Inference
 
-### Tooth growth by dose level
+### Tooth Growth by Dose Level
 
-As mentioned above, there seems to be a positive correlation between dose level and tooth length in guinea pigs. Mean values of tooth length by dose:
+As mentioned above, there seems to be a positive correlation between dose level and tooth length in guinea pigs. To compare tooth growth by `dose` and check if there is a statistically significant difference between the means, we will use t-tests.
 
-```{r, echo=F}
-tg %>% group_by(dose) %>% summarise(mean(len))
+```{r subsetbydose}
+# make three subsets
+dose05or1 <- subset(ToothGrowth, dose == "0.5" | dose == "1")
+dose1or2 <- subset(ToothGrowth, dose == "1" | dose == "2")
+dose05or2 <- subset(ToothGrowth, dose == "0.5" | dose == "2")
 ```
 
-To compare tooth growth by `dose` and check if there is a statistically significant difference between the means, we will use t-tests (full results can be seen in Appendix).
-
-```{r bydose, results='hide'}
-with(tg, t.test(len[dose=="0.5"], len[dose=="1"]))
-with(tg, t.test(len[dose=="1"], len[dose=="2"]))
-with(tg, t.test(len[dose=="0.5"], len[dose=="2"]))
+```{r testbydose}
+t.test(len ~ dose, data = dose05or2)
+t.test(len ~ dose, data = dose1or2)
+t.test(len ~ dose, data = dose05or2)
 ```
 
-P-values of these t-tests, respectively:
+P-values and confidence intervals of these t-tests, respectively:
 
-```{r pvalues, echo=F}
-with(tg, t.test(len[dose=="0.5"], len[dose=="1"]))$p.value
-with(tg, t.test(len[dose=="1"], len[dose=="2"]))$p.value
-with(tg, t.test(len[dose=="0.5"], len[dose=="2"]))$p.value
+```{r conclusionbydose}
+compared.doses <- c("0.5 and 1", "1 and 2", "0.5 and 2")
+
+p.values <- c(t.test(len ~ dose, data = dose05or2)$p.value, 
+              t.test(len ~ dose, data = dose1or2)$p.value, 
+              t.test(len ~ dose, data = dose05or2)$p.value)
+
+conf.int.lower <- round(c(t.test(len ~ dose, data = dose05or2)$conf.int[1], 
+                    t.test(len ~ dose, data = dose1or2)$conf.int[1], 
+                    t.test(len ~ dose, data = dose05or2)$conf.int[1]), 3)
+
+conf.int.higher <- round(c(t.test(len ~ dose, data = dose05or2)$conf.int[2], 
+                    t.test(len ~ dose, data = dose1or2)$conf.int[2], 
+                    t.test(len ~ dose, data = dose05or2)$conf.int[2]), 3)
+
+data.frame(compared.doses, p.values, conf.int.lower, conf.int.higher)
 ```
 
-From these numbers, we can make a conclusion that **dosage of Vitamin C affects tooth growth in guinea pigs**.
+From these numbers, we can reject all of three null hypotheses and make a conclusion that **dosage of Vitamin C affects tooth growth in guinea pigs**.
 
 ### Tooth growth by supplement type
 
-We have made an assumption that that orange juice causes larger tooth growth than ascorbic acid. Mean values of tooth length by supplement type:
+We have made an assumption that that orange juice causes larger tooth growth than ascorbic acid. To compare tooth growth by `supp` and check if there is a statistically significant difference between the means, we will run a t-test with the null hypothesis *H0*: mean tooth growth in guinea pigs getting Vitamin C from orange juice is the same as mean tooth growth in guinea pigs getting Vitamin C from ascorbic acid:
 
-```{r, echo=F}
-tg %>% group_by(supp) %>% summarise(mean(len))
+```{r ttestbysupp}
+t.test(len ~ supp, data = ToothGrowth)
 ```
 
-To compare tooth growth by `supp` and check if there is a statistically significant difference between the means, we will use a t-test:
-
-```{r}
-with(tg, t.test(len[supp=="OJ"], len[supp=="VC"]))
-```
-
-The resulting p-value is `0.06063`. Though it is very close to `0.05` (most common alpha-level), the difference between the means is **not** significant. So, **delivery method doesn't affect tooth growth in guinea pigs**.
+The resulting p-value is ``r t.test(len ~ supp, data = ToothGrowth)$p.value``. Though it is very close to `0.05` (most common alpha-level), the difference between the means is **not** significant. Furthermore, the 95% confidence interval contains 0. We cannot reject the null hypothesis and can conclude that **delivery method doesn't affect tooth growth in guinea pigs**.
 
 ### Tooth growth by supplement type and dosage
 
-Now, let us compare tooth growth by delivery method (`supp`) in groups with different dosage:
+We will compute means and standard deviations for 6 groups:
 
-```{r by.supp, echo=T, results='hold'}
-with(tg, t.test(len[supp=="OJ" & dose=="0.5"], len[supp=="VC" & dose=="0.5"]))$p.value
-with(tg, t.test(len[supp=="OJ" & dose=="1"], len[supp=="VC" & dose=="1"]))$p.value
-with(tg, t.test(len[supp=="OJ" & dose=="2"], len[supp=="VC" & dose=="2"]))$p.value
+```{r summary}
+ToothGrowth %>% group_by(supp, dose) %>% summarise(mean(len), sd(len))
+```
+
+Next, we will compare tooth growth by delivery method (`supp`) in groups with different dosage:
+
+```{r}
+with(ToothGrowth, t.test(len[supp=="OJ" & dose=="0.5"], len[supp=="VC" & dose=="0.5"]))$p.value
+with(ToothGrowth, t.test(len[supp=="OJ" & dose=="1"], len[supp=="VC" & dose=="1"]))$p.value
+with(ToothGrowth, t.test(len[supp=="OJ" & dose=="2"], len[supp=="VC" & dose=="2"]))$p.value
 ```
 
 As we can see, delivery method **does affect** tooth growth in guinea pigs when dosage is 0.5 or 1, with **orange juice causing more tooth growth**. However, **when dosage is 2 miligrams, orange juice does not significantly differ from ascorbic acid**. If we take into consideration the fact that this dosage causes largest tooth growth, these two supplement types are equally successful.
 
+## Conclusions and assumptions
+
 ## Appendix
-
-### Setting the workplace; loading the data
-```{r, ref.label="start", eval = F}
-library(ggplot2)
-library(dplyr)
-options(scipen=99)
-library(datasets)
-tg <- ToothGrowth
-```
-
-### Basic summary of the data
-```{r, results='hold'}
-str(tg)
-head(tg)
-summary(tg)
-```
-
-### Plots
-```{r, eval=F}
-ggplot(data = tg, aes(dose, len)) + 
-  geom_point(aes(colour = supp), size=3) + 
-  ggtitle("Tooth growth by dose of Vitamin C\nwith different delivery methods") + 
-  ylab("tooth length") + facet_grid(. ~ supp)
-```
-```{r, fig.align='center'}
-ggplot(data = tg, aes(dose, len)) + 
-  geom_boxplot(aes(fill = dose)) + 
-  ggtitle("Tooth growth by dose") + 
-  ylab("Tooth length") + xlab("Dose of Vitamin C (miligrams)")
-```
-```{r, fig.align='center'}
-ggplot(data = tg, aes(supp, len)) + 
-  geom_boxplot(aes(fill = supp)) + 
-  ggtitle("Tooth growth by supplement type") + 
-  ylab("Tooth length") + xlab("Supplement type (orange juice/ascorbic acid)")
-```
-
-### Sources for "Tooth Growth by Dose Level" section
-```{r, ref.label="bydose", eval=F}
-with(tg, t.test(len[dose=="0.5"], len[dose=="1"]))
-with(tg, t.test(len[dose=="1"], len[dose=="2"]))
-with(tg, t.test(len[dose=="0.5"], len[dose=="2"]))
-```
-```{r, ref.label="pvalues", eval=F}
-with(tg, t.test(len[dose=="0.5"], len[dose=="1"]))$p.value
-with(tg, t.test(len[dose=="1"], len[dose=="2"]))$p.value
-with(tg, t.test(len[dose=="0.5"], len[dose=="2"]))$p.value
-```
-
-```{r, ref.label="by.supp", eval=F}
-with(tg, t.test(len[supp=="OJ" & dose=="0.5"], len[supp=="VC" & dose=="0.5"]))$p.value
-with(tg, t.test(len[supp=="OJ" & dose=="1"], len[supp=="VC" & dose=="1"]))$p.value
-with(tg, t.test(len[supp=="OJ" & dose=="2"], len[supp=="VC" & dose=="2"]))$p.value
-```
