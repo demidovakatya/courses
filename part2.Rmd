@@ -144,16 +144,14 @@ data.frame(doses, p.values, conf.int.lower, conf.int.higher)
 
 As we can see, delivery method **does affect** tooth growth in guinea pigs when dosage is 0.5 or 1, with **orange juice causing more tooth growth**. However, **when dosage is 2 miligrams, orange juice does not significantly differ from ascorbic acid**.
 
-## Conclusions and assumptions
+## Assumptions and Conclusions
 
-From this analysis, we can make several conclusions:
+Assuming that (1) delivery method and dosage are randomly assigned, (2) population data is normally distributed, and (3) sample group is representative for the population, we can make several conclusions:
 
 * higher doses of Vitamin C lead to larger tooth length in guinea pigs;
 * orange juice is a more successful delivery method (comparing to ascorbic acid) when dosage os either 0.5 or 1 mg;
 * when dosage is 2 mg, there is no significant difference between orange juice and ascorbic acid.
 
 In other words, if we needed our guinea pig to have long teeth, we could choose any delivery method and dosage of 2 mg.
-
-
 
 ## Appendix
