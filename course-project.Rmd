@@ -5,89 +5,77 @@ date: "23 December 2015"
 output: html_document
 ---
 
-## Overview
+## Executive Summary
 
 The main goal of this project is to explore the relationship between a set of variables and miles per gallon (MPG) from the `mtcars` data set. We are particularly interested in the following two questions:
 
-* "Is an automatic or manual transmission better for MPG"
-* "Quantify the MPG difference between automatic and manual transmissions".
+* Is an automatic or manual transmission better for MPG?
+* Quantify the MPG difference between automatic and manual transmissions.
 
 Short summary:
 
 * Cars with manual transmission have significantlly more miles per gallon than cars with automatic transmission;
 * Manual transmission is better for MPG by 1.8 compared to automatic transmission (adj. by `cyl`, `hp`, `wt`).
 
-## Loading and exploring the data
+## Load the Data and Exploratory Analysis
 
-```{r}
+```{r settings}
 library(ggplot2)
+```
+
+In this analysis, we will use the `mtcars` data set. This data was extracted from the 1974 *Motor Trend* US magazine. It comprises fuel consumption and 10 aspects of automobile design and performance for 32 automobiles (1973–74 models). First, we will load the data and perform basic exploration:
+
+```{r load}
 library(datasets)
+data(mtcars)
 ```
 
-To answer these questions, we will use the `mtcars` data set. This data was extracted from the 1974 *Motor Trend* US magazine. It comprises fuel consumption and 10 aspects of automobile design and performance for 32 automobiles (1973–74 models).
-
-The `mtcars` data set has 32 observations of 11 variables:
-```{r}
+```{r basicexploration}
 str(mtcars)
+head(mtcars)
 ```
 
-In this work we will be interested in following variables: 
-* `mpg`:	Miles/(US) gallon (numeric),
-* `am`:	Transmission (0 = automatic, 1 = manual) (numeric).
-
-```{r}
-summary(mtcars$mpg)
-```
-
-The histogram of MPG can be seen in appendix.
-
-```{r}
-# factor the am variable for convenience
+```{r factor}
+# factor some variables for convenience
 mtcars$am <- factor(mtcars$am, labels = c("automatic", "manual"))
-# factor some other variables as well
 mtcars$cyl <- factor(mtcars$cyl)
 mtcars$vs <- factor(mtcars$vs)
 mtcars$gear <- factor(mtcars$gear)
 mtcars$carb <- factor(mtcars$carb)
 ```
 
+Next, we will explore correlations between all variables in the `mtcars` dataset. 
+
 ## Analysis
 
-In our further analysis, we will focus on relationship between MPG and transmission (`mpg` and `am`), with `mpg` as the outcome and `am` as the predictor. As we can see in the boxplot of MPG by transmission type, there is an increase in MPG when transmission is manual comparing to automatic transmission:
-
-```{r}
-ggplot(aes(am, mpg, fill=am), data = mtcars) + 
-  geom_boxplot() + 
-  ggtitle("Boxplot of MPG by transmission type") + 
-  ylab("MPG") + xlab("Transmission type") + 
-  theme_update(legend.position=c(0.85, 0.15))
-```
+We will further focus on relationship between MPG and transmission (`mpg` and `am`), with `mpg` as the outcome and `am` as the predictor. As can be seen in the boxplot of MPG by transmission type (Appendix - Figure: Boxplot of MPG by transmission type), there is an increase in MPG when transmission is manual comparing to automatic transmission.
 
 To find out if this increase is statistically significant, we will perform a t-test (assuming that the distribution is normal):
-```{r}
+
+```{r ttest}
 t.test(mpg ~ am, data = mtcars)
 ```
 
-With p-value of `0.001374`, we can see that this difference is significant.
+With p-value of `r t.test(mpg ~ am, data = mtcars)$p.value`, we can see that this difference is significant.
 
-### Linear regression model
+### Linear Regression Model
 
 ```{r}
 lin.model <- lm(mpg ~ am, data = mtcars)
 summary(lin.model)
 ```
 
-The intercept coefficient (`r coef(lin.model)[1]`) is the empirical mean of MPG for cars with automatic transmissions. The `am` coefficient (`r coef(lin.model)[2]`) is the mean increase of MPG for cars with manual transmissions. The mean MPG for cars with manual transmissions is `intercept` + `am` = `r sum(coef(lin.model))[1]+ coef(lin.model)[2]`.
+The intercept coefficient (``r round(coef(lin.model)[1], 3)``) is the empirical mean of MPG for cars with automatic transmissions. The `am` coefficient (``r round(coef(lin.model)[2], 3)``) is the mean increase of MPG for cars with manual transmissions. The mean MPG for cars with manual transmissions is `intercept` + `am` = ``r round(coef(lin.model)[1]+ coef(lin.model)[2], 3)``.
 
 The p-value is `0.000285`, which means that there is a significant difference in MPG between groups with different transmission. 
 
-The adjusted R-squared is `r summary(lin.model)$adj.r.squared`, which means that only ~34% of the variability is explained by this model. This percentage is relatively small, so we should find out which of other variables could be predictors in our model.
+The adjusted R-squared is ``r round(summary(lin.model)$adj.r.squared, 4)``, which means that only ~34% of the variability is explained by this model. This percentage is relatively small, so we should find out which of other variables could be predictors in our model.
 
-### Multivariate regression model
+### Multivariate Regression Model
 
 To begin with, we will build a model with `mpg` as the outcome and all other variables as predictors. Next, we will use this model as the initial model in the stepwise search by `step` algorithm.
 
-```{r results='hide'}
+```{r}
 init.model <- lm(mpg ~ ., data = mtcars)
 step.model <- step(init.model)
 ```
@@ -108,9 +96,22 @@ So with these three variables as confounders, adjusted R-squared is `r summary(s
 * Quantify the MPG difference between automatic and manual transmissions.
 
 ## Appendix
-```{r}
-head(mtcars)
+
+### Figure: Histogram of MPG
+```{r hist, results='hide'}
+ggplot(aes(mpg), data = mtcars) + geom_histogram()
 ```
-```{r results='hide'}
-ggplot(aes(mpg), data = mtcars) + geom_histogram() + ggtitle("Histogram of MPG")
+
+### Figure: Correlations between variables
+```{r correlations}
+pairs(mpg ~ ., data = mtcars)
+```
+
+### Figure: Boxplot of MPG by transmission type
+
+```{r boxplot}
+ggplot(aes(am, mpg, fill=am), data = mtcars) + 
+  geom_boxplot() + 
+  ylab("MPG") + xlab("Transmission type") + 
+  theme_update(legend.position=c(0.85, 0.15))
 ```
