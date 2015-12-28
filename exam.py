@@ -1,18 +1,34 @@
 from Bio.Blast import NCBIWWW, NCBIXML
 
-f = open("dna.example.fasta")
-input = f.read()
+name = "dna.example.fasta"
+f = open(name)
 
-# how many records
-def count_records(input):
-    records = 0
-    for line in input:
-        if line.startswith(">"):
-            records += 1
-    return records
 
-def len_longest_seq(input):
-    pass
+# Count records
+text = f.read()
+records = text.count(">")
+print("There are %d records" % records)
 
-def len_shortest_seq(input):
-    pass
+
+# Find sequences
+seqs = []
+current_seq = ""
+for line in text:
+    if not line.startswith(">"):
+        current_seq += line.strip()
+    else:
+        seqs.append(current_seq)
+        current_seq = ""
+seqs.append(current_seq)
+seqs = seqs[1:]
+
+# Find lengths
+seq_lengths = [len(seq) for seq in seqs]
+
+# Find longest sequence
+print("Longest sequence is %d" % max(seq_lengths))
+
+# Find shortest sequence
+print("Shortest sequence is %d" % min(seq_lengths))
+
+# Find longest ORF 2
