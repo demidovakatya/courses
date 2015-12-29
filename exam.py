@@ -29,7 +29,7 @@ def max_len(stuff):
 
 print("There are %d records" % (len(records)))
 print("Longest sequence: %d" % max_len(seqs))
-print("Shortest sequence: %d" % min([len(seq) for seq in seqs]))
+print("Shortest sequence: %d\n" % min([len(seq) for seq in seqs]))
 
 
 def find_orf(sequence, frame):
@@ -48,6 +48,9 @@ def find_orf(sequence, frame):
         if sequence[i:i+3] in stop_codons:
             ends.append(i+2)
 
+    print(starts)
+    print(ends)
+
     orfs = []
 
     for i in starts:
@@ -58,9 +61,16 @@ def find_orf(sequence, frame):
             orfs.append(sequence[i:j+1])
             break
     
-    # print("TEST Length of the longest ORF %d: %d" % (frame, max_len(orfs)))
+    # print("Length of the longest ORF %d: %d" % (frame, max_len(orfs)))
     return orfs
 
+# TEST 
+t1 = find_orf(seq_with_id, 1)
+print("Test\nORFs-1 found: %d; max length: %d" % (len(t1), max_len(t1)))
+t2 = find_orf(seq_with_id, 2)
+print("Test\nORFs-2 found: %d; max length: %d" % (len(t1), max_len(t2)))
+t3 = find_orf(seq_with_id, 3)
+print("Test\nORFs-3 found: %d; max length: %d" % (len(t1), max_len(t3)))
 
 def find_orf_seqs(sequences, frame):
     """Looks for ORFs – open reading frames in a SINGLE sequence.
@@ -77,14 +87,18 @@ orfs2 = find_orf_seqs(seqs, 2)
 orfs3 = find_orf_seqs(seqs, 3)
 
 orfs = orfs1 + orfs2 + orfs3
-print("Longest ORF: %d" % max_len(orfs))
+print("Longest ORF: %d\n" % max_len(orfs))
 
 
 # What is the length of the longest forward ORF that appears in the sequence with the identifier gi|142022655|gb|EQ086233.1|16?
 identifier = 'gi|142022655|gb|EQ086233.1|454'
 seq_with_id = records['>' + identifier]
 orfs = find_orf(seq_with_id, 1) + find_orf(seq_with_id, 2) + find_orf(seq_with_id, 3)
-print("Longest ORF with identifier %s:\n %d" % (identifier, max_len(orfs)))
+print("\nLongest ORF with identifier %s:\n %d" % (identifier, max_len(orfs)))
+print("\n=====TEST\n")
+print(max_len(find_orf(seq_with_id, 1)))
+print(max_len(find_orf(seq_with_id, 2)))
+print(max_len(find_orf(seq_with_id, 3)))
 
 def find_repeats(sequences, length):
     repeats_freq = {}
@@ -99,7 +113,7 @@ def find_repeats(sequences, length):
                 # print("Added: %s" % rep)
     # return repeats_freq
     top_freq = sorted(repeats_freq.values())[-1]
-    print("Most frequently occurring repeats")
+    print("\nMost frequently occurring repeats")
     print("(length: %d; frequency: %d)" % (length, top_freq))
     for rep in repeats_freq:
         if repeats_freq[rep] == top_freq:
