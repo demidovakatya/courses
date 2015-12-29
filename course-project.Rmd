@@ -67,9 +67,7 @@ summary(lin.model)
 
 The intercept coefficient (``r round(coef(lin.model)[1], 3)``) is the empirical mean of MPG for cars with automatic transmissions. The `am` coefficient (``r round(coef(lin.model)[2], 3)``) is the mean increase of MPG for cars with manual transmissions. The mean MPG for cars with manual transmissions is `intercept` + `am` = ``r round(coef(lin.model)[1]+ coef(lin.model)[2], 3)``.
 
-The p-value is `0.000285`, which means that there is a significant difference in MPG between groups with different transmission. 
-
-The adjusted R-squared is ``r round(summary(lin.model)$adj.r.squared, 4)``, which means that only ~34% of the variability is explained by this model. This percentage is relatively small, so we should find out which of other variables could be predictors in our model.
+The p-value is `0.000285`, which means that there is a significant difference in MPG between groups with different transmission. However, the adjusted R-squared is ``r round(summary(lin.model)$adj.r.squared, 4)``, which means that only ~34% of the variability is explained by this model. This percentage is relatively small, so we should find out which of other variables could be predictors in our model.
 
 ### Multivariate Regression Model
 
@@ -83,9 +81,7 @@ step.model <- step(init.model)
 summary(step.model)
 ```
 
-The best model found by the `step` algorithm contains `cyl`, `hp`, `wt`, and `am` variables. We have compared this model with the linear model (Appendix - Figure: Comparing regression models). From the results, we can tell that there are significant differences between two models, in other words, `cyl`, `hp`, and `wt` variables increase acuuracy of the model.
-
-With these three variables as confounders, adjusted R-squared is `r summary(step.model)$adj.r.squared`, meaning 84% of the variability is explained by the model above.
+The best model found by the `step` algorithm contains `cyl` (number of cylinders), `hp` (gross horsepower), `wt` (weight), and `am` (transmission) variables. We have compared this model with the linear model (Appendix - Figure: Comparing regression models). From the results, we can tell that there are significant differences between two models, in other words, `cyl`, `hp`, and `wt` variables increase accuracy of the model. With these three variables as confounders, adjusted R-squared is `r summary(step.model)$adj.r.squared`, meaning 84% of the variability is explained by the model above.
 
 ## Appendix
 
@@ -96,7 +92,7 @@ ggplot(aes(mpg), data = mtcars) + geom_histogram()
 
 ### Figure: Correlations between variables
 ```{r correlations}
-pairs(mpg ~ ., data = mtcars)
+cor(mtcars)
 ```
 
 ### Figure: Boxplot of MPG by transmission type
