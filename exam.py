@@ -16,18 +16,23 @@ handle = open(name)
 records = {} # {header: sequence}
 seqs = [] # [sequence]
 current_seq = ""
+current_req = ""
 
 for line in handle:
     # print(line)
-    if not line.startswith(">"):
-        current_seq += line.strip()
+    if line.startswith(">"):
+        current_req = line.split(" ")[0]
+        records[current_req] = ""
+        # current_seq += line.strip()
     else:
+        records[current_req] = records[current_req] + line.strip()
         # print("Line doesn't startswith >")
-        seqs.append(current_seq)
-        records[line.split(" ")[0]] = current_seq
-        current_seq = ""
-seqs.append(current_seq)
-seqs = seqs[1:]
+        # seqs.append(current_seq)
+        # records[line.split(" ")[0]] = current_seq
+        # current_seq = ""
+# seqs.append(current_seq)
+# seqs = seqs[1:]
+seqs = records.values()
 
 
 print("There are %d records" % (len(records)))
@@ -67,7 +72,7 @@ def find_orf(sequence, frame):
         for j in ends:
             if (i > j) or (j - i < 6):
                 continue
-            print("String from %d to %d. Length: %d" % (i, j+1, j+1-i))
+            # print("String from %d to %d. Length: %d" % (i, j+1, j+1-i))
             orfs.append(sequence[i:j+1])
             break
  
@@ -94,7 +99,10 @@ print("Length of the longest ORF: %d" % max(orf_lengths))
 
 
 # What is the length of the longest forward ORF that appears in the sequence with the identifier gi|142022655|gb|EQ086233.1|16?
-identifier = "gi|142022655|gb|EQ086233.1|16"
+identifier = 'gi|142022655|gb|EQ086233.1|454'
+seq_with_id = records['>' + identifier]
+orfs = find_orf(seq_with_id, 1) + find_orf(seq_with_id, 2) + find_orf(seq_with_id, 3)
+print("Length of the longest ORF: %d" % max([len(orf) for orf in orfs]))
 
 # Find the most frequently occurring repeat of length 6 in all sequences. 
 # How many times does it occur in all?
@@ -110,3 +118,14 @@ identifier = "gi|142022655|gb|EQ086233.1|16"
 # GCGCGCA
 # CGCGCCG
 # AATGGCA
+
+reps = ["TGCGCGC", "GCGCGCA", "CGCGCCG", "AATGGCA"]
+occurrences = []
+for rep in reps:
+    num = 0
+    for seq in seqs:
+        num += [a.start() for a in list(re.finditer(rep, seq))]
+    print("%s occurs: %d times" % (rep, num))
+    occurrences.append((rep, num))
+print(occurrences)
+
