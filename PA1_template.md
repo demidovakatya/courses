@@ -1,11 +1,4 @@
----
-title: "Reproducible Research: Peer Assessment 1"
-output: 
-  html_document:
-    fig_width: 8
-    keep_md: yes
-    toc: yes
----
+# Reproducible Research: Peer Assessment 1
 
 ## Introduction
 
@@ -143,7 +136,7 @@ colnames(daily.steps) <- c("day", "total.steps")
 hist(daily.steps$total.steps, breaks = 20, xlab = "Number of steps", main = "Histogram of the total number of steps\ntaken each day (NAs ignored)", col="red")
 ```
 
-![plot of chunk unnamed-chunk-3](figure/unnamed-chunk-3-1.png) 
+![](PA1_template_files/figure-html/unnamed-chunk-3-1.png) 
 
 * Calculate and report the mean and median total number of steps taken per day
 
@@ -183,7 +176,7 @@ plot(interval.steps$interval, interval.steps$average.steps,
      ylab = "Average number of steps taken")
 ```
 
-![plot of chunk unnamed-chunk-5](figure/unnamed-chunk-5-1.png) 
+![](PA1_template_files/figure-html/unnamed-chunk-5-1.png) 
 
 * Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?
 
@@ -250,7 +243,7 @@ hist(daily.filled.steps$total.steps, breaks = 20, xlab = "Number of steps",
      col="green")
 ```
 
-![plot of chunk unnamed-chunk-10](figure/unnamed-chunk-10-1.png) 
+![](PA1_template_files/figure-html/unnamed-chunk-10-1.png) 
 
 ```r
 mean(daily.filled.steps$total.steps)
@@ -282,7 +275,7 @@ hist(daily.filled.steps$total.steps, breaks = 20, xlab = "",
      main = "total steps per day\nNAs filled", col="green")
 ```
 
-<img src="figure/unnamed-chunk-11-1.png" title="plot of chunk unnamed-chunk-11" alt="plot of chunk unnamed-chunk-11" style="display: block; margin: auto;" />
+<img src="PA1_template_files/figure-html/unnamed-chunk-11-1.png" title="" alt="" style="display: block; margin: auto;" />
 
 
 ```r
@@ -320,7 +313,7 @@ colnames(bad.daily.filled.steps) <- c("day", "total.steps")
 hist(bad.daily.filled.steps$total.steps, breaks = 20, xlab = "Number of steps", main = "Histogram of the total number\nof steps taken each day", col="yellow")
 ```
 
-![plot of chunk unnamed-chunk-13](figure/unnamed-chunk-13-1.png) 
+![](PA1_template_files/figure-html/unnamed-chunk-13-1.png) 
 
 ```r
 # Mean and median
@@ -370,5 +363,5 @@ xyplot(average.steps ~ interval | daytype, data = week.steps,
        main = "Average daily activity pattern for weekends and weekdays")
 ```
 
-![plot of chunk unnamed-chunk-15](figure/unnamed-chunk-15-1.png) 
+![](PA1_template_files/figure-html/unnamed-chunk-15-1.png) 
 
