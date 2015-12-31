@@ -20,13 +20,13 @@ vignettes/*.pdf
 statinference-course-project.Rproj
 analysis_cache*
 cache/unname*
-
 .Rproj.user/783A01F2/sdb/s-87E9D458/3F445C69
 .Rproj.user
-
-.Rproj.user/783A01F2/sdb/s-87E9D458/3F445C69
-
 rsconnect/**
 cache/**
 analysis_cache/**
 *.Rproj
+rsconnect/documents/analysis.Rmd/rpubs.com/rpubs/**
+style.css
+replace.R
+
