@@ -43,16 +43,18 @@ hatvalues(lm(y ~ x))
 x <- c(0.586, 0.166, -0.042, -0.614, 11.72)
 y <- c(0.549, -0.026, -0.127, -0.751, 1.344)
 # Give the slope dfbeta for the point with the highest hat value.
-fit <- lm(y ~ x)
+influence.measures(lm(y ~ x))
+## Influence measures of
+##   lm(formula = y ~ x) :
+## 
+##    dfb.1_     dfb.x     dffit cov.r   cook.d   hat inf
+## 1  1.0621 -3.78e-01    1.0679 0.341 2.93e-01 0.229   *
+## 2  0.0675 -2.86e-02    0.0675 2.934 3.39e-03 0.244    
+## 3 -0.0174  7.92e-03   -0.0174 3.007 2.26e-04 0.253   *
+## 4 -1.2496  6.73e-01   -1.2557 0.342 3.91e-01 0.280   *
+## 5  0.2043 -1.34e+02 -149.7204 0.107 2.70e+02 0.995   *
 
-plot(x, y)
-abline(fit)
-
-dfbetas(fit)
-# -.00134
 # -134
-# -0.378
-# 0.673
 
 # Question 7
 # Consider a regression relationship between Y and X with and without adjustment for a third variable Z. Which of the following is true about comparing the regression coefficient between Y and X with and without adjustment for Z.
