@@ -126,7 +126,7 @@ Italy	        2,000,000	33
 - Mean = 0, standard deviation = 1.
 - Mean = 1400, standard deviation = 300.
 
-16. Ten students resit the Basic Statistics exam. Their final grades are: `4, 4, 2, 9, 7, 9, 6, 4, 7, 8`. What is the interquartile range?
+16\. Ten students resit the Basic Statistics exam. Their final grades are: `4, 4, 2, 9, 7, 9, 6, 4, 7, 8`. What is the interquartile range?
 
 - 2
 - 8
