@@ -1,32 +1,21 @@
-# History files
 .Rhistory
 .Rapp.history
-
-# Session Data files
 .RData
-
-# Example code in package build process
 *-Ex.R
-
-# RStudio files
 .Rproj.user/
-
-# produced vignettes
 vignettes/*.html
 vignettes/*.pdf
-
-# OAuth2 token, see https://github.com/hadley/httr/releases/tag/v0.3
 .httr-oauth
 statinference-course-project.Rproj
 analysis_cache*
 cache/unname*
 .Rproj.user/783A01F2/sdb/s-87E9D458/3F445C69
 .Rproj.user
-rsconnect/**
+rsconnect/*/*
 cache/**
 analysis_cache/**
 *.Rproj
 rsconnect/documents/analysis.Rmd/rpubs.com/rpubs/**
 style.css
 replace.R
-
+figure/*
