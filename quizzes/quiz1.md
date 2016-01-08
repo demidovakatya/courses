@@ -60,7 +60,7 @@ shinyUI(pageWithSidebar(
 - The 𝚑𝟸 command has the wrong arguments.
 - The 𝚑𝟹 command should be an 𝚑𝟸 command.
 - The "𝚂𝚒𝚍𝚎𝚋𝚊𝚛" should say "𝚂𝚒𝚍𝚎𝚋𝚊𝚛 𝚝𝚎𝚡𝚝".
-- Missing a comma in the sidebar panel
+- **Missing a comma in the sidebar panel**
 
 ## Question 5
 
@@ -95,7 +95,7 @@ shinyServer(
 ```
 Why isn't it doing what we want?
 
-- The server.R output name isn't the same as the plotOutput command used in ui.R.
+- The `server.R` output name isn't the same as the `plotOutput` command used in ui.R.
 - The phrase "Guess at the mu value" should say "mean" instead of "mu"
 - The limits of the slider are set incorrectly and giving an error.
-- It should be 𝚖𝚞 <- 𝚒𝚗𝚙𝚞𝚝$𝚖𝚎𝚊𝚗 in server.R
+- It should be 𝚖𝚞 <- 𝚒𝚗𝚙𝚞𝚝$𝚖𝚎𝚊𝚗 in `server.R`
