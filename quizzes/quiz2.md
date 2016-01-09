@@ -39,7 +39,7 @@ If you want to display the results, but not the actual code, what should you do?
 - Add a 𝚎𝚌𝚑𝚘 = 𝙵𝙰𝙻𝚂𝙴 option in the {𝚛} call of the code chunk
 - Comment the command, but use a bang symbol after the comment, as in #! 𝚜𝚞𝚖𝚖𝚊𝚛𝚢(𝚏𝚒𝚝)
 - Comment out the command # 𝚜𝚞𝚖𝚖𝚊𝚛𝚢(𝚏𝚒𝚝)
-- Add a 𝚎𝚌𝚑𝚘 = 𝚃𝚁𝚄𝙴option in the {𝚛} call of the code chunk
+- Add a 𝚎𝚌𝚑𝚘 = 𝚃𝚁𝚄𝙴 option in the {𝚛} call of the code chunk
 
 ## Question 4
 

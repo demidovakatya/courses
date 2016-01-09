@@ -64,8 +64,9 @@ shinyUI(pageWithSidebar(
 
 ## Question 5
 
-```r
 Consider the following code in 𝚞𝚒.𝚁
+
+```r
 shinyUI(pageWithSidebar(  
    headerPanel("Example plot"),  
    sidebarPanel(    
@@ -93,9 +94,10 @@ shinyServer(
           })      }
 )
 ```
+
 Why isn't it doing what we want?
 
-- The `server.R` output name isn't the same as the `plotOutput` command used in ui.R.
+- **The `server.R` output name isn't the same as the `plotOutput` command used in ui.R.**
 - The phrase "Guess at the mu value" should say "mean" instead of "mu"
 - The limits of the slider are set incorrectly and giving an error.
 - It should be 𝚖𝚞 <- 𝚒𝚗𝚙𝚞𝚝$𝚖𝚎𝚊𝚗 in `server.R`
