@@ -19,7 +19,7 @@ Which of the following code will make a manipulate plot that creates a slider fo
 - `manipulate(myPlot, s = slider(0, 2, step = 0.1))`
 - `manipulate(myPlot(s), x.s = slider(0, 2, step = 0.1))`
 - `manipulate(myPlot(s), slider = x(0, 2, step = 0.1))`
-- `manipulate(myPlot(s), s = slider(0, 2, step = 0.1))`
+- **`manipulate(myPlot(s), s = slider(0, 2, step = 0.1))`**
 
 ## Question 2
 
@@ -28,14 +28,14 @@ Which of the following code uses the `rCharts` package to create a sortable and 
 - `airquality`
 - `d <- data.frame(airquality, stringsAsFactors = FALSE); print(d)`
 - `head(airquality)`
-- `dTable(airquality, sPaginationType = "full_numbers")`
+- **`dTable(airquality, sPaginationType = "full_numbers")`**
 
 ## Question 3
 
 A basic shiny data product requires:
 
 - A 𝚜𝚑𝚒𝚗𝚢.𝚁 file.
-- A 𝚞𝚒.𝚁 and 𝚜𝚎𝚛𝚟𝚎𝚛.𝚁 file or a A 𝚜𝚎𝚛𝚟𝚎𝚛.𝚁 file and a directory called 𝚠𝚠𝚠 containing the relevant html files.
+- **A 𝚞𝚒.𝚁 and 𝚜𝚎𝚛𝚟𝚎𝚛.𝚁 file or a A 𝚜𝚎𝚛𝚟𝚎𝚛.𝚁 file and a directory called 𝚠𝚠𝚠 containing the relevant html files.**
 - A 𝚜𝚎𝚛𝚟𝚎𝚛.𝚁 file only.
 - A 𝚞𝚒.𝚁 file only.
 
