@@ -23,10 +23,10 @@ Which of the following code will make a manipulate plot that creates a slider fo
 
 ## Question 2
 
-Which of the following code uses the `rCharts` package to create a sortable and searchable data table for the 𝚊𝚒𝚛𝚚𝚞𝚊𝚕𝚒𝚝𝚢 data set? Assume the `rCharts` package and the `airquality` data set have already been loaded into R.
+Which of the following code uses the `rCharts` package to create a sortable and searchable data table for the `𝚊𝚒𝚛𝚚𝚞𝚊𝚕𝚒𝚝𝚢` data set? Assume the `rCharts` package and the `airquality` data set have already been loaded into R.
 
 - `airquality`
-- `d <- data.frame(airquality, stringsAsFactors = FALSE)print(d)`
+- `d <- data.frame(airquality, stringsAsFactors = FALSE); print(d)`
 - `head(airquality)`
 - `dTable(airquality, sPaginationType = "full_numbers")`
 
