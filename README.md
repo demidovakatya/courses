@@ -12,6 +12,7 @@ You will create a report to answer the questions. Given the nature of the series
 Results:
 
 :cyclone: First part: [PDF](https://github.com/demidovakatya/statinference-course-project/blob/master/part1.pdf)
+:cyclone: Second part: [PDF](https://github.com/demidovakatya/statinference-course-project/blob/master/part2.pdf)
 
 ## A simulation exercise
 
