@@ -75,7 +75,7 @@ The intercept coefficient (``r round(coef(lin.model)[1], 4)``) is the empirical 
 
 The p-value is `r round(0.000285, 4)`, which means that there is a significant difference in MPG between groups with different transmission. However, the adjusted R-squared is ``r round(summary(lin.model)$adj.r.squared, 4)``, which means that only ~34% of the variability is explained by this model. This percentage is relatively small, so we should find out which of other variables could be predictors in our model.
 
-### Multivariate Regression Model
+### Multivariable Regression Model
 
 To begin with, we will build a model with `mpg` as the outcome and all other variables as predictors. Next, we will use this model as the initial model in the stepwise search by `step` algorithm.
 
