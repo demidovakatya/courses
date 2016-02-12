@@ -1,0 +1,18 @@
+{
+    "contents" : "# Have total emissions from PM2.5 decreased in the Baltimore City, Maryland\n# (fips == \"24510\") from 1999 to 2008? \n# Use the base plotting system to make a plot answering this question.\n\n# Load and extract the data into the working directory\nif (!file.exists(\"NEI_data/\")) {\n  url <- \"https://d396qusza40orc.cloudfront.net/exdata%2Fdata%2FNEI_data.zip\"\n  download.file(url, destfile = \"NEI_data.zip\", method = \"curl\")\n  unzip(\"NEI_data.zip\", exdir = \"NEI_data/\")\n}\n\n# Load the data into the environment\nif (!exists(\"nei\")) { nei <- readRDS(\"NEI_data/summarySCC_PM25.rds\") }\nif (!exists(\"scc\")) { scc <- readRDS(\"NEI_data/Source_Classification_Code.rds\") }\n\n# Aggregate the amout of PM2.5 emission by year for the Baltimore City\nemission.by.year <- aggregate(Emissions ~ year, data = subset(nei, fips==\"24510\"), FUN = sum)\n\n# Create the plot\noptions(scipen = 20)\nwith(emission.by.year, \n     barplot(height = Emissions, xlab = \"year\", names.arg = year, \n             ylab = \"PM2.5 emission, tons\", col=\"red\",\n             main=\"The total PM2.5 emission\\nin the Baltimore City\\n(all sources)\", yaxs=\"i\"))\n\n# Save the plot\ndev.copy(png, \"plot2.png\", width=600, height=600)\ndev.off()",
+    "created" : 1448110858820.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "880898995",
+    "id" : "98420E8B",
+    "lastKnownWriteTime" : 1448119759,
+    "path" : "~/Documents/GitHub/exdata-course-project-2/plot2.R",
+    "project_path" : "plot2.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "type" : "r_source"
+}

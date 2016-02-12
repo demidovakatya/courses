@@ -1,0 +1,18 @@
+{
+    "contents" : "# Across the United States, how have emissions from coal combustion-related sources \n# changed from 1999–2008?\n\n# Load and extract the data into the working directory\nif (!file.exists(\"NEI_data/\")) {\n  url <- \"https://d396qusza40orc.cloudfront.net/exdata%2Fdata%2FNEI_data.zip\"\n  download.file(url, destfile = \"NEI_data.zip\", method = \"curl\")\n  unzip(\"NEI_data.zip\", exdir = \"NEI_data/\")\n}\n\n# Load the data into the environment\nif (!exists(\"nei\")) { nei <- readRDS(\"NEI_data/summarySCC_PM25.rds\") }\nif (!exists(\"scc\")) { scc <- readRDS(\"NEI_data/Source_Classification_Code.rds\") }\n\n# Merge the NEI and SCC data and select rows with \"coal\" in SCC Short Name\nnei.with.scc <- merge(nei, scc, by = \"SCC\")\nsource.is.coal.related <- grepl(\"coal\", nei.with.scc$Short.Name, ignore.case=TRUE)\nchosen.data <- nei.with.scc[source.is.coal.related, ]\n\n# Aggregate the amout of PM2.5 emission from coal combustion-related sources by year\nemission.from.coal <- aggregate(Emissions ~ year, \n                                    data = chosen.data, FUN = sum)\n\n# Create the plot\nlibrary(ggplot2)\nggplot(data = emission.from.coal, aes(factor(year), Emissions)) + \n  geom_bar(stat = \"identity\") +\n  xlab(\"year\") + ylab(\"Emission, tons\") +\n  ggtitle(\"Emissions from coal combustion-related sources\")\n\n# Save the plot\ndev.copy(png, \"plot4.png\", width=600, height=600)\ndev.off()\n",
+    "created" : 1448110937198.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1589084830",
+    "id" : "ECB123C8",
+    "lastKnownWriteTime" : 1448119678,
+    "path" : "~/Documents/GitHub/exdata-course-project-2/plot4.R",
+    "project_path" : "plot4.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 5,
+    "source_on_save" : false,
+    "type" : "r_source"
+}
