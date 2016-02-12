@@ -1,0 +1,12 @@
+.Rhistory
+.Rapp.history
+.RData
+*-Ex.R
+.Rproj.user/
+vignettes/*.html
+vignettes/*.pdf
+.httr-oauth
+statinference-course-project.Rproj
+.Rproj.user
+show4calls.R
+course-materials/*

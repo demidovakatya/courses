@@ -1,0 +1,226 @@
+---
+title: "Statistical Inference Course Project Part 2"
+author: "Katya Demidova"
+date: "26 December 2015"
+output:
+  pdf_document:
+    fig_height: 3
+    fig_width: 5
+  html_document: default
+---
+
+## Overview
+
+In this document we're going to use the ToothGrowth data from the R `datasets` package. We will analyse if the response is the length of odontoblasts (teeth) in each group of 10 guinea pigs is different:
+
+* at each of three dose levels of Vitamin C (0.5, 1, and 2 mg),
+* with each of two delivery methods (orange juice or ascorbic acid).
+
+## Load the Data and Basic Analysis
+
+```{r settings, echo=FALSE, message=FALSE}
+library(ggplot2)
+library(dplyr)
+options(scipen=2)
+```
+
+First, we will load the data and perform basic exploration:
+
+```{r load, echo=FALSE}
+library(datasets)
+data(ToothGrowth)
+```
+
+```{r basicexploration}
+head(ToothGrowth)
+summary(ToothGrowth)
+ToothGrowth$dose <- as.factor(ToothGrowth$dose) # coerce 'dose' to factor
+```
+
+The ToothGrowth data has 60 observations of 3 variables:
+
+* `len`: tooth length (numeric),
+* `supp`: supplement type / delivery method (factor with 2 levels `OJ` and `VC`, orange juice and ascorbic acid respectively),
+* `dose`: dose of Vitamin C in miligrams. This variable is factorised for convenience.
+
+```{r exploratoryplot, fig.align='center', echo=FALSE}
+ggplot(data = ToothGrowth, aes(dose, len)) + geom_boxplot(aes(fill = supp)) + ggtitle("Tooth growth by dose of Vitamin C\nwith different delivery methods") + ylab("tooth length") + facet_grid(. ~ supp)
+```
+
+From the plot above, it is clear that there is a positive correlation between dose level and tooth length in guinea pigs. We might also make an assumption that orange juice causes larger tooth growth than ascorbic acid.
+
+## Statistical Inference
+
+### Tooth Growth by Dose Level
+
+As mentioned above, there seems to be a positive correlation between dose level and tooth length in guinea pigs. To compare tooth growth by `dose` and check if there is a statistically significant difference between the means, we will use t-tests (full results can be seen in Appendix).
+
+```{r subsetbydose}
+# make three subsets
+dose05or1 <- subset(ToothGrowth, dose == "0.5" | dose == "1")
+dose1or2 <- subset(ToothGrowth, dose == "1" | dose == "2")
+dose05or2 <- subset(ToothGrowth, dose == "0.5" | dose == "2")
+```
+
+```{r testbydose, results='hide'}
+t.test(len ~ dose, data = dose05or2)
+t.test(len ~ dose, data = dose1or2)
+t.test(len ~ dose, data = dose05or2)
+```
+
+P-values and confidence intervals of these t-tests:
+
+```{r conclusionbydose, echo=FALSE}
+compared.doses <- c("0.5 and 1", "1 and 2", "0.5 and 2")
+
+p.values <- c(t.test(len ~ dose, data = dose05or2)$p.value, 
+              t.test(len ~ dose, data = dose1or2)$p.value, 
+              t.test(len ~ dose, data = dose05or2)$p.value)
+
+conf.int.lower <- round(c(t.test(len ~ dose, data = dose05or2)$conf.int[1], 
+                    t.test(len ~ dose, data = dose1or2)$conf.int[1], 
+                    t.test(len ~ dose, data = dose05or2)$conf.int[1]), 3)
+
+conf.int.higher <- round(c(t.test(len ~ dose, data = dose05or2)$conf.int[2], 
+                    t.test(len ~ dose, data = dose1or2)$conf.int[2], 
+                    t.test(len ~ dose, data = dose05or2)$conf.int[2]), 3)
+
+data.frame(compared.doses, p.values, conf.int.lower, conf.int.higher)
+```
+
+From these numbers, we can reject all of three null hypotheses and make a conclusion that **dosage of Vitamin C affects tooth growth in guinea pigs**.
+
+### Tooth growth by supplement type
+
+We have made an assumption that that orange juice causes larger tooth growth than ascorbic acid. To compare tooth growth by `supp` and check if there is a statistically significant difference between the means, we will run a t-test with the null hypothesis *H0*: mean tooth growth in guinea pigs getting Vitamin C from orange juice is the same as mean tooth growth in guinea pigs getting Vitamin C from ascorbic acid:
+
+```{r ttestbysupp}
+t.test(len ~ supp, data = ToothGrowth)
+```
+
+The resulting p-value is ``r t.test(len ~ supp, data = ToothGrowth)$p.value``. Though it is very close to `0.05` (most common alpha-level), the difference between the means is **not** significant. Furthermore, the 95% confidence interval contains 0. We cannot reject the null hypothesis and can conclude that **delivery method doesn't affect tooth growth in guinea pigs**.
+
+### Tooth growth by supplement type and dosage
+
+We will compute means and standard deviations for 6 groups:
+
+```{r summarybysuppanddose}
+ToothGrowth %>% group_by(supp, dose) %>% summarise(mean(len), sd(len))
+```
+
+Next, we will compare tooth growth by delivery method (`supp`) in groups with different dosage:
+
+```{r subsetbysuppanddose}
+# make three subsets
+dose05 <- subset(ToothGrowth, dose == "0.5")
+dose1 <- subset(ToothGrowth, dose == "1")
+dose2 <- subset(ToothGrowth, dose == "2")
+```
+
+```{r ttestbysuppanddose, results='hide'}
+t.test(len ~ supp, data = dose05)
+t.test(len ~ supp, data = dose1)
+t.test(len ~ supp, data = dose2)
+```
+
+P-values and confidence intervals of these t-tests:
+
+```{r conclusionbysuppanddose, echo=FALSE}
+doses <- c("0.5", "1", "2")
+
+p.values <- round(c(t.test(len ~ supp, data = dose05)$p.value, 
+              t.test(len ~ supp, data = dose1)$p.value, 
+              t.test(len ~ supp, data = dose2)$p.value), 5)
+
+conf.int.lower <- round(c(t.test(len ~ supp, data = dose05)$conf.int[1], 
+                    t.test(len ~ supp, data = dose1)$conf.int[1], 
+                    t.test(len ~ supp, data = dose2)$conf.int[1]), 3)
+
+conf.int.higher <- round(c(t.test(len ~ supp, data = dose05)$conf.int[2], 
+                    t.test(len ~ supp, data = dose1)$conf.int[2], 
+                    t.test(len ~ supp, data = dose2)$conf.int[2]), 3)
+
+data.frame(doses, p.values, conf.int.lower, conf.int.higher)
+```
+
+As we can see, delivery method **does affect** tooth growth in guinea pigs when dosage is 0.5 or 1, with **orange juice causing more tooth growth**. However, **when dosage is 2 miligrams, orange juice does not significantly differ from ascorbic acid**.
+
+## Assumptions and Conclusions
+
+Assuming that (1) delivery method and dosage are randomly assigned, (2) population data is normally distributed, and (3) sample group is representative for the population, we can make several conclusions:
+
+* higher doses of Vitamin C lead to larger tooth length in guinea pigs;
+* orange juice is a more successful delivery method (comparing to ascorbic acid) when dosage os either 0.5 or 1 mg;
+* when dosage is 2 mg, there is no significant difference between orange juice and ascorbic acid.
+
+In other words, if we needed our guinea pig to have long teeth, we could choose any delivery method and dosage of 2 mg.
+
+## Appendix
+
+### Hidden Code Chunks
+```{r, ref.label = "settings", eval=FALSE}
+library(ggplot2)
+library(dplyr)
+options(scipen=2)
+```
+
+```{r, ref.label="load", eval=FALSE}
+library(datasets)
+data(ToothGrowth)
+```
+
+```{r ref.label="exploratoryplot", eval=FALSE}
+ggplot(data = ToothGrowth, aes(dose, len)) + geom_boxplot(aes(fill = supp)) + ggtitle("Tooth growth by dose of Vitamin C\nwith different delivery methods") + ylab("tooth length") + facet_grid(. ~ supp)
+```
+
+### Section Tooth Growth by Dose Level
+
+```{r ref.label="testbydose", eval=FALSE}
+t.test(len ~ dose, data = dose05or2)
+t.test(len ~ dose, data = dose1or2)
+t.test(len ~ dose, data = dose05or2)
+```
+
+```{r ref.label="conclusionbydose", eval=FALSE}
+compared.doses <- c("0.5 and 1", "1 and 2", "0.5 and 2")
+
+p.values <- c(t.test(len ~ dose, data = dose05or2)$p.value, 
+              t.test(len ~ dose, data = dose1or2)$p.value, 
+              t.test(len ~ dose, data = dose05or2)$p.value)
+
+conf.int.lower <- round(c(t.test(len ~ dose, data = dose05or2)$conf.int[1], 
+                    t.test(len ~ dose, data = dose1or2)$conf.int[1], 
+                    t.test(len ~ dose, data = dose05or2)$conf.int[1]), 3)
+
+conf.int.higher <- round(c(t.test(len ~ dose, data = dose05or2)$conf.int[2], 
+                    t.test(len ~ dose, data = dose1or2)$conf.int[2], 
+                    t.test(len ~ dose, data = dose05or2)$conf.int[2]), 3)
+
+data.frame(compared.doses, p.values, conf.int.lower, conf.int.higher)
+```
+
+### Section Tooth Growth by Dose Level and Supplement Type
+
+```{r ref.label="ttestbysuppanddose", eval=FALSE}
+t.test(len ~ supp, data = dose05)
+t.test(len ~ supp, data = dose1)
+t.test(len ~ supp, data = dose2)
+```
+
+```{r ref.label="conclusionbysuppanddose", eval=FALSE}
+doses <- c("0.5", "1", "2")
+
+p.values <- round(c(t.test(len ~ supp, data = dose05)$p.value, 
+              t.test(len ~ supp, data = dose1)$p.value, 
+              t.test(len ~ supp, data = dose2)$p.value), 5)
+
+conf.int.lower <- round(c(t.test(len ~ supp, data = dose05)$conf.int[1], 
+                    t.test(len ~ supp, data = dose1)$conf.int[1], 
+                    t.test(len ~ supp, data = dose2)$conf.int[1]), 3)
+
+conf.int.higher <- round(c(t.test(len ~ supp, data = dose05)$conf.int[2], 
+                    t.test(len ~ supp, data = dose1)$conf.int[2], 
+                    t.test(len ~ supp, data = dose2)$conf.int[2]), 3)
+
+data.frame(doses, p.values, conf.int.lower, conf.int.higher)
+```
