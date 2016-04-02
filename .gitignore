@@ -1,5 +1,7 @@
 data-science/rprog/assignment_1/specdata/.RData
 data-science/rprog/assignment_1/specdata/.Rhistory
 data-science/rprog/quizzes/.Rhistory
-data-science/rprog/assignment_3/.RData
-data-science/rprog/assignment_3/.Rhistory
+**.RData
+**.Rhistory
+
+data-science/r-programming/assignment_1/specdata/*.csv
