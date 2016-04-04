@@ -78,7 +78,7 @@ def walk(f, d, numSteps):
     return(start.distFrom(f.getLoc(d)))
 
 
-## import pylab
+import pylab
 
 # set line width
 ## pylab.rcParams['lines.linewidth'] = 6
@@ -186,3 +186,6 @@ def drunkTestP(numTrials=50):
         pylab.ylabel('Steps from Origin')
         pylab.legend(loc='upper left')
     pylab.show()
+
+# test
+drunkTestP()

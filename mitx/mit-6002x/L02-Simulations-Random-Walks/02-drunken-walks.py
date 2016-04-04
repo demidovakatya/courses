@@ -91,9 +91,9 @@ def simWalks(numSteps, numTrials):
 def drunkTest(numTrials = 20):
     for numSteps in [10, 100, 1000, 10000]:
         distances = simWalks(numSteps, numTrials)
-        print 'Random walk of ' + str(numSteps) + ' steps'
-        print ' Mean =', sum(distances)/len(distances)
-        print ' Max =', max(distances), 'Min =', min(distances)
+        print ('Random walk of ' + str(numSteps) + ' steps')
+        print (' Mean =', sum(distances)/len(distances))
+        print (' Max =', max(distances), 'Min =', min(distances))
 
 
 
