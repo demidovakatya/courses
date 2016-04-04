@@ -13,7 +13,7 @@ def checkPascal(numTrials, roll):
             if d1 == 6 and d2 == 6:
                 yes += 1
                 break
-    print 'Probability of losing =', 1.0 - yes/numTrials
+    print ('Probability of losing =', 1.0 - yes/numTrials)
 
 ##checkPascal(10000, rollDie)
 

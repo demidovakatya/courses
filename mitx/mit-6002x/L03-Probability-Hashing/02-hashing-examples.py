@@ -22,9 +22,9 @@ def hashStr(s, tableSize = 101):
 ##print hashStr('John is a cool dude')
 
 
-print hashStr('Eric', 7)
-print hashStr('Chris', 7)
-print hashStr('Sarina', 7)
+print (hashStr('Eric', 7))
+print (hashStr('Chris', 7))
+print (hashStr('Sarina', 7))
 
 
-print hashStr('Jill', 7)
+print (hashStr('Jill', 7))
