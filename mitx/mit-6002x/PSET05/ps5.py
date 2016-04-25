@@ -35,8 +35,18 @@ def load_map(mapFilename):
     Returns:
         a directed graph representing the map
     """
-    # TODO
-    print "Loading map from file..."
+    print("Loading map from file...")
+    
+    graph = WeightedDigraph()
+
+    with open(mapFilename) as map:
+        for line in map:
+            fr, to, total_d, d_outd = line.rstrip().split()
+            graph.addNode(fr)
+            graph.addNode(to)
+            graph.addEdge( WeigthedEdge(fr, to, total_d, d_outd) )
+
+    return(graph)
         
 
 #
