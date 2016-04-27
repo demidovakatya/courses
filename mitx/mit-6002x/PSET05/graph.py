@@ -33,6 +33,19 @@ class Edge(object):
     def __str__(self):
         return '{0}->{1}'.format(self.src, self.dest)
 
+class WeightedEdge(Edge):
+    def __init__(self, src, dest, totDist, outDist):
+        Edge.__init__(self, src, dest)
+        self.totDist = totDist
+        self.outDist = outDist 
+    def getTotalDistance(self):
+        return self.totDist
+    def getOutdoorDistance(self):
+        return self.outDist
+    def __str__(self):
+        return '{0}->{1} ({2}, {3})'.format(self.src, self.dest,\
+                                            self.totDist, self.outDist)
+
 class Digraph(object):
     """
     A directed graph
@@ -70,39 +83,24 @@ class Digraph(object):
         return res[:-1]
 
 class WeightedDigraph(Digraph):
+    """
+    A weighted directed graph
+    """
     def __init__(self):
         Digraph.__init__(self)
-
     def addEdge(self, edge):
         src = edge.getSource()
         dest = edge.getDestination()
         if not(src in self.nodes and dest in self.nodes):
             raise ValueError('Node not in graph')
-        self.edges[src].append(dest)
-
+        totDist = edge.getTotalDistance()
+        outDist = edge.getOutdoorDistance()
+        self.edges[src].append((dest, totDist, outDist))
     def childrenOf(self, node):
-        return self.edges[node]
-    
+        return [n[0] for n in self.edges[node]]
     def __str__(self):
         res = ''
-
         for k in self.edges:
             for d in self.edges[k]:
-                res = '{0}{1}\n'.format(res,  d)
-        return res[:-1]
-
-class WeightedEdge(Edge):
-    def __init__(self, src, dest, total_distance, outdoor_distance):
-        Edge.__init__(self, src, dest)
-        self.total_distance = total_distance
-        self.outdoor_distance = outdoor_distance
-
-    def getTotalDistance(self):
-        return self.total_distance
-
-    def getOutdoorDistance(self):
-        return self.outdoor_distance
-
-    def __str__(self):
-        return '{0}->{1} ({2}, {3})'.format(self.src, self.dest, 
-                        self.total_distance, self.outdoor_distance)
+                res += '{0}->{1} ({2}, {3})\n'.format(k, d[0], float(d[1]), float(d[2]))
+        return res

@@ -1,5 +1,6 @@
 #Code shared across examples
 import pylab, string
+import numpy as np
 
 def stdDev(X):
     mean = sum(X)/float(len(X))
@@ -10,7 +11,7 @@ def stdDev(X):
 
 def scaleFeatures(vals):
     """Assumes vals is a sequence of numbers"""
-    result = pylab.array(vals)
+    result = np.array(vals)
     mean = sum(result)/float(len(result))
     result = result - mean
     sd = stdDev(result)
@@ -52,22 +53,42 @@ class Cluster(object):
         are closest to each other, where one point is from 
         self and the other point is from other. Uses the 
         Euclidean dist between 2 points, defined in Point."""
-        # TO DO
-        pass
+        minDist = 100
+        for pointSelf in self.members():
+            for pointOther in other.members():
+                dist = pointSelf.distance(pointOther)
+                if type(minDist) == 'NoneType' or dist < minDist or minDist == None:
+                    minDist = dist
+        return minDist
+        
     def maxLinkageDist(self, other):
         """ Returns the float distance between the points that 
         are farthest from each other, where one point is from 
         self and the other point is from other. Uses the 
         Euclidean dist between 2 points, defined in Point."""
-        # TO DO
-        pass
+        maxDist = 0
+        for pointSelf in self.members():
+            for pointOther in other.members():
+                dist = pointSelf.distance(pointOther)
+                if dist > maxDist or maxDist == None or type(maxDist) == NoneType:
+                    maxDist = dist
+        return maxDist
+    
     def averageLinkageDist(self, other):
         """ Returns the float average (mean) distance between all 
         pairs of points, where one point is from self and the 
         other point is from other. Uses the Euclidean dist 
         between 2 points, defined in Point."""
-        # TO DO
-        pass
+        selfPoints = [point for point in self.members()]
+        otherPoints = [point for point in other.members()]
+        totDist = []
+        cnt = 0
+        for pSelf in selfPoints:
+            for pOther in otherPoints:
+                cnt += 1
+                totDist += [pSelf.distance(pOther)]
+        return sum(totDist) / float(cnt)
+               
     def members(self):
         for p in self.points:
             yield p
@@ -115,20 +136,34 @@ class ClusterSet(object):
         """ Assumes clusters c1 and c2 are in self
         Adds to self a cluster containing the union of c1 and c2
         and removes c1 and c2 from self """
-        # TO DO
-        pass
+        cMerged = Cluster([p for p in c1.members()] + [p for p in c2.members()], City) 
+        self.add(cMerged)
+        self.members.remove(c1)
+        self.members.remove(c2)
     def findClosest(self, linkage):
         """ Returns a tuple containing the two most similar 
         clusters in self
         Closest defined using the metric linkage """
-        # TO DO
-        pass
+        clusters = self.getClusters()
+        numClusters = self.numClusters()
+        minDist = 100
+        minClusters = ()
+        for c1 in clusters:
+            for c2 in clusters:
+                if c1 != c2:
+                    #Call the linkage function of object c1
+                    dist = linkage(c1, c2)
+                    if dist < minDist or minDist == None:
+                        minDist = dist
+                        minClusters = (c1, c2)
+        return minClusters                              
     def mergeOne(self, linkage):
         """ Merges the two most simililar clusters in self
         Similar defined using the metric linkage
         Returns the clusters that were merged """
-        # TO DO
-        pass
+        clusters = self.findClosest(linkage)
+        self.mergeClusters(clusters[0], clusters[1])
+        return clusters
     def numClusters(self):
         return len(self.members)
     def toStr(self):
@@ -168,10 +203,11 @@ def readCityData(fName, scale = False):
         
     #Continue processing lines in file, starting after comments
     for line in dataFile:
-        dataLine = string.split(line[:-1], ',') #remove newline; then split
-        cityNames.append(dataLine[0])
-        for i in range(numFeatures):
-            featureVals[i].append(float(dataLine[i+1]))
+        if not line.startswith('#'):
+            dataLine = line.split(',') #remove newline; then split
+            cityNames.append(dataLine[0])
+            for i in range(numFeatures):
+                featureVals[i].append(float(dataLine[i+1]))
             
     #Use featureVals to build list containing the feature vectors
     #For each city scale features, if needed
@@ -190,7 +226,7 @@ def buildCityPoints(fName, scaling):
     cityNames, featureList = readCityData(fName, scaling)
     points = []
     for i in range(len(cityNames)):
-        point = City(cityNames[i], pylab.array(featureList[i]))
+        point = City(cityNames[i], np.array(featureList[i]))
         points.append(point)
     return points
 
@@ -204,7 +240,7 @@ def hCluster(points, linkage, numClusters, printHistory):
         merged = cS.mergeOne(linkage)
         history.append(merged)
     if printHistory:
-        print ''
+        print('')
         for i in range(len(history)):
             names1 = []
             for p in history[i][0].members():
@@ -212,20 +248,25 @@ def hCluster(points, linkage, numClusters, printHistory):
             names2 = []
             for p in history[i][1].members():
                 names2.append(p.getName())
-            print 'Step', i, 'Merged', names1, 'with', names2
-            print ''
-    print 'Final set of clusters:'
-    print cS.toStr()
+            print('Step', i, 'Merged', names1, 'with', names2)
+            print('')
+    print('Final set of clusters:')
+    print(cS.toStr())
     return cS
 
 def test():
-    points = buildCityPoints('cityTemps.txt', False)
-    hCluster(points, Cluster.singleLinkageDist, 10, False)
-    #points = buildCityPoints('cityTemps.txt', True)
+    # points = buildCityPoints('./cityTemps.txt', True)
+    # hCluster(points, Cluster.singleLinkageDist, 10, False)
+    print("with scaling")
+    points = buildCityPoints('./cityTemps.txt', True)
+    hCluster(points, Cluster.singleLinkageDist, 5, False)
+    print("without scaling")
+    points = buildCityPoints('./cityTemps.txt', False)
+    hCluster(points, Cluster.singleLinkageDist, 5, False)
     #hCluster(points, Cluster.maxLinkageDist, 10, False)
     #hCluster(points, Cluster.averageLinkageDist, 10, False)
     #hCluster(points, Cluster.singleLinkageDist, 10, False)
+    # hCluster(points, Cluster.singleLinkageDist, 5, True)
 
-#test()
 
-
+test()
