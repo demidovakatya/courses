@@ -33,3 +33,5 @@ model.rains <- lm(Price ~ HarvestRain + WinterRain, data = wine)
 summary(model.rains)
 
 cor(wine$HarvestRain, wine$WinterRain)
+
+baseball <- read.csv("baseball.csv")
