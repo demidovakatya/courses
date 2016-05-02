@@ -31,3 +31,5 @@ SSE <- sum(model3$residuals^2)
 
 model.rains <- lm(Price ~ HarvestRain + WinterRain, data = wine)
 summary(model.rains)
+
+cor(wine$HarvestRain, wine$WinterRain)
