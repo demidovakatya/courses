@@ -22,22 +22,54 @@ split
 train <- subset(data, split == T)
 test <- subset(data, split == F)
 
-log <- glm(PoorCare ~ StartedOnCombination + ProviderCount, data = train, family = binomial)
+log <- glm(PoorCare ~ StartedOnCombination + ProviderCount, newdata = train, family = binomial)
 summary(log)
 
 pred.train <- predict(log, type = 'response')
 summary(pred.train)
 
-tapply(pred.train, train$PoorCare, mean)
+# tapply(pred.train, train$PoorCare, mean)
+# 
+# table(train$PoorCare, pred.train > 0.5)
+# # sensitivity
+# 3 / 25
+# # specificity
+# 73 / 74
+# 
+# table(train$PoorCare, pred.train > 0.7)
+# # sensitivity
+# 2 / 25
+# # specificity
+# 73 / 74
 
-table(train$PoorCare, pred.train > 0.5)
-# sensitivity
-3 / 25
-# specificity
-73 / 74
+log <- glm(PoorCare ~ OfficeVisits + Narcotics, data = train, family = binomial)
+pred.test <- predict(log, type = "response", newdata = test)
+rocr.pred.test <- prediction(pred.test, test$PoorCare)
+auc.test <- as.numeric(performance(rocr.pred.test, "auc")@y.values)
+auc.test
 
-table(train$PoorCare, pred.train > 0.7)
+
+# --------
+
+dat <- read.csv("framingham.csv")
+str(dat)
+
+library(caTools)
+set.seed(1000)
+split <- sample.split(dat$TenYearCHD, SplitRatio = 0.65)
+train <- subset(dat, split == TRUE)
+test <- subset(dat, split == FALSE)
+
+log <- glm(TenYearCHD ~ ., data = train, family = "binomial")
+summary(log)
+
+pred.test <- predict(log, type = "response", newdata = test)
+
+library(ROCR)
+rocr.pred <- prediction(pred.test, test$TenYearCHD)
+performance(rocr.pred, "auc")
+
 # sensitivity
-2 / 25
+11 / (11 + 187)
 # specificity
-73 / 74
+1069 / (1069 + 6)
