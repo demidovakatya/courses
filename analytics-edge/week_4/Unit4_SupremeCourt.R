@@ -68,9 +68,9 @@ table(Test$Reverse, PredictForest)
 # VIDEO 6
 
 # Install cross-validation packages
-install.packages("caret")
+# install.packages("caret")
 library(caret)
-install.packages("e1071")
+# install.packages("e1071")
 library(e1071)
 
 # Define cross-validation experiment
