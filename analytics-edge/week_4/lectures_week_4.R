@@ -17,5 +17,6 @@ library(rpart.plot)
 
 # CART model
 tree <- rpart(bucket2009 ~ age + alzheimers + arthritis + cancer + copd + depression + diabetes + heart.failure + ihd + kidney + osteoporosis + stroke + bucket2008 + reimbursement2008, data = train, method = "class", cp = 0.00005)
-
 prp(tree)
+
+predict.test <- predict(tree, newdata = test, type = "class")
