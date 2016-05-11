@@ -1,5 +1,6 @@
 # LETTER RECOGNITION
 
+library(dplyr)
 library(randomForest)
 
 data <- read.csv("letters_ABPR.csv")
@@ -36,3 +37,11 @@ table(data$letter)
 
 baseline <- rep("P", nrow(test))
 table(train$letter)[3] / nrow(test)
+
+cart <- rpart(letter ~ . - isB, data = train, method = "class")
+pred <- predict(cart, newdata = test, type = "class")
+table(pred, test$letter) %>% diag %>% sum / nrow(test)
+
+rf <- randomForest(letter ~ . - isB, data = train)
+pred.rf <- predict(rf, newdata = test, type = "class")
+table(pred.rf, test$letter) %>% diag %>% sum / nrow(test)
