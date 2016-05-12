@@ -24,3 +24,8 @@ prp(cart.over50)
 
 cart.pred.over50 <- predict(cart.over50, newdata = test, type = "class")
 table(test$over50k, cart.pred.over50) %>% diag %>% sum / nrow(test)
+
+# TODO
+# What is the AUC of the CART model on the test set?
+
+
