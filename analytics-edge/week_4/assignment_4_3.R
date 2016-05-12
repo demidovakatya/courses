@@ -28,4 +28,4 @@ table(test$over50k, cart.pred.over50) %>% diag %>% sum / nrow(test)
 # TODO
 # What is the AUC of the CART model on the test set?
 
-
+set.seed(1)
