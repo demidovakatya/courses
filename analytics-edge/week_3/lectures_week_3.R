@@ -67,7 +67,10 @@ pred.test <- predict(log, type = "response", newdata = test)
 
 library(ROCR)
 rocr.pred <- prediction(pred.test, test$TenYearCHD)
-performance(rocr.pred, "auc")
+as.numeric(performance(rocr.pred, "auc")@y.values)
+
+library(pROC)
+auc(test$TenYearCHD, pred.test)
 
 # sensitivity
 11 / (11 + 187)
