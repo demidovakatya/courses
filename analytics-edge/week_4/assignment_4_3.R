@@ -1,7 +1,9 @@
 # PREDICTING EARNINGS FROM CENSUS DATA
 
 library(ROCR)
+library(pROC)
 library(dplyr)
+library(rpart)
 data <- read.csv("census.csv")
 
 set.seed(2000)
@@ -26,12 +28,13 @@ log.over50.rocr <- prediction(pred.over50k, test$over50k)
 cart.over50 <- rpart(over50k ~ ., data = train, method = "class")
 prp(cart.over50)
 
-cart.pred.over50 <- predict(cart.over50, newdata = test, type = "vector")
+cart.pred.over50 <- predict(cart.over50, newdata = test, type = "class")
 table(test$over50k, cart.pred.over50) %>% diag %>% sum / nrow(test)
 
-# TODO Problem 2.6 - A CART Model
 # What is the AUC of the CART model on the test set?
-cart.over50.rocr <- prediction(as.vector(cart.pred.over50), test$over50k)
-(cart.over50.auc <- as.numeric(performance(cart.over50.rocr, "auc")@y.values))
+cart.pred.over50 <- predict(cart.over50, newdata = test)
+cart.over50.rocr <- prediction(cart.pred.over50[, 2], test$over50k)
+(cart.over50.auc <- performance(cart.over50.rocr, "auc")@y.values)
+# auc(test$over50k, cart.pred.over50)
 
 set.seed(1)
