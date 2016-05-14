@@ -1,5 +1,7 @@
 # PREDICTING EARNINGS FROM CENSUS DATA
 
+library(ROCR)
+library(dplyr)
 data <- read.csv("census.csv")
 
 set.seed(2000)
@@ -16,16 +18,20 @@ table(test$over50k, pred.over50k > 0.5) %>% diag %>% sum / nrow(test)
 table(train$over50k)
 baseline <- rep("<=50K", nrow(test))
 table(test$over50k, baseline)[1] / nrow(test)
-# TODO: Problem 1.4 - A Logistic Regression Model
+
 # What is the area-under-the-curve (AUC) for this model on the test set?
+log.over50.rocr <- prediction(pred.over50k, test$over50k)
+(log.over50.auc <- as.numeric(performance(log.over50.rocr, "auc")@y.values))
 
 cart.over50 <- rpart(over50k ~ ., data = train, method = "class")
 prp(cart.over50)
 
-cart.pred.over50 <- predict(cart.over50, newdata = test, type = "class")
+cart.pred.over50 <- predict(cart.over50, newdata = test, type = "vector")
 table(test$over50k, cart.pred.over50) %>% diag %>% sum / nrow(test)
 
-# TODO
+# TODO Problem 2.6 - A CART Model
 # What is the AUC of the CART model on the test set?
+cart.over50.rocr <- prediction(as.vector(cart.pred.over50), test$over50k)
+(cart.over50.auc <- as.numeric(performance(cart.over50.rocr, "auc")@y.values))
 
 set.seed(1)
