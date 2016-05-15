@@ -93,3 +93,39 @@ rf.auc <- as.numeric(performance(prediction(rf.pred, test$spam), "auc")@y.values
                                   ncol = 2, dimnames = list(c("lm", "tree", "rf"),
                                                             c("acc", "auc"))
                                   ))
+rm(lm.acc, lm.auc, tree.acc, tree.auc, rf.acc, rf.auc)
+
+# (PART 2 - OPTIONAL) -------------
+# Problem 6 - Integrating Word Count Information
+word.count <- dtm %>% as.matrix %>% rowSums
+hist(word.count)
+
+log.word.count <- log(word.count)
+hist(log.word.count)
+rm(word.count)
+
+sp.dtm$log.word.count <- log.word.count
+train <- subset(sp.dtm, s == T)
+test <- subset(sp.dtm, s == F)
+
+tapply(sp.dtm$log.word.count, sp.dtm$spam, summary)
+boxplot(sp.dtm$log.word.count ~ sp.dtm$spam)
+
+tree <- rpart(spam ~ ., data = train, method = "class")
+set.seed(123)
+rf <- randomForest(spam ~ ., data = train)
+
+tree %>% prp
+
+tree.pred <- predict(tree, newdata = test)[, 2]
+rf.pred <- predict(rf, newdata = test, type = "prob")[, 2]
+
+tree.acc <- find.accuracy(test$spam, tree.pred > 0.5)
+tree.auc <- as.numeric(performance(prediction(tree.pred, test$spam), "auc")@y.values)
+rf.acc <- find.accuracy(test$spam, rf.pred > 0.5)
+rf.auc <- as.numeric(performance(prediction(rf.pred, test$spam), "auc")@y.values)
+
+(models.on.test.results <- matrix(data = c(tree.acc, rf.acc, tree.auc, rf.auc), 
+                                  ncol = 2, 
+                                  dimnames = list(c("tree", "rf"), c("acc", "auc")))
+)
