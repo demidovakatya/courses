@@ -472,7 +472,7 @@ kable(fatality.events)
 qplot(evtype, fatalities, data=fatality.events, geom="bar", stat="identity", xlab="Event type", main="20 events causing most fatalities", fill=fatalities) + scale_fill_continuous(low="red", high="black") + theme(axis.text.x = element_text(angle = 90, hjust = 1), legend.position="none")
 ```
 
-![plot of chunk unnamed-chunk-13](figure/unnamed-chunk-13-1.png) 
+![plot of chunk unnamed-chunk-13](https://github.com/demidovakatya/courses/blob/master/data-science/repdata/peer-assessment-2/analysis_files/figure-html/unnamed-chunk-13-1.png) 
 
 ### Events causing most injuries:
 
@@ -514,7 +514,7 @@ kable(injury.events)
 qplot(evtype, injuries, data=injury.events, geom="bar", stat="identity", xlab="Event type", main="20 events causing most injuries", fill=injuries) + scale_fill_continuous(low="white", high="darkblue") + theme(axis.text.x = element_text(angle = 90, hjust = 1), legend.position="none")
 ```
 
-![plot of chunk unnamed-chunk-14](figure/unnamed-chunk-14-1.png) 
+![plot of chunk unnamed-chunk-14](https://github.com/demidovakatya/courses/blob/master/data-science/repdata/peer-assessment-2/analysis_files/figure-html/unnamed-chunk-14-1.png) 
 
 ### Events causing most property damage:
 
@@ -556,7 +556,7 @@ kable(property.damage.events)
 qplot(evtype, property.damage/10^9, data=property.damage.events, geom="bar", stat="identity", xlab="Event type", ylab="Property damage cost ($ billions)", main="20 events causing most property damage", fill=property.damage) + scale_fill_continuous(low="green", high="black") + theme(axis.text.x = element_text(angle = 90, hjust = 1), legend.position="none")
 ```
 
-![plot of chunk unnamed-chunk-15](figure/unnamed-chunk-15-1.png) 
+![plot of chunk unnamed-chunk-15](https://github.com/demidovakatya/courses/blob/master/data-science/repdata/peer-assessment-2/analysis_files/figure-html/unnamed-chunk-15-1.png) 
 
 ### Events causing most crop damage:
 
@@ -598,4 +598,4 @@ kable(crop.damage.events)
 qplot(evtype, crop.damage/10^9, data=crop.damage.events, geom="bar", stat="identity", xlab="Event type", ylab = "Crop damage cost ($ billions)", main="20 events causing most crop damage", fill=crop.damage) + scale_fill_continuous(low="yellow", high="black") + theme(axis.text.x = element_text(angle = 90, hjust = 1), legend.position="none")
 ```
 
-![plot of chunk unnamed-chunk-16](figure/unnamed-chunk-16-1.png) 
+![plot of chunk unnamed-chunk-16](https://github.com/demidovakatya/courses/blob/master/data-science/repdata/peer-assessment-2/analysis_files/figure-html/unnamed-chunk-16-1.png) 
