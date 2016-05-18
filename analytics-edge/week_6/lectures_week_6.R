@@ -69,3 +69,43 @@ image(flower.matrix, axes = F, col = grey(seq(0, 1, length.out = 256)))
 
 # Video 4: MRI Image ----
 healthy <- read.csv("healthy.csv", header = F)
+dim(healthy)
+
+healthy.matrix <- as.matrix(healthy)
+length(healthy.vector)
+image(healthy.matrix, axes = F, col = grey(seq(0, 1, length.out = 256)))
+
+healthy.vector <- as.vector(healthy.matrix)
+length(healthy.vector)
+
+# Video 5: K-Means Clustering
+k <- 5
+set.seed(1)
+kmc <- kmeans(healthy.vector, centers = k, iter.max = 1000)
+
+healthy.clusters <- kmc$cluster
+kmc$centers[2]
+
+(dim(healthy.clusters) <- c(nrow(healthy.matrix), ncol(healthy.matrix)))
+image(healthy.clusters, axes = FALSE, col = rainbow(k))
+
+
+# Video 6. Detecting Tumors -----
+
+# creating test vector
+tumor <- read.csv("tumor.csv", header = F)
+tumor.matrix <- as.matrix(tumor)
+tumor.vector <- as.vector(tumor.matrix)
+
+# apply clusters from "healthyæ (before) to new image, using the flexclust package
+library(flexclust)
+
+kmc.kcca <- as.kcca(kmc, healthy.vector)
+tumor.clusters <- predict(kmc.kcca, newdata = tumor.vector)
+
+# Visualize the clusters
+dim(tumorClusters) = c(nrow(tumorMatrix), ncol(tumorMatrix))
+
+image(tumorClusters, axes = FALSE, col=rainbow(k))
+
+
