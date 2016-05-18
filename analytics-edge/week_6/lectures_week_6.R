@@ -39,3 +39,33 @@ lapply(spl, colMeans)
 cluster.groups <- cutree(movies.cluster, k = 2)
 movies[2:20] %>% subset(cluster.groups == 1) %>% colMeans
 movies[2:20] %>% subset(cluster.groups != 1) %>% colMeans
+
+# Seeing the Big Picture: Segmenting Images to Create Data (Recitation) ----- 
+# Video 2: Clustering Pixels ------
+flower <- read.csv("flower.csv", header = F)
+
+flower.matrix <- as.matrix(flower)
+str(flower.matrix)
+
+flower.vector <- as.vector(flower.matrix)
+str(flower.vector)
+
+distance <- dist(flower.vector, method = "euclidean")
+cluster.intensity <- hclust(distance, method = "ward.D")
+
+plot(cluster.intensity)
+rect.hclust(cluster.intensity, k = 3, border = "red")
+
+cluster.groups <- cutree(cluster.intensity, k = 3) 
+table(cluster.groups)
+tapply(flower.vector, cluster.groups, mean)
+
+#the original picture is 50x50 px 
+dim(cluster.groups) <- c(50, 50) 
+
+image(cluster.groups)
+image(flower.matrix, axes = F, col = grey(seq(0, 1, length.out = 256)))
+
+
+# Video 4: MRI Image ----
+healthy <- read.csv("healthy.csv", header = F)
