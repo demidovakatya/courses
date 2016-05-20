@@ -1,4 +1,4 @@
-# Recommendations Worth a Million: An Introduction to Clustering 
+# Recommendations Worth a Million: An Introduction to Clustering ----
 
 # euclidean distance
 a <- c(0,1,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0)
@@ -72,7 +72,7 @@ healthy <- read.csv("healthy.csv", header = F)
 dim(healthy)
 
 healthy.matrix <- as.matrix(healthy)
-length(healthy.vector)
+length(healthy.matrix)
 image(healthy.matrix, axes = F, col = grey(seq(0, 1, length.out = 256)))
 
 healthy.vector <- as.vector(healthy.matrix)
@@ -96,6 +96,7 @@ image(healthy.clusters, axes = FALSE, col = rainbow(k))
 tumor <- read.csv("tumor.csv", header = F)
 tumor.matrix <- as.matrix(tumor)
 tumor.vector <- as.vector(tumor.matrix)
+image(tumor.matrix, axes = F, col = grey(seq(0, 1, length.out = 256)))
 
 # apply clusters from "healthyæ (before) to new image, using the flexclust package
 library(flexclust)
@@ -104,8 +105,7 @@ kmc.kcca <- as.kcca(kmc, healthy.vector)
 tumor.clusters <- predict(kmc.kcca, newdata = tumor.vector)
 
 # Visualize the clusters
-dim(tumorClusters) = c(nrow(tumorMatrix), ncol(tumorMatrix))
-
-image(tumorClusters, axes = FALSE, col=rainbow(k))
+dim(tumor.clusters) <- c(nrow(tumor.matrix), ncol(tumor.matrix))
+image(tumor.clusters, axes = FALSE, col = rainbow(k))
 
 
