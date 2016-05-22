@@ -98,7 +98,7 @@ tumor.matrix <- as.matrix(tumor)
 tumor.vector <- as.vector(tumor.matrix)
 image(tumor.matrix, axes = F, col = grey(seq(0, 1, length.out = 256)))
 
-# apply clusters from "healthyæ (before) to new image, using the flexclust package
+# apply clusters from "healthy" (before) to new image, using the flexclust package
 library(flexclust)
 
 kmc.kcca <- as.kcca(kmc, healthy.vector)
