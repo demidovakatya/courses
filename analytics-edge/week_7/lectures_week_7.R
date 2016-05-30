@@ -1,4 +1,6 @@
 library(ggplot2)
+library(maps)
+library(ggmap)
 
 # Visualizing the World: An Introduction to Visualization ----
 
@@ -46,3 +48,17 @@ ggplot(hour.weekday.crimes, aes(x = Hour, y = Freq)) + geom_line(aes(group = Var
 ggplot(hour.weekday.crimes, aes(x = Hour, y = Var1)) + geom_tile(aes(fill = Freq)) +
     scale_fill_gradient(name = "thefts", low = "white", high = "red") + 
     theme(axis.title.y = element_blank())
+
+chicago <- get_map("chicago", zoom = 11)
+ggmap(chicago) + geom_point(data = mvt[1:100, ], aes(x = Longitude, y = Latitude))
+
+lat.lon.crimes <- data.frame(table(round(mvt$Longitude, 2), round(mvt$Latitude, 2)))
+lat.lon.crimes$long <- as.numeric(as.character(lat.lon.crimes$Var1))
+lat.lon.crimes$lat <- as.numeric(as.character(lat.lon.crimes$Var2))
+
+ggmap(chicago) + geom_point(lat.lon.crimes, aes(x = long, y = lat, color = Freq, size = Freq)) + 
+    scale_color_gradient(low = "yellow", high = "red")
+ggmap(chicago) + geom_tile(lat.lon.crimes, aes(x = long, y = lat, alpha = Freq), fill = "red")
+
+lat.lon.crimes.2 <- subset(lat.lon.crimes, Freq > 0)
+nrow(lat.lon.crimes) - nrow(lat.lon.crimes.2)
