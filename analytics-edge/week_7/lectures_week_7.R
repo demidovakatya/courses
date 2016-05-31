@@ -62,3 +62,33 @@ ggmap(chicago) + geom_tile(lat.lon.crimes, aes(x = long, y = lat, alpha = Freq),
 
 lat.lon.crimes.2 <- subset(lat.lon.crimes, Freq > 0)
 nrow(lat.lon.crimes) - nrow(lat.lon.crimes.2)
+
+murders <- read.csv("murders.csv")
+states.map <- map_data("state")
+
+ggplot(states.map, aes(x = long, y = lat, group = group)) + 
+    geom_polygon(fill = "white", color = "black") 
+
+murders$region <- tolower(murders$State)
+
+murder.map <- merge(states.map, murders, by = "region")
+
+ggplot(murder.map, aes(x = long, y = lat, group = group, fill = Murders)) + 
+    geom_polygon(color = "black") + 
+    scale_fill_gradient(low = "black", high = "red", guide = "legend")
+
+murder.map$MurderRate <- murder.map$Murders / murder.map$Population * 100000
+
+ggplot(murder.map, aes(x = long, y = lat, group = group, fill = MurderRate)) + 
+    geom_polygon(color = "black") + 
+    scale_fill_gradient(low = "black", high = "red", guide = "legend")
+
+# Redo the plot, removing any states with murder rates above 10
+ggplot(murder.map, aes(x = long, y = lat, group = group, fill = MurderRate)) + 
+    geom_polygon(color = "black") + 
+    scale_fill_gradient(low = "black", high = "red", guide = "legend", limits = c(0, 10))
+
+murder.map$GunOwnRate <- murder.map$GunOwnership / murder.map$Population * 100000
+ggplot(murder.map, aes(x = long, y = lat, group = group, fill = GunOwnRate)) + 
+    geom_polygon(color = "black") + 
+    scale_fill_gradient(low = "white", high = "green", guide = "legend")
