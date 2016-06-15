@@ -42,7 +42,6 @@ analytics-edge/week_5/tweets.csv
 analytics-edge/kaggle_competition/kaggle.R
 analytics-edge/kaggle_competition/submissions/*
 analytics-edge/kaggle_competition/test.csv
-
 analytics-edge/kaggle_competition/train.csv
-
 analytics-edge/kaggle_competition/train_labels.csv
+analytics-edge/kaggle_competition/05_31_old.R
