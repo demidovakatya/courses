@@ -101,3 +101,8 @@ f.rhs <- c(80 + demand.increase, 120, 75, 100, 60, 110, 166, 166) # increase x2
 res <- lp("max", f.obj, f.con, f.dir, f.rhs)
 # is it more than 200?
 (res$objval - revenue.conn) / demand.increase 
+
+
+
+## Radiation Therapy: An Application of Linear Optimization
+## Video 2: An Optimization Problem ----
