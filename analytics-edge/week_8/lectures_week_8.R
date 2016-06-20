@@ -106,3 +106,27 @@ res <- lp("max", f.obj, f.con, f.dir, f.rhs)
 
 ## Radiation Therapy: An Application of Linear Optimization
 ## Video 2: An Optimization Problem ----
+
+# Minimize
+
+# 3x1 + 4.5x2 + 2.5x3 + x4 + 2x5 + 4x6
+#Coefficients for objective function
+f.obj <- c(3, 4.5, 2.5, 1, 2, 4)
+
+# 2x1 + x5 >= 7
+# x2 + 2x4 >= 7
+# 1.5x3 + x4 >= 7
+# 2x2 + 2x5 <= 5
+# x1, x2, x3, x4, x5, x5 >= 0
+# Coefficient matrix of constraints
+f.con <- rbind(matrix(c(2, 0, 0, 0, 1, 0), nrow = 1, ncol = 6), 
+               matrix(c(0, 1, 0, 1, 0, 0), nrow = 1, ncol = 6),
+               matrix(c(0, 0, 1.5, 1, 0, 0), nrow = 1, ncol = 6),
+               matrix(c(0, 2, 0, 0, 2, 0), nrow = 1, ncol = 6))
+# Vector of signs (length = number of equations/rows in constraint matrix)
+f.dir <- c(rep(">=", 3), "<=")
+# Constraint values
+f.rhs <- c(rep(7, 3), 5)
+
+# Solver
+(res <- lp("min", f.obj, f.con, f.dir, f.rhs))
