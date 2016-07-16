@@ -1,41 +1,25 @@
-data-science/rprog/assignment_1/specdata/.RData
-data-science/rprog/assignment_1/specdata/.Rhistory
-data-science/rprog/quizzes/.Rhistory
 **.RData
 **.Rhistory
+.Rproj.user
+*/.ipynb_checkpoints/*-checkpoint.ipynb
 
 data-science/r-programming/assignment_1/specdata/*.csv
-
 analytics-edge/.Rproj.user/*
 
 python-for-everybody/python-databases/counting-emails.sqlite
-
 python-for-everybody/python-databases/emaildb.sqlite
-
 python-for-everybody/python-databases/geodata/where.html
-
 python-for-everybody/python-databases/geodata/where.js
-
 python-for-everybody/python-databases/geodata/where.data
-
 python-for-everybody/python-databases/gmane/d3.v2.js
-
 python-for-everybody/python-databases/gmane/d3.layout.cloud.js
-
 python-for-everybody/python-databases/gmane/gline.jsonp
-
 python-for-everybody/python-databases/pagerank/d3.v2.js
-
 python-for-everybody/python-databases/gmane/gword.jsonp
-
 python-for-everybody/python-databases/pagerank/force.js
-
 python-for-everybody/python-databases/rosterdb.sqlite
-
 python-for-everybody/python-databases/trackdb.sqlite
-
 python-for-everybody/python-databases/sql1
-.Rproj.user
 
 analytics-edge/week_5/tweets.csv
 
@@ -45,3 +29,4 @@ analytics-edge/kaggle_competition/test.csv
 analytics-edge/kaggle_competition/train.csv
 analytics-edge/kaggle_competition/train_labels.csv
 analytics-edge/kaggle_competition/05_31_old.R
+
