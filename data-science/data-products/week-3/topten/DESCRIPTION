@@ -1,0 +1,12 @@
+Package: topten
+Type: Package
+Title: Building a Prediction Model from Top 10 Features
+Version: 0.1
+Date: 2016-01-11
+Author: Katya Demidova
+Maintainer: Katya Demidova <demidovakatya@gmail.com>
+Description: Functions for building and predicting from models from selecting
+    top 10 predictors.
+License: GPL-3
+LazyData: TRUE
+RoxygenNote: 5.0.1

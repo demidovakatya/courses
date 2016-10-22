@@ -1,0 +1,403 @@
+---
+title: 'Most Dangerous Weather Events'
+author: "Katya Demidova"
+date: "24 December 2015"
+output: 
+  html_document: 
+    fig_height: 8
+    fig_width: 10
+    css: style.css
+---
+
+## Synopsis
+
+The goal of this project is to analyze how severe weather events affect public health and economy of the United States. Our research addresses two main questions:
+
+1. which types of events are most harmful with respect to population health?
+
+2. which types of events have the greatest economic consequences?
+
+We have found out that tornadoes are significantly more harmful to population health than any other type of events; floods, lightnings, excessive heat and thunderstorm winds cause many injuries and fatalities as well.
+
+Floods, hurricanes/typhoons, and tornadoes cause most property damage (40-140 $ billions). And the most harmful for crops are drought, floods, and hurricanes/typhoons.
+
+Summing up, typhoons, tornadoes, and floods cause huge both public health and economic problems for communities and municipalities, and preventing such outcomes to the extent possible is a key concern.
+
+## Data
+
+The data for this assignment (comma-separated-value file compressed via the bzip2 algorithm):
+
+* [Storm Data][1] [47Mb]
+
+Documentation of the database:
+
+* National Weather Service [Storm Data Documentation][2]
+* National Climatic Data Center Storm Events [FAQ][3]
+
+[1]: https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2FStormData.csv.bz2
+[2]: https://d396qusza40orc.cloudfront.net/repdata%2Fpeer2_doc%2Fpd01016005curr.pdf
+[3]: https://d396qusza40orc.cloudfront.net/repdata%2Fpeer2_doc%2FNCDC%20Storm%20Events-FAQ%20Page.pdf
+
+The events in the database start in the year 1950 and end in November 2011. In the earlier years of the database there are generally fewer events recorded, most likely due to a lack of good records. More recent years should be considered more complete.
+
+## Setting up
+
+```{r, message = F}
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+library(data.table)
+library(R.utils)
+library(knitr)
+
+options(scipen = 1)
+```
+
+## Import the data
+
+The analysis starts from loading the `.csv.bz2` file and unpacking it:
+
+```{r, message=FALSE, warning=FALSE, cache=TRUE, results='hide'}
+url <- "https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2FStormData.csv.bz2"
+
+if (!file.exists("StormData.csv.bz2")) {
+  download.file(url, "StormData.csv.bz2")
+}
+
+if (!file.exists("StormData.csv")) {
+bunzip2("StormData.csv.bz2")
+}
+
+raw.storm <- fread("StormData.csv", na.strings = c("NA", ""))
+
+rm(url)
+
+```
+
+Another way to import this data can be seen in Appendix. 
+
+## Data Processing
+
+Quick overview of the internal structure of the dataset and its first three rows:
+
+```{r, cache=TRUE}
+head(raw.storm, n = 3)
+str(raw.storm)
+```
+
+### Selecting columns
+
+There are 37 columns and 902297 rows in this dataset.
+
+```{r, cache=TRUE}
+dim(raw.storm)
+names(raw.storm)
+```
+
+These column names were not obvious for me, so I've made an attempt to explain these variables. You can see the results in [this table](https://github.com/demidovakatya/repdata-peer-assessment-2/blob/master/variable_explanation.md).
+
+These variables may be useful for further analysis:
+
+Variable name | Class | Explanation
+--------------|-------|------------
+BGN_DATE | chr | Date when the event began
+STATE | chr | State where the event happened
+EVTYPE | chr | Event type
+FATALITIES | num | Number of fatalities caused by the event
+INJURIES | num | Number of injuries caused by the event
+PROPDMG | num | Property damage caused by the event
+PROPDMGEXP | chr | Property damage multiplier
+CROPDMG | num | Crops damage caused by the event
+CROPDMGEXP | chr | Crops damage multiplier
+
+Create a new dataset from these columns:
+
+```{r, cache=TRUE}
+columns <- c("BGN_DATE", "EVTYPE", "FATALITIES", "INJURIES", 
+             "PROPDMG", "CROPDMG", "PROPDMGEXP", "CROPDMGEXP")
+storm <- select(tbl_df(raw.storm), one_of(columns))
+
+colnames(storm) <- tolower(colnames(storm))
+
+rm(raw.storm, columns)
+```
+
+### Removing old events
+
+Information from the NOAA's website ([source](https://www.ncdc.noaa.gov/stormevents/details.jsp)):
+
+Event Types Available: 
+
+1. Tornado: From 1950 through 1954, only tornado events were recorded.
+
+2. Tornado, Thunderstorm Wind and Hail: From 1955 through 1992, only tornado, thunderstorm wind and hail events were keyed from the paper publications into digital data. From 1993 to 1995, only tornado, thunderstorm wind and hail events have been extracted from the Unformatted Text Files.
+
+3. All Event Types: From 1996 to present, 48 event types are recorded as defined in NWS Directive 10-1605. 
+
+From this information, we can conclude that years 1950-1995 should be removed from the data set, otherwise the analysis can be incorrect.
+
+```{r}
+# convert bgn_date to date format
+storm$bgn_date <- as.Date(storm$bgn_date, format = "%m/%d/%Y %H:%M:%S")
+
+# subset only new data
+storm <- subset(storm, bgn_date > as.Date("1996-01-01"))
+```
+
+### Damage cost multipliers
+
+Convert multipliers in `propdmgexp` and `cropdmgexp` columns into numeric values and apply these multipliers:
+
+```{r, cache=TRUE}
+
+storm$propdmgexp <- toupper(storm$propdmgexp)
+storm$propdmgexp[storm$propdmgexp == "0"] <- 1
+storm$propdmgexp[storm$propdmgexp == "K"] <- 1000
+storm$propdmgexp[storm$propdmgexp == "M"] <- 1000000
+storm$propdmgexp[storm$propdmgexp == "B"] <- 1000000000
+storm$propdmgexp <- as.numeric(storm$propdmgexp)
+storm <- storm %>% mutate(propdmg=propdmg * propdmgexp)
+
+storm$cropdmgexp <- toupper(storm$cropdmgexp)
+storm$cropdmgexp[storm$cropdmgexp == "0"] <- 1
+storm$cropdmgexp[storm$cropdmgexp == "K"] <- 1000
+storm$cropdmgexp[storm$cropdmgexp == "M"] <- 1000000
+storm$cropdmgexp[storm$cropdmgexp == "B"] <- 1000000000
+storm$cropdmgexp <- as.numeric(storm$cropdmgexp)
+
+
+storm <- storm %>% mutate(cropdmg=cropdmg * cropdmgexp)
+
+# Remove ~dmgexp columns
+storm <- storm %>% select(-ends_with("dmgexp"))
+```
+### Removing empty rows
+
+Since we are not going to analyse lowest damage, we will remove rows where damage equals to 0:
+
+```{r}
+# replace NAs with 0
+storm$propdmg[is.na(storm$propdmg)] <- 0
+storm$cropdmg[is.na(storm$cropdmg)] <- 0
+
+storm <- storm %>% subset(fatalities!=0 | injuries!=0 | propdmg!=0 | cropdmg!=0)
+```
+
+### Tidying event types
+
+The last thing is to tidy up the `evtype` column.  Let's save it to a separate variable and then have a look at it:
+
+```{r}
+events <- storm$evtype
+head(data.frame(table(events)), n=20)
+```
+
+At this point of our analysis, there are 174 different event types. But as we have mentioned before, there are only 48 types of weather events. A list of these event types is located [here](https://gist.github.com/demidovakatya/8bd24a471d36def5971e). 
+
+There are so many unique values of `evtype` due to similar values like these:
+
+- "Freezing rain"
+- "Freezing Rain"
+- "FREEZING RAIN"
+
+or 
+
+- BLOW OUT TIDE 
+- BLOW OUT TIDES
+
+Tidying up this column will make our analysis more accurate and trustworthy. To begin with, we will convert all values in `evtype` column to uppercase strings, trim them, and delete punctuation and digits.
+
+```{r}
+
+# trim, clean from punctuation
+events <- toupper(events)
+events <- gsub("[[:digit:]]+", "", events)
+events <- gsub("&", " AND ", events)
+events <- gsub("[[:punct:]]+", " ", events)
+events <- gsub("^\\s+|\\s+$|\\s\\s+", "", events)
+```
+
+Next, we will replace incorrect values with the correct ones (from the NOAA paper) by performing the following code (for readability, the whole code chunk was put in Appendix).
+
+```{r replacement, echo=1:15, eval=TRUE}
+events[events %in% c("COASTAL EROSION", "COASTAL FLOODING EROSION", "COASTAL FLOODING", "EROSION CSTL FLOOD", "STORM SURGE TIDE", "STORM SURGE")] <- "COASTAL FLOOD"
+events[events %in% c("COLD TEMPERATURE", "COLD WEATHER", "COLD WIND CHILL", "COLD", "HYPOTHERMIA EXPOSURE", "LIGHT FREEZING RAIN") ] <- "COLD/WIND CHILL"
+events[events %in% c("FOG")] <- "DENSE FOG"
+events[events %in% c("BLOWING DUST")] <- "DUST STORM"
+events[events %in% c("EXTENDED COLD", "UNSEASONABLE COLD", "UNSEASONABLY COLD", "EXTREME COLD WIND CHILL", "EXTREME COLD", "EXTREME WINDCHILL")] <- "EXTREME COLD/WIND CHILL"
+events[events %in% c("DAM BREAK", "DROWNING", "HIGH SEAS", "HIGH SWELLS", "HIGH WATER", "RIVER FLOOD", "RIVER FLOODING", "TIDAL FLOODING", "URBAN SML STREAM FLD")] <- "FLOOD"
+events[events %in% c("FLASH FLOOD FLOOD", "FLASH FLOOD", "FLOOD FLASH FLOOD", "FLOOD")] <- "FLOOD/FLASH FLOOD"
+events[events %in% c("AGRICULTURAL FREEZE", "DAMAGING FREEZE", "EARLY FROST", "FREEZE", "FREEZING DRIZZLE", "FREEZING RAIN", "FREEZING SPRAY", "FROST FREEZE", "FROST", "GLAZE", "HARD FREEZE")] <- "FROST/FREEZE"
+events[events %in% c("FALLING SNOW ICE", "SMALL HAIL")] <- "HAIL"
+events[events %in% c("RECORD HEAT", "HEAT WAVE", "HYPERTHERMIA EXPOSURE", "UNSEASONABLY WARM", "WARM WEATHER")] <- "HEAT"
+events[events %in% c("HEAVY RAIN HIGH SURF", "RAIN", "TORRENTIAL RAINFALL", "UNSEASONAL RAIN")] <- "HEAVY RAIN"
+events[events %in% c("EXCESSIVE SNOW", "HEAVY SNOW SHOWER", "LATE SEASON SNOW", "SNOW SQUALL", "SNOW SQUALLS")] <- "HEAVY SNOW"
+events[events %in% c("ASTRONOMICAL HIGH TIDE", "HAZARDOUS SURF", "HEAVY SEAS", "HEAVY SURF AND WIND", "HEAVY SURF HIGH SURF", "HEAVY SURF", "HIGH SURF ADVISORY", "ROGUE WAVE", "ROUGH SURF", "WIND AND WAVE")] <- "HIGH SURF"
+events[events %in% c("HIGH WINDG", "HIGH WINDS", "NON SEVERE WIND DAMAGE", "NON TSTM WIND")] <- "HIGH WIND"
+events[events %in% c("HURRICANE EDOUARD", "HURRICANE TYPHOON", "HURRICANE", "TYPHOON")] <- "HURRICANE/TYPHOON"
+events[events %in% c("ROCK SLIDE")] <- "LANDSLIDE"
+events[events %in% c("ROUGH SEAS")] <- "MARINE HIGH WIND"
+events[events %in% c("MARINE TSTM WIND")] <- "MARINE THUNDERSTORM WIND"
+events[events %in% c("MUD SLIDE")] <- "MUDSLIDE"
+events[events %in% c("BEACH EROSION", "BLACK ICE", "LANDSLUMP", "MARINE ACCIDENT", "MIXED PRECIP", "MIXED PRECIPITATION") ] <- "OTHER"
+events[events %in% c("RIP CURRENTS")] <- "RIP CURRENT"
+events[events %in% c("DOWNBURST", "DRY MICROBURST","GRADIENT WIND", "GUSTY WIND HAIL", "GUSTY WIND HVY RAIN", "GUSTY WIND RAIN", "GUSTY WIND", "GUSTY WINDS", "MICROBURST", "STRONG WINDS", "WET MICROBURST", "WIND DAMAGE", "WIND", "WINDS")] <- "STRONG WIND"
+events[events %in% c("TSTM WIND", "THUNDERSTORM", "THUNDERSTORM WINDG", "THUNDERSTORMS","TSTM WIND AND LIGHTNING", "TSTM WIND G", "TSTM WIND HAIL", "TSTM WINDG")] <- "THUNDERSTORM WIND"
+events[events %in% c("LANDSPOUT", "WHIRLWIND")] <- "TORNADO"
+events[events %in% c("BRUSH FIRE", "DENSE SMOKE", "WILD FOREST FIRE")] <- "WILDFIRE"
+events[events %in% c("BLOWING SNOW", "COLD AND SNOW", "ICE JAM FLOODMINOR", "ICE ON ROAD", "ICE ROADS", "ICY ROADS", "LAKE EFFECT SNOW", "LIGHT SNOW", "LIGHT SNOWFALL", "RAIN SNOW", "SNOW AND ICE", "SNOW", "WINTER WEATHER MIX", "WINTRY MIX")] <- "WINTER WEATHER"
+
+
+```
+
+```{r}
+unique(events)
+
+# replace messy evtype variable with this new one
+storm$evtype <- events
+```
+
+By the end of this data processing section we have removed ~700,000 rows with incomplete or irrelevant information, which should increase the productivity of following section.
+
+The clean data set has `r nrow(storm)` observations of 6 variables:
+
+```{r}
+str(storm)
+```
+
+## Results
+
+### Most harmful to population health events
+
+```{r}
+health <- storm %>% 
+  group_by(evtype) %>% 
+  summarise(fatalities = sum(fatalities), injuries = sum(injuries)) %>% 
+  top_n(15, wt = fatalities + injuries)
+
+ggplot(data = health, aes(evtype, fatalities + injuries)) + geom_bar(stat = "identity") + 
+  coord_flip() + xlab("Event type") + ggtitle("15 events causing most harm to population health") 
+```
+
+Events causing most fatalities:
+
+```{r}
+storm %>% 
+  group_by(evtype) %>% 
+  summarise(fatalities = sum(fatalities)) %>% 
+  top_n(10, wt = fatalities) %>% 
+  arrange(desc(fatalities))
+```
+
+Events causing most injuries:
+
+```{r}
+storm %>% 
+  group_by(evtype) %>% 
+  summarise(injuries = sum(injuries)) %>% 
+  top_n(10, wt = injuries) %>% 
+  arrange(desc(injuries))
+```
+
+### Events causing most property damage:
+```{r}
+property <- storm %>% 
+  group_by(evtype) %>%
+  summarise(damage = sum(propdmg)) %>% 
+  top_n(15, wt = damage) %>% 
+  arrange(desc(damage))
+
+ggplot(aes(evtype, damage/10^9, fill=evtype), data=property) + geom_bar(stat="identity") + 
+  xlab("Event type")+ ylab("Property damage cost ($ billions)") + 
+  ggtitle("15 events causing most property damage") + theme(legend.position="none") + coord_flip()
+```
+
+Events causing most property damage are: flood/flash flood, hurricane/typhoon, coastal flood, tornado, and hail.
+
+### Events causing most crop damage:
+```{r}
+crop <- storm %>% group_by(evtype) %>% 
+  summarise(damage=sum(cropdmg)) %>% 
+  top_n(15, wt = damage) %>% 
+  arrange(desc(damage))
+
+ggplot(aes(evtype, damage/10^9, fill=evtype), data=crop) + geom_bar(stat="identity") + 
+  xlab("Event type")+ ylab("Crop damage cost ($ billions)") + 
+  ggtitle("15 events causing most crop damage") + theme(legend.position="none") + coord_flip()
+
+```
+
+Events causing most crop damage are: drought, flood/flash flood, hurricane/typhoon, hail, and frost/freeze.
+
+## Conclusion
+
+The most **harmful for population health** events are: tornado, flood/flash flood, excessive heat, thunderstorm wind, and lightning.
+
+The greatest **economic consequences** have: drought, flood/flash flood, coastal flood hurricane/typhoon, tornado, hail, and frost/freeze. Floods and hurricanes/typhoons are harmful for both property and crops, while drought deals the most damage to crops and much less - to property.
+
+## Appendix
+
+### Import of the data
+
+The CSV file is very large (561.6 MB), so to load the data for the first time we use `fread()` method. In R Documentation `fread {data.table}` is described as similar to `read.table` but faster and more convenient.
+
+After reading in the original CSV file, we save the dataset as an RDS file so we could restore the dataset via `readRDS()`. `readRDS()` is considered faster than other `read` methods.
+
+The following chunk of code checks if there is an RDS file (if there isn't, it creates it (from the CSV file which is created by unpacking the BZ2 package)) and loads the data into workspace.
+
+```{r, eval=FALSE, warning=F, message=F}
+# Download and import the data
+
+if (!file.exists("StormData.rds")) {
+  # If we don't have the csv, we need to unpack the .bz2 file
+  if (!file.exists("StormData.csv")) {
+    # If we don't have the .bz2 file, we need to download it
+    if (!file.exists("StormData.csv.bz2")) {
+      download.file(url, "StormData.csv.bz2")
+    }
+    bunzip2("StormData.csv.bz2")
+  }
+  raw.storm <- fread("StormData.csv", na.strings = c("NA", ""))
+  saveRDS(storm, "StormData.rds")
+  file.remove("StormData.csv")
+}
+
+# Load the data into workspace unless it already exists
+if (!exists("raw.storm")) {
+  raw.storm <- readRDS("StormData.rds")
+}
+
+```
+
+### Evtype replacement
+
+```{r, ref.label="replacement", eval=FALSE, echo=TRUE}
+events[events %in% c("COASTAL EROSION", "COASTAL FLOODING EROSION", "COASTAL FLOODING", "EROSION CSTL FLOOD", "STORM SURGE TIDE", "STORM SURGE")] <- "COASTAL FLOOD"
+events[events %in% c("COLD TEMPERATURE", "COLD WEATHER", "COLD WIND CHILL", "COLD", "HYPOTHERMIA EXPOSURE", "LIGHT FREEZING RAIN") ] <- "COLD/WIND CHILL"
+events[events %in% c("FOG")] <- "DENSE FOG"
+events[events %in% c("BLOWING DUST")] <- "DUST STORM"
+events[events %in% c("EXTENDED COLD", "UNSEASONABLE COLD", "UNSEASONABLY COLD", "EXTREME COLD WIND CHILL", "EXTREME COLD", "EXTREME WINDCHILL")] <- "EXTREME COLD/WIND CHILL"
+events[events %in% c("DAM BREAK", "DROWNING", "HIGH SEAS", "HIGH SWELLS", "HIGH WATER", "RIVER FLOOD", "RIVER FLOODING", "TIDAL FLOODING", "URBAN SML STREAM FLD")] <- "FLOOD"
+events[events %in% c("FLASH FLOOD FLOOD", "FLASH FLOOD", "FLOOD FLASH FLOOD", "FLOOD")] <- "FLOOD/FLASH FLOOD"
+events[events %in% c("AGRICULTURAL FREEZE", "DAMAGING FREEZE", "EARLY FROST", "FREEZE", "FREEZING DRIZZLE", "FREEZING RAIN", "FREEZING SPRAY", "FROST FREEZE", "FROST", "GLAZE", "HARD FREEZE")] <- "FROST/FREEZE"
+events[events %in% c("FALLING SNOW ICE", "SMALL HAIL")] <- "HAIL"
+events[events %in% c("RECORD HEAT", "HEAT WAVE", "HYPERTHERMIA EXPOSURE", "UNSEASONABLY WARM", "WARM WEATHER")] <- "HEAT"
+events[events %in% c("HEAVY RAIN HIGH SURF", "RAIN", "TORRENTIAL RAINFALL", "UNSEASONAL RAIN")] <- "HEAVY RAIN"
+events[events %in% c("EXCESSIVE SNOW", "HEAVY SNOW SHOWER", "LATE SEASON SNOW", "SNOW SQUALL", "SNOW SQUALLS")] <- "HEAVY SNOW"
+events[events %in% c("ASTRONOMICAL HIGH TIDE", "HAZARDOUS SURF", "HEAVY SEAS", "HEAVY SURF AND WIND", "HEAVY SURF HIGH SURF", "HEAVY SURF", "HIGH SURF ADVISORY", "ROGUE WAVE", "ROUGH SURF", "WIND AND WAVE")] <- "HIGH SURF"
+events[events %in% c("HIGH WINDG", "HIGH WINDS", "NON SEVERE WIND DAMAGE", "NON TSTM WIND")] <- "HIGH WIND"
+events[events %in% c("HURRICANE EDOUARD", "HURRICANE TYPHOON", "HURRICANE", "TYPHOON")] <- "HURRICANE/TYPHOON"
+events[events %in% c("ROCK SLIDE")] <- "LANDSLIDE"
+events[events %in% c("ROUGH SEAS")] <- "MARINE HIGH WIND"
+events[events %in% c("MARINE TSTM WIND")] <- "MARINE THUNDERSTORM WIND"
+events[events %in% c("MUD SLIDE")] <- "MUDSLIDE"
+events[events %in% c("BEACH EROSION", "BLACK ICE", "LANDSLUMP", "MARINE ACCIDENT", "MIXED PRECIP", "MIXED PRECIPITATION") ] <- "OTHER"
+events[events %in% c("RIP CURRENTS")] <- "RIP CURRENT"
+events[events %in% c("DOWNBURST", "DRY MICROBURST","GRADIENT WIND", "GUSTY WIND HAIL", "GUSTY WIND HVY RAIN", "GUSTY WIND RAIN", "GUSTY WIND", "GUSTY WINDS", "MICROBURST", "STRONG WINDS", "WET MICROBURST", "WIND DAMAGE", "WIND", "WINDS")] <- "STRONG WIND"
+events[events %in% c("TSTM WIND", "THUNDERSTORM", "THUNDERSTORM WINDG", "THUNDERSTORMS","TSTM WIND AND LIGHTNING", "TSTM WIND G", "TSTM WIND HAIL", "TSTM WINDG")] <- "THUNDERSTORM WIND"
+events[events %in% c("LANDSPOUT", "WHIRLWIND")] <- "TORNADO"
+events[events %in% c("BRUSH FIRE", "DENSE SMOKE", "WILD FOREST FIRE")] <- "WILDFIRE"
+events[events %in% c("BLOWING SNOW", "COLD AND SNOW", "ICE JAM FLOODMINOR", "ICE ON ROAD", "ICE ROADS", "ICY ROADS", "LAKE EFFECT SNOW", "LIGHT SNOW", "LIGHT SNOWFALL", "RAIN SNOW", "SNOW AND ICE", "SNOW", "WINTER WEATHER MIX", "WINTRY MIX")] <- "WINTER WEATHER"
+
+
+```

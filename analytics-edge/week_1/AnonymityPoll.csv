@@ -1,0 +1,1003 @@
+"Internet.Use","Smartphone","Sex","Age","State","Region","Conservativeness","Info.On.Internet","Worry.About.Info","Privacy.Importance","Anonymity.Possible","Tried.Masking.Identity","Privacy.Laws.Effective"
+1,0,"Male",62,"Massachusetts","Northeast",4,0,1,100,0,0,0
+1,0,"Male",45,"South Carolina","South",1,1,0,0,1,0,1
+0,1,"Female",70,"New Jersey","Northeast",4,0,0,NA,0,0,NA
+1,0,"Male",70,"Georgia","South",4,3,1,88.8888888888889,1,0,0
+0,NA,"Female",80,"Georgia","South",4,NA,NA,NA,NA,NA,NA
+1,1,"Male",49,"Tennessee","South",4,6,0,88.8888888888889,1,1,0
+1,0,"Female",52,"Michigan","Midwest",3,3,1,33.3333333333333,0,0,1
+0,0,"Female",76,"New York","Northeast",3,NA,NA,NA,NA,NA,NA
+0,NA,"Male",75,"North Carolina","South",4,NA,NA,NA,NA,NA,0
+1,0,"Female",76,"North Carolina","South",4,0,0,56.25,1,0,1
+0,0,"Male",69,"Ohio","Midwest",4,NA,NA,NA,NA,NA,0
+1,1,"Female",50,"Virginia","South",3,1,0,27.7777777777778,0,0,0
+0,0,"Male",72,"New York","Northeast",5,NA,NA,NA,NA,NA,1
+1,1,"Female",47,"North Carolina","South",3,0,0,0,1,0,0
+1,0,"Male",69,"New York","Northeast",3,9,0,77.7777777777778,0,0,0
+0,0,"Male",63,"Ohio","Midwest",3,NA,NA,NA,NA,NA,0
+1,0,"Male",41,"Georgia","South",NA,0,1,50,NA,0,0
+0,0,"Male",63,"New York","Northeast",3,NA,NA,NA,NA,NA,0
+1,0,"Female",91,"Indiana","Midwest",5,5,1,71.4285714285714,NA,0,0
+0,NA,"Female",80,"Minnesota","Midwest",5,NA,NA,NA,NA,NA,NA
+1,1,"Female",56,"Texas","South",4,0,0,100,0,0,1
+1,0,"Male",66,"Alabama","South",5,2,0,16.6666666666667,1,0,0
+1,0,"Female",61,"Louisiana","South",3,1,0,100,0,0,0
+1,0,"Female",36,"North Dakota","Midwest",5,0,0,100,0,1,0
+0,0,"Female",73,"Wisconsin","Midwest",NA,NA,NA,NA,NA,NA,0
+0,0,"Female",78,"Michigan","Midwest",3,NA,NA,NA,NA,NA,0
+1,0,"Female",58,"Texas","South",5,1,0,50,0,0,0
+0,0,"Male",64,"Missouri","Midwest",2,NA,NA,NA,NA,NA,0
+1,0,"Male",53,"Illinois","Midwest",4,0,0,85.7142857142857,1,0,0
+0,0,"Female",80,"Nebraska","Midwest",2,NA,NA,NA,NA,NA,1
+1,1,"Female",48,"Georgia","South",4,1,1,100,0,1,0
+1,0,"Female",78,"Wisconsin","Midwest",2,5,1,80,1,1,NA
+0,0,"Male",67,"Indiana","Midwest",3,NA,NA,NA,NA,NA,0
+1,1,"Female",41,"Wisconsin","Midwest",5,0,1,88.8888888888889,0,0,0
+1,0,"Female",74,"Florida","South",3,0,0,6.25,0,0,0
+0,0,"Female",62,"Texas","South",4,NA,NA,NA,NA,NA,0
+1,1,"Male",60,"Pennsylvania","Northeast",1,9,0,77.7777777777778,0,0,0
+0,0,"Female",75,"Texas","South",1,NA,NA,NA,NA,NA,0
+0,0,"Female",70,"Florida","South",3,NA,NA,NA,NA,NA,0
+0,0,"Female",67,"Pennsylvania","Northeast",5,NA,NA,NA,NA,NA,1
+1,1,"Female",44,"Tennessee","South",3,0,1,100,0,0,0
+0,0,"Female",73,"Minnesota","Midwest",4,NA,NA,NA,NA,NA,0
+0,0,"Female",87,"Texas","South",5,NA,NA,NA,NA,NA,NA
+1,0,"Male",66,"Minnesota","Midwest",2,5,1,88.8888888888889,0,0,0
+1,0,"Male",65,"North Carolina","South",4,5,1,64.2857142857143,0,0,0
+1,0,"Male",86,"Vermont","Northeast",5,1,0,33.3333333333333,0,0,NA
+0,0,"Male",39,"Pennsylvania","Northeast",5,NA,NA,NA,NA,NA,0
+1,1,"Female",51,"North Carolina","South",3,8,0,100,0,0,0
+1,1,"Male",68,"South Dakota","Midwest",4,0,1,83.3333333333333,1,0,0
+1,1,"Female",56,"Alabama","South",4,4,1,100,NA,0,0
+0,0,"Female",54,"Ohio","Midwest",3,NA,NA,NA,NA,NA,0
+1,0,"Female",78,"Kansas","Midwest",3,1,0,0,NA,0,NA
+1,1,"Female",36,"Pennsylvania","Northeast",3,3,0,61.1111111111111,0,0,1
+1,1,"Female",33,"Utah","West",4,4,1,42.8571428571429,NA,0,NA
+1,0,"Female",57,"Missouri","Midwest",4,7,1,38.8888888888889,1,0,0
+1,1,"Male",42,"New Jersey","Northeast",2,6,1,50,0,0,1
+1,1,"Male",76,"Ohio","Midwest",1,3,1,100,0,0,0
+1,1,"Male",49,"Maryland","South",3,2,0,61.1111111111111,1,0,1
+0,0,"Female",69,"Colorado","West",4,NA,NA,NA,NA,NA,1
+1,0,"Male",70,"Utah","West",5,4,0,38.8888888888889,0,1,1
+1,0,"Female",64,"Maryland","South",2,5,0,14.2857142857143,0,0,1
+1,0,"Male",38,"Arkansas","South",4,1,0,85.7142857142857,0,0,0
+1,0,"Male",45,"Wisconsin","Midwest",4,5,1,83.3333333333333,0,1,0
+0,0,"Female",91,"Massachusetts","Northeast",NA,NA,NA,NA,NA,NA,0
+0,0,"Male",62,"Mississippi","South",5,NA,NA,NA,NA,NA,1
+1,0,"Female",62,"Pennsylvania","Northeast",4,4,1,11.1111111111111,0,0,0
+1,0,"Male",18,"New Mexico","West",5,6,1,44.4444444444444,0,0,0
+1,0,"Male",18,"Utah","West",NA,0,0,72.2222222222222,0,0,1
+1,1,"Female",52,"Pennsylvania","Northeast",5,7,0,50,0,0,NA
+0,0,"Female",51,"Louisiana","South",5,NA,NA,NA,NA,NA,0
+1,1,"Male",64,"New Mexico","West",3,0,0,55.5555555555556,0,0,0
+0,0,"Female",76,"Pennsylvania","Northeast",3,NA,NA,NA,NA,NA,0
+0,0,"Female",62,"Texas","South",4,NA,NA,NA,NA,NA,0
+0,0,"Female",NA,"Michigan","Midwest",5,NA,NA,NA,NA,NA,0
+0,0,"Male",69,"New York","Northeast",2,NA,NA,NA,NA,NA,1
+0,0,"Female",85,"Georgia","South",3,NA,NA,NA,NA,NA,0
+1,0,"Female",62,"South Carolina","South",NA,0,1,100,NA,0,NA
+1,1,"Female",60,"Kentucky","South",5,2,1,100,0,1,0
+1,1,"Male",NA,"Utah","West",4,6,0,72.2222222222222,0,0,1
+1,0,"Male",21,"Florida","South",3,8,1,0,1,0,0
+1,1,"Male",50,"Kansas","Midwest",4,2,0,50,1,0,NA
+1,1,"Female",39,"North Carolina","South",1,2,0,50,1,0,1
+1,0,"Female",60,"Iowa","Midwest",NA,0,0,22.2222222222222,1,0,0
+0,0,"Female",63,"Wisconsin","Midwest",1,NA,NA,NA,NA,NA,0
+1,0,"Male",52,"Minnesota","Midwest",4,1,0,100,0,0,NA
+1,1,"Male",57,"New York","Northeast",3,6,0,44.4444444444444,0,0,0
+0,0,"Male",75,"Texas","South",3,NA,NA,NA,NA,NA,NA
+1,0,"Female",83,"Texas","South",3,7,1,88.8888888888889,1,0,0
+1,0,"Female",81,"Michigan","Midwest",4,0,0,0,1,0,0
+1,0,"Male",63,"New Hampshire","Northeast",NA,3,0,88.8888888888889,0,1,0
+1,1,"Male",78,"Indiana","Midwest",5,0,0,6.25,1,0,0
+0,0,"Female",NA,"Vermont","Northeast",NA,NA,NA,NA,NA,NA,0
+1,1,"Female",74,"Wisconsin","Midwest",4,4,1,62.5,1,0,0
+1,0,"Male",69,"Arizona","West",4,0,1,43.75,0,0,1
+1,0,"Male",67,"California","West",2,0,0,88.8888888888889,0,NA,0
+1,0,"Male",42,"Arizona","West",2,3,0,16.6666666666667,0,0,1
+1,0,"Female",68,"Alabama","South",5,2,1,100,0,0,0
+1,1,"Male",56,"Georgia","South",4,0,0,85.7142857142857,1,1,0
+0,0,"Male",70,"Virginia","South",4,NA,NA,NA,NA,NA,0
+1,0,"Female",83,"California","West",3,2,1,44.4444444444444,NA,0,0
+1,0,"Female",72,"New Jersey","Northeast",4,5,1,43.75,NA,0,0
+0,0,"Female",72,"New York","Northeast",3,NA,NA,NA,NA,NA,1
+1,1,"Female",23,"Maryland","South",4,4,0,11.1111111111111,1,0,0
+1,0,"Male",43,"Virginia","South",3,0,1,100,0,0,0
+1,1,"Female",62,"California","West",5,7,0,22.2222222222222,0,0,1
+1,0,"Female",60,"Michigan","Midwest",4,0,0,50,0,0,0
+0,0,"Male",72,"North Carolina","South",4,NA,NA,NA,NA,NA,NA
+1,0,"Female",19,"California","West",2,2,1,16.6666666666667,0,0,1
+1,1,"Male",67,"Indiana","Midwest",3,1,1,100,0,1,0
+1,0,"Male",63,"New York","Northeast",4,1,1,100,0,0,0
+1,0,"Female",77,"Florida","South",3,0,0,81.25,0,0,NA
+1,0,"Female",60,"Texas","South",3,5,0,50,0,1,0
+0,0,"Female",24,"Tennessee","South",2,NA,NA,NA,NA,NA,1
+1,0,"Female",81,"California","West",4,0,0,100,1,0,1
+1,0,"Female",64,"Oregon","West",2,1,1,61.1111111111111,0,0,NA
+1,1,"Female",50,"Indiana","Midwest",3,6,1,100,0,1,0
+1,0,"Male",75,"Oregon","West",5,2,0,16.6666666666667,NA,0,1
+0,0,"Male",84,"California","West",2,NA,NA,NA,NA,NA,NA
+1,0,"Female",64,"Washington","West",2,7,0,5.55555555555556,0,0,NA
+1,1,"Male",56,"Oregon","West",4,5,0,22.2222222222222,0,0,0
+1,1,"Female",55,"California","West",3,6,1,61.1111111111111,0,0,1
+1,0,"Male",53,"Oregon","West",5,0,1,80,1,0,0
+1,0,"Female",49,"Connecticut","Northeast",3,2,0,50,0,0,1
+1,1,"Male",39,"South Carolina","South",2,4,0,88.8888888888889,1,1,0
+1,1,"Female",NA,"New Jersey","Northeast",1,9,0,88.8888888888889,0,1,0
+1,0,"Female",71,"California","West",5,3,1,75,NA,1,1
+1,0,"Female",49,"California","West",4,3,1,100,0,0,0
+1,1,"Male",56,"California","West",3,2,1,68.75,0,0,NA
+0,NA,"Male",74,"California","West",3,NA,NA,NA,NA,NA,0
+1,0,"Female",71,"Washington","West",3,4,1,75,0,0,0
+1,1,"Female",37,"Washington","West",3,4,1,72.2222222222222,0,0,0
+0,0,"Male",68,"Arkansas","South",NA,NA,NA,NA,NA,NA,0
+1,1,"Female",38,"Kansas","Midwest",2,5,0,66.6666666666667,0,0,0
+1,1,"Male",43,"Tennessee","South",4,8,1,88.8888888888889,0,0,0
+1,1,"Male",30,"Wisconsin","Midwest",5,5,0,11.1111111111111,0,0,1
+1,1,"Female",41,"Texas","South",3,2,1,94.4444444444444,0,0,0
+0,0,"Male",66,"Missouri","Midwest",5,NA,NA,NA,NA,NA,0
+0,0,"Male",70,"Wisconsin","Midwest",4,NA,NA,NA,NA,NA,0
+1,1,"Female",52,"Iowa","Midwest",2,5,1,27.7777777777778,1,0,1
+0,1,"Male",41,"Oklahoma","South",3,0,0,11.1111111111111,0,0,0
+0,0,"Male",53,"Wisconsin","Midwest",4,NA,NA,NA,NA,NA,0
+1,1,"Female",36,"Missouri","Midwest",1,9,1,94.4444444444444,0,0,0
+0,0,"Female",75,"Illinois","Midwest",3,NA,NA,NA,NA,NA,0
+1,0,"Female",54,"Washington","West",5,5,0,61.1111111111111,0,0,1
+0,NA,"Female",85,"Colorado","West",3,NA,NA,NA,NA,NA,1
+1,1,"Male",52,"New Mexico","West",3,3,1,50,1,0,1
+1,0,"Male",22,"New Mexico","West",2,3,1,94.4444444444444,0,1,0
+1,0,"Female",80,"Missouri","Midwest",2,5,1,72.2222222222222,0,1,1
+1,NA,"Female",68,"Mississippi","South",3,4,0,37.5,1,0,0
+0,0,"Female",58,"Arizona","West",4,NA,NA,NA,NA,NA,1
+1,0,"Male",53,"California","West",4,0,0,0,1,0,0
+0,0,"Male",57,"California","West",3,NA,NA,NA,NA,NA,0
+0,0,"Female",77,"Oregon","West",3,NA,NA,NA,NA,NA,NA
+1,0,"Female",80,"Oregon","West",4,0,1,75,1,0,0
+1,1,"Female",53,"Washington","West",3,5,1,100,0,0,0
+1,0,"Female",55,"Oregon","West",4,6,1,100,0,1,0
+1,1,"Male",64,"Ohio","Midwest",1,10,0,27.7777777777778,0,1,0
+1,1,"Male",NA,"California","West",4,0,0,100,1,0,1
+0,0,"Female",56,"Washington","West",2,NA,NA,NA,NA,NA,0
+0,0,"Male",58,"Nevada","West",4,NA,NA,NA,NA,NA,0
+1,1,"Male",48,"California","West",3,6,1,50,1,0,0
+1,1,"Female",46,"Ohio","Midwest",4,1,0,12.5,0,0,1
+0,0,"Male",67,"Rhode Island","Northeast",3,NA,NA,NA,NA,NA,NA
+1,0,"Male",32,"North Carolina","South",2,3,0,50,1,0,1
+1,1,"Female",62,"Pennsylvania","Northeast",2,7,0,55.5555555555556,0,0,0
+1,1,"Female",61,"North Carolina","South",3,1,0,88.8888888888889,1,0,1
+0,0,"Male",83,"Ohio","Midwest",3,NA,NA,NA,NA,NA,NA
+1,0,"Male",28,"South Carolina","South",3,6,1,94.4444444444444,0,1,0
+1,0,"Female",46,"Michigan","Midwest",4,4,0,50,0,0,0
+0,0,"Female",68,"New York","Northeast",5,NA,NA,NA,NA,NA,1
+0,0,"Male",73,"New York","Northeast",4,NA,NA,NA,NA,NA,1
+0,0,"Female",77,"New York","Northeast",3,NA,NA,NA,NA,NA,0
+0,0,"Female",78,"Pennsylvania","Northeast",3,NA,NA,NA,NA,NA,1
+0,0,"Female",82,"Indiana","Midwest",3,NA,NA,NA,NA,NA,1
+1,0,"Female",53,"Virginia","South",3,4,0,50,1,0,0
+1,NA,"Female",46,"New York","Northeast",5,4,1,50,0,0,0
+1,0,"Female",77,"Florida","South",3,4,1,50,1,0,0
+1,0,"Female",66,"New Jersey","Northeast",3,3,1,83.3333333333333,0,1,0
+0,0,"Female",90,"Michigan","Midwest",4,NA,NA,NA,NA,NA,NA
+1,0,"Male",45,"New York","Northeast",4,3,0,44.4444444444444,1,0,0
+1,0,"Female",71,"Massachusetts","Northeast",2,4,1,0,1,0,0
+1,0,"Female",45,"Pennsylvania","Northeast",2,4,1,94.4444444444444,0,0,0
+0,0,"Male",57,"New Jersey","Northeast",NA,NA,NA,NA,NA,NA,NA
+0,0,"Female",53,"Virginia","South",5,NA,NA,NA,NA,NA,1
+1,0,"Female",62,"Rhode Island","Northeast",2,4,1,94.4444444444444,0,0,0
+1,0,"Female",65,"Virginia","South",5,6,1,94.4444444444444,1,0,0
+1,1,"Female",40,"Kentucky","South",3,4,0,88.8888888888889,0,0,0
+1,0,"Female",72,"Pennsylvania","Northeast",4,4,1,88.8888888888889,1,0,1
+0,0,"Male",59,"Florida","South",4,NA,NA,NA,NA,NA,0
+0,0,"Female",79,"New York","Northeast",4,NA,NA,NA,NA,NA,0
+1,1,"Male",35,"South Carolina","South",3,4,0,83.3333333333333,1,0,0
+1,0,"Female",83,"Virginia","South",3,2,0,NA,1,0,1
+1,1,"Female",59,"New York","Northeast",4,4,0,88.8888888888889,0,0,0
+0,0,"Female",71,"New Hampshire","Northeast",5,NA,NA,NA,NA,NA,0
+0,0,"Female",72,"Michigan","Midwest",4,NA,NA,NA,NA,NA,0
+1,1,"Male",42,"New York","Northeast",3,10,0,27.7777777777778,1,0,0
+1,0,"Female",55,"Tennessee","South",NA,1,1,100,0,0,0
+0,0,"Male",75,"Georgia","South",3,NA,NA,NA,NA,NA,1
+0,0,"Male",81,"Missouri","Midwest",3,NA,NA,NA,NA,NA,0
+1,0,"Female",58,"Maine","Northeast",4,4,0,100,0,1,0
+1,0,"Female",43,"South Carolina","South",NA,4,0,85.7142857142857,0,0,0
+0,0,"Female",77,"Illinois","Midwest",2,NA,NA,NA,NA,NA,0
+0,0,"Female",74,"Illinois","Midwest",2,NA,NA,NA,NA,NA,0
+0,0,"Male",86,"Pennsylvania","Northeast",3,NA,NA,NA,NA,NA,1
+0,NA,"Female",NA,"West Virginia","South",NA,NA,NA,NA,NA,NA,0
+0,1,"Female",58,"North Carolina","South",4,0,0,100,0,0,0
+0,0,"Female",82,"Illinois","Midwest",1,NA,NA,NA,NA,NA,0
+0,0,"Female",80,"Texas","South",5,NA,NA,NA,NA,NA,0
+1,1,"Female",53,"Texas","South",4,5,1,88.8888888888889,0,1,0
+1,0,"Male",59,"Tennessee","South",2,5,0,100,1,0,0
+1,0,"Female",NA,"Georgia","South",3,0,1,100,0,0,1
+1,1,"Male",62,"Virginia","South",3,2,0,87.5,1,0,0
+0,0,"Female",59,"Ohio","Midwest",3,NA,NA,NA,NA,NA,0
+0,0,"Female",77,"Indiana","Midwest",4,NA,NA,NA,NA,NA,NA
+0,0,"Female",78,"Minnesota","Midwest",4,NA,NA,NA,NA,NA,NA
+0,0,"Female",81,"New York","Northeast",2,NA,NA,NA,NA,NA,1
+1,1,"Male",48,"Kentucky","South",3,7,1,43.75,0,1,1
+1,1,"Male",67,"Pennsylvania","Northeast",4,4,0,100,0,0,0
+1,1,"Female",59,"Maine","Northeast",3,6,0,16.6666666666667,0,0,0
+1,NA,"Male",70,"Georgia","South",4,3,1,100,0,0,NA
+0,0,"Male",73,"Illinois","Midwest",5,NA,NA,NA,NA,NA,0
+1,0,"Male",42,"Indiana","Midwest",3,4,0,83.3333333333333,0,0,0
+1,0,"Male",57,"Pennsylvania","Northeast",4,1,0,50,0,0,0
+0,0,"Male",36,"Indiana","Midwest",5,NA,NA,NA,NA,NA,0
+1,0,"Female",72,"Ohio","Midwest",4,3,0,68.75,1,0,0
+1,1,"Female",67,"New York","Northeast",2,1,1,44.4444444444444,1,0,1
+1,1,"Male",21,"Texas","South",2,2,1,55.5555555555556,1,1,0
+0,0,"Male",61,"Texas","South",5,NA,NA,NA,NA,NA,NA
+1,0,"Female",69,"Florida","South",4,4,0,85.7142857142857,0,0,0
+0,0,"Female",80,"Kentucky","South",NA,NA,NA,NA,NA,NA,NA
+0,0,"Male",60,"Missouri","Midwest",2,NA,NA,NA,NA,NA,0
+1,1,"Male",82,"Illinois","Midwest",4,7,0,42.8571428571429,1,0,1
+1,0,"Male",64,"Indiana","Midwest",3,0,0,100,1,0,0
+0,0,"Female",76,"Georgia","South",4,NA,NA,NA,NA,NA,1
+1,1,"Male",49,"Louisiana","South",4,5,1,100,0,0,0
+1,0,"Male",65,"Texas","South",4,2,0,0,1,0,NA
+1,0,"Female",73,"Missouri","Midwest",5,4,1,61.1111111111111,0,0,0
+1,1,"Female",47,"Connecticut","Northeast",3,2,0,100,0,0,1
+1,0,"Female",34,"Michigan","Midwest",2,5,1,55.5555555555556,1,0,0
+1,0,"Female",69,"Ohio","Midwest",3,1,0,33.3333333333333,0,1,0
+1,1,"Male",19,"New York","Northeast",3,1,1,94.4444444444444,0,0,1
+1,0,"Female",56,"Iowa","Midwest",4,5,1,55.5555555555556,0,0,NA
+0,0,"Female",65,"Louisiana","South",4,NA,NA,NA,NA,NA,NA
+0,0,"Female",96,"Pennsylvania","Northeast",2,NA,NA,NA,NA,NA,NA
+0,0,"Male",68,"Florida","South",3,NA,NA,NA,NA,NA,0
+1,1,"Female",20,"Colorado","West",2,4,1,33.3333333333333,1,0,0
+1,0,"Female",55,"Kentucky","South",NA,6,0,18.75,1,0,0
+1,0,"Male",65,"Kentucky","South",NA,0,0,NA,0,0,0
+0,NA,"Female",81,"Wisconsin","Midwest",NA,NA,NA,NA,NA,NA,NA
+1,1,"Male",43,"New York","Northeast",2,7,1,94.4444444444444,1,0,1
+1,1,"Male",44,"Georgia","South",2,2,1,100,0,0,0
+1,1,"Male",60,"Maryland","South",3,3,0,50,0,0,0
+1,0,"Male",52,"Pennsylvania","Northeast",2,1,NA,0,0,0,NA
+1,0,"Female",45,"South Carolina","South",4,4,0,88.8888888888889,0,0,0
+0,0,"Male",72,"Mississippi","South",5,NA,NA,NA,NA,NA,0
+1,0,"Male",73,"Texas","South",2,5,1,100,0,0,0
+1,0,"Male",62,"Pennsylvania","Northeast",1,0,0,22.2222222222222,1,0,1
+1,0,"Female",NA,"Texas","South",3,1,0,61.1111111111111,0,0,0
+1,0,"Male",45,"Ohio","Midwest",2,4,0,50,0,0,1
+1,1,"Male",39,"Pennsylvania","Northeast",3,8,1,100,1,0,0
+0,0,"Male",85,"Massachusetts","Northeast",3,NA,NA,NA,NA,NA,0
+1,0,"Male",66,"Tennessee","South",4,1,1,0,0,0,0
+1,1,"Male",62,"Montana","West",4,7,0,55.5555555555556,0,NA,0
+1,1,"Female",35,"Delaware","South",2,4,0,66.6666666666667,1,1,0
+1,0,"Female",58,"Florida","South",4,1,0,40,1,0,1
+1,0,"Male",23,"Maryland","South",3,0,0,16.6666666666667,0,0,1
+0,0,"Female",50,"Kentucky","South",4,NA,NA,NA,NA,NA,NA
+1,1,"Female",40,"Maryland","South",3,4,1,100,1,0,0
+1,0,"Female",69,"Florida","South",4,0,0,81.25,0,0,0
+1,1,"Male",44,"New York","Northeast",2,9,1,44.4444444444444,0,0,0
+1,1,"Female",57,"Maine","Northeast",4,0,1,100,0,0,0
+1,1,"Male",41,"Colorado","West",4,1,1,100,0,0,0
+1,0,"Male",73,"Virginia","South",4,0,0,94.4444444444444,0,0,0
+1,0,"Female",40,"Arizona","West",3,5,0,33.3333333333333,0,0,0
+1,NA,"Male",59,"Oregon","West",4,0,1,16.6666666666667,1,0,1
+0,0,"Female",74,"Maryland","South",4,NA,NA,NA,NA,NA,0
+1,1,"Female",23,"Connecticut","Northeast",2,6,1,77.7777777777778,0,0,0
+1,0,"Female",54,"Pennsylvania","Northeast",3,8,1,77.7777777777778,0,0,0
+1,1,"Female",55,"Kentucky","South",2,7,1,83.3333333333333,0,1,0
+1,0,"Female",65,"Arizona","West",4,0,0,100,0,0,0
+0,0,"Male",43,"Arizona","West",3,NA,NA,NA,NA,NA,1
+0,0,"Female",79,"California","West",4,NA,NA,NA,NA,NA,0
+1,0,"Male",52,"Wyoming","West",4,7,1,27.7777777777778,0,0,0
+1,0,"Male",57,"California","West",2,5,1,50,1,0,0
+1,0,"Male",44,"Oregon","West",2,5,1,100,1,0,0
+0,0,"Male",81,"Illinois","Midwest",1,NA,NA,NA,NA,NA,0
+1,1,"Male",60,"Wyoming","West",3,5,0,93.75,NA,0,NA
+1,0,"Male",58,"California","West",1,3,0,87.5,1,0,1
+0,0,"Female",78,"Illinois","Midwest",3,NA,NA,NA,NA,NA,0
+1,0,"Male",68,"Montana","West",5,3,1,100,NA,0,0
+1,1,"Male",50,"Arizona","West",4,6,0,44.4444444444444,0,0,1
+1,0,"Male",66,"Nebraska","Midwest",3,7,0,25,1,0,0
+1,1,"Male",35,"Tennessee","South",4,7,1,72.2222222222222,1,0,0
+1,0,"Female",68,"Utah","West",4,0,0,75,0,0,0
+1,0,"Female",57,"Washington","West",3,3,1,83.3333333333333,0,0,0
+1,1,"Female",53,"Utah","West",4,3,0,50,0,0,1
+0,0,"Female",78,"Iowa","Midwest",3,NA,NA,NA,NA,NA,NA
+1,1,"Female",48,"California","West",4,8,1,94.4444444444444,1,1,0
+0,0,"Female",94,"Wisconsin","Midwest",3,NA,NA,NA,NA,NA,0
+1,1,"Female",66,"California","West",4,6,0,22.2222222222222,0,0,0
+1,1,"Female",30,"California","West",3,8,1,44.4444444444444,0,0,0
+1,0,"Female",57,"California","West",5,1,1,88.8888888888889,0,0,0
+1,0,"Male",74,"Oregon","West",4,5,0,5.55555555555556,1,0,0
+1,0,"Female",91,"Wisconsin","Midwest",4,2,0,66.6666666666667,0,0,NA
+1,1,"Male",81,"California","West",2,5,1,50,0,0,0
+1,1,"Female",28,"Missouri","Midwest",4,6,0,27.7777777777778,NA,1,0
+1,1,"Male",53,"Washington","West",NA,4,1,100,NA,0,0
+1,0,"Female",41,"California","West",2,4,1,100,1,0,0
+1,1,"Male",67,"Nevada","West",3,5,0,55.5555555555556,0,0,1
+0,0,"Male",76,"California","West",3,NA,NA,NA,NA,NA,0
+1,1,"Male",33,"California","West",5,6,0,100,1,0,0
+1,0,"Female",37,"Washington","West",3,2,1,62.5,0,0,NA
+1,1,"Female",63,"Oregon","West",2,3,0,44.4444444444444,0,0,1
+1,1,"Female",66,"California","West",4,7,1,94.4444444444444,1,0,1
+1,1,"Female",69,"Idaho","West",3,1,0,16.6666666666667,1,0,NA
+1,0,"Female",50,"California","West",4,5,1,94.4444444444444,1,0,0
+1,0,"Male",64,"Oregon","West",5,3,0,72.2222222222222,0,0,0
+1,1,"Female",26,"California","West",4,6,1,83.3333333333333,1,1,1
+1,1,"Male",57,"California","West",3,8,1,62.5,0,0,1
+0,NA,"Female",86,"Michigan","Midwest",4,NA,NA,NA,NA,NA,1
+0,0,"Female",74,"Kentucky","South",5,NA,NA,NA,NA,NA,0
+1,1,"Female",43,"Michigan","Midwest",3,8,1,100,0,0,1
+0,0,"Female",61,"District of Columbia","South",4,NA,NA,NA,NA,NA,0
+0,NA,"Female",65,"Florida","South",3,NA,NA,NA,NA,NA,1
+0,0,"Female",79,"West Virginia","South",3,NA,NA,NA,NA,NA,0
+1,0,"Female",55,"New York","Northeast",3,3,1,61.1111111111111,0,0,0
+1,1,"Female",54,"Maine","Northeast",4,0,0,88.8888888888889,0,0,0
+0,0,"Male",63,"Ohio","Midwest",4,NA,NA,NA,NA,NA,0
+1,0,"Female",83,"New Jersey","Northeast",2,4,1,50,NA,0,0
+1,0,"Female",77,"Pennsylvania","Northeast",3,0,0,81.25,NA,0,NA
+1,1,"Female",54,"New York","Northeast",3,4,1,27.7777777777778,0,0,0
+0,0,"Female",53,"West Virginia","South",4,NA,NA,NA,NA,NA,0
+1,0,"Female",64,"New York","Northeast",3,0,0,87.5,1,0,0
+1,1,"Female",53,"Ohio","Midwest",3,0,0,22.2222222222222,1,0,1
+0,0,"Female",72,"Pennsylvania","Northeast",4,NA,NA,NA,NA,NA,0
+0,0,"Female",88,"New Jersey","Northeast",5,NA,NA,NA,NA,NA,0
+1,1,"Female",23,"Virginia","South",2,6,0,44.4444444444444,1,0,0
+1,1,"Female",59,"Indiana","Midwest",4,7,1,94.4444444444444,0,1,0
+1,1,"Female",64,"New York","Northeast",2,5,1,55.5555555555556,0,0,0
+1,1,"Female",37,"Pennsylvania","Northeast",1,8,1,55.5555555555556,0,1,1
+1,0,"Female",93,"North Carolina","South",5,3,1,44.4444444444444,0,0,NA
+0,0,"Female",74,"West Virginia","South",4,NA,NA,NA,NA,NA,NA
+1,1,"Male",47,"Florida","South",3,4,0,77.7777777777778,0,1,0
+1,1,"Female",18,"New York","Northeast",3,6,0,61.1111111111111,0,0,1
+0,0,"Female",58,"New York","Northeast",5,NA,NA,NA,NA,NA,NA
+1,1,"Female",42,"Pennsylvania","Northeast",3,3,0,75,0,0,0
+0,0,"Male",65,"South Carolina","South",3,NA,NA,NA,NA,NA,NA
+1,1,"Male",21,"Michigan","Midwest",4,1,0,22.2222222222222,0,0,0
+0,0,"Female",54,"Massachusetts","Northeast",1,NA,NA,NA,NA,NA,NA
+1,0,"Male",80,"Florida","South",4,0,1,75,0,0,0
+1,0,"Female",76,"Pennsylvania","Northeast",4,1,1,100,0,0,NA
+1,0,"Male",30,"Texas","South",3,3,0,66.6666666666667,0,0,1
+1,0,"Female",74,"Florida","South",1,3,0,11.1111111111111,0,0,0
+0,0,"Male",82,"California","West",3,NA,NA,NA,NA,NA,1
+1,1,"Female",72,"New Jersey","Northeast",3,5,0,68.75,1,0,0
+1,1,"Male",48,"Michigan","Midwest",2,6,0,33.3333333333333,0,0,1
+0,0,"Female",87,"Florida","South",1,NA,NA,NA,NA,NA,NA
+1,0,"Female",55,"Arizona","West",2,2,1,0,0,0,1
+0,0,"Male",66,"New Mexico","West",4,NA,NA,NA,NA,NA,0
+1,0,"Male",62,"Iowa","Midwest",4,2,1,66.6666666666667,0,0,0
+1,1,"Male",62,"Wyoming","West",4,1,0,100,0,0,0
+1,1,"Male",71,"Texas","South",4,3,1,77.7777777777778,1,0,0
+1,0,"Female",65,"Virginia","South",3,3,1,100,0,0,0
+1,1,"Female",55,"Massachusetts","Northeast",3,7,0,37.5,0,0,1
+1,0,"Female",50,"Illinois","Midwest",5,2,0,20,1,0,1
+1,1,"Female",62,"Ohio","Midwest",3,4,1,100,0,1,0
+0,NA,"Female",86,"Washington","West",4,NA,NA,NA,NA,NA,0
+1,0,"Male",63,"California","West",3,7,1,88.8888888888889,0,0,0
+1,1,"Female",48,"Arkansas","South",4,8,0,44.4444444444444,0,0,1
+1,0,"Female",61,"New York","Northeast",2,5,1,77.7777777777778,0,0,0
+0,0,"Female",78,"Oklahoma","South",4,NA,NA,NA,NA,NA,NA
+1,NA,"Female",47,"California","West",NA,4,0,75,NA,0,NA
+0,0,"Female",81,"California","West",3,NA,NA,NA,NA,NA,NA
+1,0,"Male",56,"Minnesota","Midwest",NA,1,0,11.1111111111111,0,0,0
+1,1,"Female",22,"California","West",4,2,0,50,0,0,1
+1,0,"Female",64,"Washington","West",4,2,1,77.7777777777778,0,0,0
+1,0,"Female",67,"Texas","South",4,0,0,57.1428571428571,1,1,1
+1,1,"Female",50,"Massachusetts","Northeast",2,5,0,72.2222222222222,0,0,1
+1,0,"Female",83,"Tennessee","South",4,2,0,61.1111111111111,1,0,1
+1,1,"Male",19,"California","West",4,3,1,55.5555555555556,0,0,0
+1,1,"Female",67,"Minnesota","Midwest",5,3,1,100,0,0,NA
+1,1,"Female",68,"California","West",3,11,0,77.7777777777778,0,0,1
+1,1,"Female",73,"California","West",2,7,0,44.4444444444444,1,0,0
+1,1,"Male",64,"Wisconsin","Midwest",3,4,0,66.6666666666667,1,0,0
+1,0,"Male",20,"Illinois","Midwest",3,9,0,16.6666666666667,1,0,0
+1,1,"Female",52,"Kentucky","South",NA,2,1,77.7777777777778,0,0,0
+1,1,"Female",64,"Florida","South",4,1,0,100,0,0,0
+1,1,"Female",55,"Washington","West",3,1,1,100,0,0,0
+0,0,"Female",81,"Missouri","Midwest",5,NA,NA,NA,NA,NA,0
+1,1,"Female",66,"Oregon","West",3,7,1,38.8888888888889,0,0,0
+1,0,"Female",64,"Wyoming","West",3,5,1,55.5555555555556,0,0,0
+1,0,"Female",66,"Arizona","West",4,4,1,100,1,0,0
+0,1,"Male",72,"Washington","West",3,2,1,100,0,0,0
+1,0,"Male",65,"Washington","West",1,7,0,11.1111111111111,0,0,1
+0,0,"Female",84,"Ohio","Midwest",2,NA,NA,NA,NA,NA,NA
+1,0,"Male",57,"Texas","South",3,1,1,88.8888888888889,0,0,0
+0,0,"Male",NA,"Texas","South",4,NA,NA,NA,NA,NA,0
+1,0,"Female",70,"Colorado","West",3,0,0,100,1,0,NA
+0,0,"Male",62,"Wisconsin","Midwest",3,NA,NA,NA,NA,NA,0
+0,1,"Female",69,"California","West",3,0,1,0,0,0,0
+1,1,"Male",NA,"North Carolina","South",3,1,0,75,0,0,0
+1,1,"Male",56,"California","West",3,5,1,100,0,0,0
+1,0,"Male",73,"Pennsylvania","Northeast",5,4,1,77.7777777777778,0,1,0
+1,0,"Male",61,"Iowa","Midwest",2,2,0,11.1111111111111,1,0,1
+0,0,"Male",85,"Pennsylvania","Northeast",4,NA,NA,NA,NA,NA,1
+0,0,"Female",71,"Texas","South",5,NA,NA,NA,NA,NA,1
+0,0,"Female",78,"Nevada","West",3,NA,NA,NA,NA,NA,1
+1,1,"Female",60,"Tennessee","South",5,4,0,0,0,0,0
+0,0,"Female",77,"Texas","South",2,NA,NA,NA,NA,NA,0
+1,0,"Male",51,"Oklahoma","South",5,4,0,50,0,0,0
+0,0,"Male",56,"Louisiana","South",5,NA,NA,NA,NA,NA,0
+1,0,"Female",47,"Georgia","South",3,3,0,58.3333333333333,0,1,0
+0,1,"Female",69,"New York","Northeast",3,1,0,30,0,0,0
+1,0,"Male",27,"Massachusetts","Northeast",4,7,1,88.8888888888889,1,1,NA
+1,1,"Female",28,"Florida","South",NA,5,0,0,1,0,1
+1,0,"Female",60,"New York","Northeast",3,0,0,100,1,0,0
+1,1,"Male",46,"North Carolina","South",3,4,0,61.1111111111111,1,0,1
+0,1,"Female",72,"North Carolina","South",3,0,0,0,0,0,1
+0,0,"Female",83,"Virginia","South",2,NA,NA,NA,NA,NA,0
+1,0,"Female",20,"Virginia","South",2,2,1,72.2222222222222,0,1,0
+1,0,"Female",44,"Illinois","Midwest",3,3,0,71.4285714285714,0,0,1
+1,NA,"Male",76,"Mississippi","South",3,2,1,57.1428571428571,1,0,0
+1,0,"Male",77,"North Carolina","South",4,0,0,16.6666666666667,0,1,0
+1,1,"Female",18,"California","West",3,1,1,5.55555555555556,1,0,0
+1,1,"Male",81,"Texas","South",4,0,1,61.1111111111111,0,0,1
+1,NA,"Female",39,"Massachusetts","Northeast",3,2,1,83.3333333333333,0,0,0
+0,0,"Female",70,"Idaho","West",4,NA,NA,NA,NA,NA,1
+1,1,"Male",49,"Ohio","Midwest",4,10,0,0,0,0,1
+1,0,"Male",67,"Nebraska","Midwest",3,0,0,16.6666666666667,1,0,0
+1,1,"Male",31,"Washington","West",2,3,0,50,0,0,0
+1,0,"Female",55,"North Carolina","South",5,1,1,66.6666666666667,0,0,0
+0,0,"Female",80,"Connecticut","Northeast",4,NA,NA,NA,NA,NA,1
+0,NA,"Male",66,"Ohio","Midwest",3,NA,NA,NA,NA,NA,0
+1,1,"Male",31,"Kentucky","South",4,1,0,77.7777777777778,0,0,0
+1,1,"Male",20,"Tennessee","South",3,3,0,27.7777777777778,1,0,1
+1,1,"Female",44,"Florida","South",3,5,0,66.6666666666667,0,0,0
+1,1,"Male",58,"Tennessee","South",4,9,0,100,0,0,0
+1,0,"Male",23,"Massachusetts","Northeast",NA,4,0,55.5555555555556,0,0,0
+1,NA,"Female",67,"Kansas","Midwest",4,2,0,43.75,0,0,NA
+0,0,"Male",60,"Illinois","Midwest",3,NA,NA,NA,NA,NA,0
+1,0,"Female",22,"Colorado","West",1,5,1,88.8888888888889,0,0,0
+1,1,"Male",51,"North Carolina","South",5,6,0,44.4444444444444,0,0,NA
+1,0,"Female",58,"Idaho","West",4,7,1,88.8888888888889,0,0,1
+1,0,"Female",51,"Montana","West",2,0,1,100,0,NA,1
+1,1,"Male",18,"Massachusetts","Northeast",3,6,0,11.1111111111111,1,0,0
+1,0,"Male",60,"Pennsylvania","Northeast",4,0,1,44.4444444444444,0,0,0
+1,0,"Female",66,"California","West",3,3,0,87.5,0,0,0
+1,1,"Male",41,"New Jersey","Northeast",3,2,1,62.5,0,0,0
+1,0,"Female",60,"Colorado","West",1,1,1,100,0,0,1
+1,0,"Female",51,"Indiana","Midwest",3,2,0,100,0,0,1
+1,1,"Female",62,"Texas","South",4,8,1,100,0,0,0
+1,1,"Female",53,"Oregon","West",4,2,0,100,0,0,0
+1,1,"Male",70,"Ohio","Midwest",4,4,1,88.8888888888889,1,0,0
+1,0,"Female",52,"Michigan","Midwest",3,1,1,94.4444444444444,1,0,0
+1,1,"Male",58,"California","West",3,6,1,100,0,1,0
+1,1,"Female",24,"Delaware","South",3,4,0,22.2222222222222,1,0,1
+0,0,"Female",75,"Ohio","Midwest",5,NA,NA,NA,NA,NA,NA
+1,1,"Female",35,"California","West",3,6,1,77.7777777777778,0,1,0
+1,1,"Male",58,"New York","Northeast",3,2,1,77.7777777777778,0,0,0
+1,0,"Female",62,"Virginia","South",2,8,1,0,0,0,1
+1,0,"Female",88,"California","West",3,1,1,100,0,0,0
+1,1,"Female",60,"Oregon","West",4,5,1,88.8888888888889,0,1,0
+1,1,"Male",66,"South Carolina","South",3,4,0,0,0,0,1
+1,1,"Male",63,"Delaware","South",3,2,1,56.25,NA,0,1
+0,0,"Female",75,"North Carolina","South",4,NA,NA,NA,NA,NA,0
+1,0,"Male",33,"New York","Northeast",3,2,1,100,1,0,0
+1,0,"Male",77,"Louisiana","South",4,4,1,18.75,0,0,0
+1,0,"Female",50,"Michigan","Midwest",3,6,1,100,0,0,0
+1,0,"Male",59,"Illinois","Midwest",NA,2,0,100,0,0,0
+0,0,"Female",NA,"Ohio","Midwest",4,NA,NA,NA,NA,NA,NA
+1,1,"Female",58,"Indiana","Midwest",4,9,1,61.1111111111111,0,0,1
+1,1,"Male",36,"Missouri","Midwest",4,11,0,72.2222222222222,1,0,0
+1,1,"Female",49,"Virginia","South",5,6,1,77.7777777777778,0,0,NA
+0,NA,"Male",74,"Georgia","South",5,NA,NA,NA,NA,NA,NA
+1,NA,"Female",81,"Ohio","Midwest",1,3,0,5.55555555555556,0,0,1
+1,1,"Female",18,"Pennsylvania","Northeast",2,4,0,44.4444444444444,0,0,NA
+1,1,"Female",62,"Oregon","West",3,5,1,100,0,0,0
+1,0,"Female",77,"Minnesota","Midwest",3,2,0,55.5555555555556,0,0,0
+0,0,"Male",93,"Georgia","South",4,NA,NA,NA,NA,NA,1
+1,0,"Female",58,"Nebraska","Midwest",3,4,1,57.1428571428571,0,0,0
+0,1,"Male",62,"Kansas","Midwest",1,5,0,50,0,0,NA
+1,1,"Male",69,"Georgia","South",3,7,0,77.7777777777778,0,0,0
+1,1,"Male",64,"California","West",NA,2,0,93.75,0,0,NA
+1,1,"Female",53,"Louisiana","South",5,3,1,100,0,0,0
+1,0,"Female",43,"Iowa","Midwest",3,1,0,88.8888888888889,0,0,0
+1,1,"Male",41,"Oklahoma","South",5,3,1,28.5714285714286,1,0,0
+1,0,"Female",NA,"Kentucky","South",4,1,0,0,0,0,0
+1,1,"Female",41,"Indiana","Midwest",3,4,1,100,0,0,0
+1,1,"Female",58,"Virginia","South",NA,4,1,0,1,0,1
+0,NA,"Male",80,"Illinois","Midwest",4,NA,NA,NA,NA,NA,1
+1,0,"Male",67,"Arkansas","South",4,1,0,100,1,0,0
+1,0,"Female",55,"Alabama","South",4,4,1,94.4444444444444,0,0,0
+0,0,"Male",66,"Connecticut","Northeast",1,NA,NA,NA,NA,NA,0
+0,0,"Female",62,"Minnesota","Midwest",2,NA,NA,NA,NA,NA,1
+1,1,"Female",45,"Georgia","South",4,4,0,75,0,0,0
+1,1,"Female",59,"New Jersey","Northeast",2,5,1,77.7777777777778,0,0,0
+1,0,"Female",59,"Florida","South",3,1,0,80,0,0,0
+1,1,"Male",33,"New York","Northeast",3,3,1,100,0,0,0
+0,0,"Female",72,"Kentucky","South",3,NA,NA,NA,NA,NA,0
+1,0,"Male",72,"Louisiana","South",4,0,0,0,1,0,0
+0,0,"Female",87,"Arizona","West",3,NA,NA,NA,NA,NA,0
+0,1,"Female",49,"Missouri","Midwest",2,0,0,11.1111111111111,0,0,1
+1,1,"Male",50,"New Hampshire","Northeast",3,1,1,100,1,0,0
+1,1,"Male",77,"Georgia","South",4,9,1,100,0,0,0
+0,0,"Male",19,"Ohio","Midwest",3,NA,NA,NA,NA,NA,1
+1,0,"Male",39,"Kentucky","South",3,0,1,100,1,1,0
+1,0,"Female",45,"Ohio","Midwest",3,5,1,88.8888888888889,0,0,0
+1,1,"Male",57,"Georgia","South",4,3,0,25,0,0,NA
+1,0,"Male",34,"Virginia","South",3,3,1,66.6666666666667,0,0,0
+1,1,"Female",65,"Florida","South",4,1,0,88.8888888888889,0,0,0
+1,1,"Male",19,"Virginia","South",3,7,0,100,1,0,0
+1,1,"Male",23,"Georgia","South",4,0,0,38.8888888888889,0,1,NA
+1,1,"Male",33,"Georgia","South",3,7,0,61.1111111111111,1,0,0
+0,NA,"Male",56,"Michigan","Midwest",3,NA,NA,NA,NA,NA,0
+1,0,"Male",54,"Missouri","Midwest",3,4,0,83.3333333333333,0,0,0
+1,1,"Female",35,"Illinois","Midwest",3,4,1,66.6666666666667,1,0,0
+1,0,"Female",59,"Illinois","Midwest",5,8,1,66.6666666666667,1,0,1
+0,0,"Female",76,"Mississippi","South",3,NA,NA,NA,NA,NA,0
+1,1,"Male",39,"Iowa","Midwest",3,6,1,55.5555555555556,0,0,0
+1,1,"Male",29,"Texas","South",5,5,1,100,1,1,0
+1,1,"Male",34,"Minnesota","Midwest",4,6,0,0,1,0,1
+1,0,"Female",79,"Michigan","Midwest",4,2,0,62.5,1,0,0
+1,1,"Male",36,"Virginia","South",1,8,0,77.7777777777778,1,0,1
+1,1,"Female",50,"Missouri","Midwest",1,6,1,77.7777777777778,0,1,0
+1,1,"Male",61,"North Carolina","South",3,4,0,66.6666666666667,0,0,1
+0,0,"Female",73,"Michigan","Midwest",3,NA,NA,NA,NA,NA,NA
+1,0,"Female",57,"Arkansas","South",4,3,0,94.4444444444444,0,0,NA
+1,NA,"Male",20,"Oklahoma","South",4,1,1,27.7777777777778,1,0,1
+1,1,"Male",31,"Arizona","West",3,6,1,55.5555555555556,0,1,0
+0,1,"Female",53,"Georgia","South",3,4,0,28.5714285714286,0,NA,0
+1,1,"Female",73,"Michigan","Midwest",3,5,1,100,0,0,0
+1,1,"Male",55,"Texas","South",3,3,0,72.2222222222222,0,0,0
+1,0,"Male",74,"Michigan","Midwest",4,3,1,66.6666666666667,1,1,0
+0,0,"Male",62,"Kentucky","South",2,NA,NA,NA,NA,NA,0
+1,1,"Male",43,"Michigan","Midwest",3,6,0,100,0,0,0
+1,1,"Male",30,"Ohio","Midwest",2,5,0,33.3333333333333,1,0,0
+1,0,"Female",76,"Texas","South",4,2,1,50,NA,0,1
+1,0,"Male",29,"New York","Northeast",4,2,1,44.4444444444444,1,1,0
+1,1,"Male",34,"Colorado","West",3,8,1,94.4444444444444,0,1,1
+1,1,"Male",59,"Illinois","Midwest",3,2,0,44.4444444444444,1,1,0
+0,0,"Male",46,"Pennsylvania","Northeast",NA,NA,NA,NA,NA,NA,0
+0,0,"Female",86,"Florida","South",NA,NA,NA,NA,NA,NA,NA
+1,1,"Male",75,"Florida","South",3,7,0,12.5,0,0,NA
+0,1,"Male",60,"Michigan","Midwest",NA,1,0,0,1,0,NA
+1,1,"Female",27,"Virginia","South",4,6,1,77.7777777777778,1,0,1
+1,1,"Male",50,"Texas","South",4,3,1,100,1,0,0
+1,1,"Male",NA,"Michigan","Midwest",NA,6,1,94.4444444444444,0,0,0
+1,1,"Male",24,"Oklahoma","South",3,1,0,61.1111111111111,1,0,0
+1,1,"Male",33,"Kansas","Midwest",4,4,0,0,1,0,0
+1,0,"Male",44,"Texas","South",4,5,0,93.75,1,0,NA
+1,0,"Male",40,"Missouri","Midwest",4,5,0,77.7777777777778,0,1,0
+1,1,"Male",39,"Utah","West",3,4,1,100,0,0,0
+1,1,"Male",21,"Texas","South",NA,5,0,6.25,0,0,1
+1,0,"Female",61,"North Dakota","Midwest",4,1,0,94.4444444444444,1,0,NA
+1,1,"Female",31,"Utah","West",3,8,1,61.1111111111111,0,1,0
+1,0,"Male",56,"New York","Northeast",3,1,0,7.14285714285714,0,0,NA
+0,0,"Male",68,"Georgia","South",3,NA,NA,NA,NA,NA,NA
+1,1,"Female",30,"Kansas","Midwest",2,1,0,100,0,0,NA
+1,0,"Female",23,"Texas","South",3,6,0,77.7777777777778,1,1,1
+1,0,"Male",53,"Wisconsin","Midwest",4,1,0,83.3333333333333,0,0,0
+1,1,"Female",27,"Texas","South",3,3,1,81.25,1,0,0
+1,0,"Male",48,"North Carolina","South",4,1,1,100,1,0,0
+1,0,"Female",50,"Kentucky","South",4,2,0,80,NA,0,0
+0,NA,"Female",41,"Louisiana","South",1,NA,NA,NA,NA,NA,0
+NA,0,"Male",33,"Wisconsin","Midwest",4,NA,NA,NA,NA,NA,0
+1,1,"Female",57,"Ohio","Midwest",2,3,1,50,0,1,0
+1,1,"Male",49,"Georgia","South",4,1,0,72.2222222222222,0,0,0
+1,1,"Female",70,"Colorado","West",4,5,1,77.7777777777778,0,0,0
+0,0,"Female",23,"Florida","South",3,NA,NA,NA,NA,NA,1
+1,1,"Female",30,"Kansas","Midwest",3,6,0,43.75,0,0,1
+1,1,"Female",51,"Texas","South",4,10,0,44.4444444444444,1,0,0
+1,0,"Male",47,"Arizona","West",4,0,0,100,1,0,1
+1,1,"Female",27,"New York","Northeast",3,3,1,66.6666666666667,0,0,0
+1,0,"Female",49,"California","West",3,1,1,66.6666666666667,1,0,0
+1,1,"Male",18,"Arizona","West",3,6,0,33.3333333333333,1,0,1
+1,1,"Female",24,"Colorado","West",3,8,1,22.2222222222222,1,1,0
+1,1,"Male",23,"Louisiana","South",4,8,1,100,0,1,0
+1,1,"Female",NA,"California","West",3,4,1,100,1,0,0
+1,NA,"Male",20,"Nevada","West",1,0,0,50,1,0,1
+0,0,"Female",66,"Arizona","West",4,NA,NA,NA,NA,NA,0
+1,1,"Female",25,"Arizona","West",3,2,0,50,1,1,0
+0,NA,"Male",50,"Missouri","Midwest",NA,NA,NA,NA,NA,NA,0
+0,0,"Male",63,"Colorado","West",1,NA,NA,NA,NA,NA,0
+1,1,"Male",64,"Texas","South",2,9,1,100,1,0,0
+1,1,"Female",21,"California","West",2,6,1,77.7777777777778,0,0,0
+1,1,"Male",44,"Indiana","Midwest",1,7,1,55.5555555555556,0,0,0
+1,1,"Female",29,"Virginia","South",2,3,0,93.75,1,0,0
+1,0,"Male",60,"South Carolina","South",5,7,0,44.4444444444444,0,0,0
+0,1,"Male",22,"Colorado","West",4,3,1,50,1,0,0
+0,0,"Male",75,"Idaho","West",2,NA,NA,NA,NA,NA,0
+0,0,"Female",56,"Georgia","South",3,NA,NA,NA,NA,NA,1
+1,1,"Male",36,"North Carolina","South",3,10,1,22.2222222222222,1,0,0
+1,1,"Female",49,"North Carolina","South",4,3,1,66.6666666666667,1,0,0
+1,1,"Male",56,"Florida","South",5,9,0,100,0,1,1
+0,0,"Female",65,"Indiana","Midwest",3,NA,NA,NA,NA,NA,NA
+1,1,"Male",18,"Kentucky","South",4,1,0,88.8888888888889,0,0,0
+1,1,"Male",51,"Pennsylvania","Northeast",NA,8,0,50,1,0,0
+0,0,"Female",70,"Michigan","Midwest",4,NA,NA,NA,NA,NA,NA
+1,0,"Female",53,"Massachusetts","Northeast",2,0,0,83.3333333333333,0,1,0
+1,1,"Male",43,"Virginia","South",3,6,0,33.3333333333333,0,0,0
+1,1,"Female",75,"Florida","South",4,0,0,83.3333333333333,0,0,0
+1,1,"Female",56,"Texas","South",3,1,0,33.3333333333333,1,0,0
+1,1,"Female",24,"South Carolina","South",3,6,1,94.4444444444444,0,0,1
+1,1,"Female",40,"Pennsylvania","Northeast",3,2,0,25,0,0,0
+0,0,"Female",65,"North Carolina","South",4,NA,NA,NA,NA,NA,0
+1,0,"Female",22,"Michigan","Midwest",NA,4,1,87.5,0,1,0
+1,1,"Male",NA,"New York","Northeast",NA,4,1,72.2222222222222,1,1,0
+0,0,"Male",65,"Florida","South",4,NA,NA,NA,NA,NA,0
+0,0,"Male",56,"New York","Northeast",3,NA,NA,NA,NA,NA,0
+1,1,"Male",18,"Maryland","South",4,10,1,88.8888888888889,0,0,0
+1,1,"Male",34,"Georgia","South",4,4,1,44.4444444444444,1,0,0
+1,1,"Female",33,"Georgia","South",3,7,1,72.2222222222222,0,0,1
+1,1,"Male",22,"Connecticut","Northeast",4,7,0,38.8888888888889,0,1,NA
+1,0,"Male",61,"Mississippi","South",1,0,0,100,0,0,0
+1,1,"Male",58,"Florida","South",4,5,0,33.3333333333333,1,0,0
+1,0,"Male",58,"South Dakota","Midwest",3,2,1,75,1,0,NA
+1,1,"Male",26,"Illinois","Midwest",3,5,1,77.7777777777778,0,0,0
+1,1,"Male",44,"Alabama","South",3,7,1,93.75,0,1,0
+1,0,"Male",64,"Kansas","Midwest",3,0,1,66.6666666666667,0,0,1
+0,NA,"Female",70,"Louisiana","South",3,NA,NA,NA,NA,NA,0
+1,1,"Male",32,"Colorado","West",1,10,1,22.2222222222222,1,1,1
+0,0,"Female",75,"Illinois","Midwest",4,NA,NA,NA,NA,NA,0
+1,1,"Female",21,"Texas","South",3,9,1,6.25,0,0,0
+1,0,"Female",79,"Texas","South",3,5,0,16.6666666666667,0,0,0
+1,1,"Male",71,"Texas","South",3,5,0,55.5555555555556,0,0,0
+1,1,"Female",47,"Texas","South",3,2,0,18.75,1,0,0
+1,1,"Female",79,"Nebraska","Midwest",4,2,0,33.3333333333333,NA,0,0
+1,1,"Male",56,"Texas","South",3,6,1,72.2222222222222,0,1,0
+1,1,"Male",59,"Kansas","Midwest",3,6,0,5.55555555555556,1,0,1
+1,1,"Male",59,"Kentucky","South",5,0,0,100,0,0,0
+1,1,"Female",53,"Kentucky","South",2,2,1,100,0,0,0
+1,0,"Female",55,"Alabama","South",2,0,0,0,0,0,0
+1,1,"Male",70,"Texas","South",4,5,0,44.4444444444444,0,1,0
+0,NA,"Male",53,"Illinois","Midwest",5,NA,NA,NA,NA,NA,0
+1,1,"Male",47,"Texas","South",2,2,1,100,1,0,1
+1,0,"Male",53,"Kansas","Midwest",5,5,1,100,1,0,0
+1,1,"Male",24,"Texas","South",NA,7,0,33.3333333333333,1,1,0
+1,1,"Female",65,"South Dakota","Midwest",3,2,0,72.2222222222222,0,0,0
+1,1,"Male",55,"Missouri","Midwest",2,3,1,100,1,0,0
+1,1,"Female",35,"California","West",3,5,1,83.3333333333333,1,0,0
+1,1,"Male",32,"Virginia","South",4,4,0,94.4444444444444,0,0,1
+1,1,"Female",21,"Maryland","South",2,5,1,88.8888888888889,0,1,0
+1,0,"Female",59,"Texas","South",2,1,1,100,1,0,0
+1,1,"Male",31,"Colorado","West",3,4,0,25,0,0,1
+1,1,"Female",60,"Colorado","West",3,1,0,77.7777777777778,0,0,0
+1,1,"Male",23,"California","West",3,7,0,33.3333333333333,1,0,0
+0,0,"Male",62,"California","West",3,NA,NA,NA,NA,NA,NA
+1,1,"Female",31,"California","West",2,5,0,77.7777777777778,1,0,0
+1,1,"Male",26,"California","West",1,3,1,100,1,0,1
+1,1,"Female",43,"California","West",2,3,1,87.5,0,0,0
+1,0,"Male",30,"Georgia","South",3,3,1,83.3333333333333,1,1,0
+1,0,"Male",53,"Oregon","West",4,0,1,66.6666666666667,1,0,0
+1,1,"Male",30,"California","West",3,3,1,0,1,0,0
+1,1,"Female",37,"Oregon","West",2,0,0,62.5,NA,0,1
+1,1,"Male",62,"California","West",5,3,1,22.2222222222222,NA,0,0
+1,1,"Male",18,"New York","Northeast",5,5,1,66.6666666666667,0,0,0
+1,1,"Male",19,"Virginia","South",3,3,1,5.55555555555556,0,0,1
+1,0,"Male",NA,"Virginia","South",2,11,1,100,0,0,0
+1,0,"Female",53,"New York","Northeast",2,2,0,94.4444444444444,1,0,1
+1,0,"Male",60,"Michigan","Midwest",NA,1,0,80,0,0,0
+1,0,"Female",64,"New York","Northeast",2,8,0,77.7777777777778,1,1,0
+0,0,"Male",51,"Michigan","Midwest",5,NA,NA,NA,NA,NA,NA
+1,1,"Male",78,"North Carolina","South",4,2,1,83.3333333333333,0,0,0
+1,0,"Female",52,"Virginia","South",5,0,1,44.4444444444444,1,0,1
+1,1,"Female",37,"New York","Northeast",2,3,1,33.3333333333333,0,0,0
+1,1,"Female",48,"Michigan","Midwest",3,6,0,56.25,0,0,0
+1,1,"Female",35,"North Carolina","South",2,3,0,83.3333333333333,1,1,0
+0,0,"Female",50,"Florida","South",3,NA,NA,NA,NA,NA,1
+1,0,"Female",39,"Rhode Island","Northeast",3,4,1,55.5555555555556,0,0,0
+0,0,"Male",53,"New York","Northeast",3,NA,NA,NA,NA,NA,0
+1,1,"Male",32,"Ohio","Midwest",3,2,1,75,1,0,0
+1,1,"Male",19,"Ohio","Midwest",3,8,0,66.6666666666667,0,0,0
+1,1,"Female",60,"Florida","South",3,1,1,83.3333333333333,0,0,0
+1,0,"Male",40,"North Carolina","South",4,2,1,22.2222222222222,0,0,0
+1,1,"Male",NA,"Florida","South",3,5,1,100,1,1,0
+1,1,"Male",37,"Georgia","South",NA,4,1,77.7777777777778,0,0,0
+1,1,"Male",92,"Kentucky","South",3,0,0,22.2222222222222,0,0,0
+1,1,"Male",20,"New York","Northeast",3,3,0,55.5555555555556,0,0,1
+0,NA,"Male",65,"Nebraska","Midwest",3,NA,NA,NA,NA,NA,0
+1,0,"Male",53,"Illinois","Midwest",5,1,0,0,0,0,1
+1,1,"Male",28,"New Jersey","Northeast",1,2,1,11.1111111111111,1,1,0
+1,1,"Female",22,"Massachusetts","Northeast",2,8,0,38.8888888888889,1,0,0
+1,1,"Male",43,"North Carolina","South",3,0,0,0,0,0,0
+1,1,"Male",64,"Texas","South",3,9,0,100,0,0,0
+1,0,"Male",60,"Texas","South",4,5,0,0,1,NA,0
+1,1,"Female",28,"Kentucky","South",4,4,1,44.4444444444444,1,1,NA
+1,1,"Male",25,"Oklahoma","South",2,4,0,11.1111111111111,0,0,0
+1,1,"Female",50,"Maryland","South",3,8,0,100,0,0,1
+0,0,"Male",46,"Texas","South",4,NA,NA,NA,NA,NA,0
+1,0,"Female",66,"Nebraska","Midwest",5,8,0,28.5714285714286,0,0,1
+1,1,"Female",37,"Illinois","Midwest",NA,2,0,100,0,1,0
+1,1,"Female",20,"Washington","West",4,8,0,77.7777777777778,0,0,1
+1,1,"Male",70,"Missouri","Midwest",4,3,1,38.8888888888889,0,0,0
+1,0,"Male",65,"Florida","South",5,0,0,0,0,0,0
+0,0,"Male",62,"Kansas","Midwest",3,NA,NA,NA,NA,NA,0
+1,1,"Male",31,"Oklahoma","South",1,8,1,77.7777777777778,0,1,0
+0,0,"Male",73,"Texas","South",5,NA,NA,NA,NA,NA,NA
+1,0,"Male",60,"Louisiana","South",5,0,0,0,0,0,0
+1,1,"Male",28,"Kentucky","South",3,5,0,6.25,0,0,0
+1,1,"Male",NA,"Oklahoma","South",4,2,1,50,1,1,0
+1,0,"Female",51,"Delaware","South",3,2,1,42.8571428571429,1,0,0
+1,1,"Female",57,"West Virginia","South",4,3,0,35.7142857142857,1,0,1
+1,0,"Female",44,"Illinois","Midwest",5,3,1,100,NA,0,0
+0,0,"Female",58,"Arkansas","South",3,NA,NA,NA,NA,NA,0
+1,1,"Female",26,"Texas","South",3,2,0,44.4444444444444,1,0,1
+1,1,"Female",58,"Massachusetts","Northeast",2,6,0,66.6666666666667,0,0,0
+1,0,"Female",30,"New York","Northeast",2,6,1,66.6666666666667,1,0,0
+1,1,"Male",62,"Mississippi","South",4,4,1,72.2222222222222,0,0,0
+1,1,"Male",64,"North Dakota","Midwest",3,11,0,93.75,NA,0,1
+1,1,"Female",26,"Texas","South",4,6,0,77.7777777777778,0,0,0
+1,1,"Female",29,"Wyoming","West",4,7,0,38.8888888888889,0,1,0
+1,NA,"Female",42,"Arkansas","South",5,4,0,88.8888888888889,1,0,1
+1,NA,"Female",23,"Texas","South",3,4,0,44.4444444444444,0,1,0
+0,0,"Female",56,"Illinois","Midwest",NA,NA,NA,NA,NA,NA,0
+1,NA,"Female",62,"Idaho","West",NA,2,0,43.75,1,0,0
+1,1,"Male",38,"Montana","West",3,4,1,72.2222222222222,0,0,0
+1,1,"Male",72,"Texas","South",3,2,1,0,1,0,0
+1,1,"Female",71,"Mississippi","South",3,7,0,0,0,0,0
+1,1,"Male",57,"Pennsylvania","Northeast",3,2,0,37.5,1,0,NA
+0,0,"Male",30,"Alabama","South",4,NA,NA,NA,NA,NA,1
+0,0,"Male",68,"Texas","South",4,NA,NA,NA,NA,NA,0
+1,0,"Male",32,"Oklahoma","South",4,0,1,50,NA,0,1
+1,1,"Male",72,"Illinois","Midwest",4,2,1,100,0,0,NA
+1,1,"Female",52,"Texas","South",5,0,0,25,1,1,1
+1,1,"Male",50,"Massachusetts","Northeast",3,1,0,100,1,0,1
+0,0,"Male",22,"Pennsylvania","Northeast",4,NA,NA,NA,NA,NA,1
+1,0,"Male",48,"Pennsylvania","Northeast",4,2,0,33.3333333333333,0,0,0
+0,0,"Female",69,"Georgia","South",4,NA,NA,NA,NA,NA,0
+0,1,"Male",52,"Connecticut","Northeast",2,1,0,50,1,0,1
+1,0,"Male",27,"Michigan","Midwest",4,8,0,44.4444444444444,1,1,1
+1,1,"Male",27,"Mississippi","South",3,4,1,94.4444444444444,0,0,0
+1,1,"Female",49,"Maryland","South",4,4,1,100,0,1,0
+1,1,"Male",34,"Tennessee","South",1,7,0,94.4444444444444,0,0,0
+1,1,"Male",26,"Wisconsin","Midwest",5,2,0,100,0,0,0
+1,1,"Male",37,"Mississippi","South",3,2,1,44.4444444444444,NA,0,0
+1,0,"Female",38,"Ohio","Midwest",4,3,1,38.8888888888889,0,0,0
+1,1,"Male",43,"New Hampshire","Northeast",3,10,0,72.2222222222222,1,0,0
+1,1,"Female",60,"Iowa","Midwest",4,3,0,61.1111111111111,1,0,1
+1,1,"Female",65,"Georgia","South",4,5,1,88.8888888888889,0,0,1
+1,1,"Male",49,"Indiana","Midwest",1,6,0,55.5555555555556,NA,0,0
+1,0,"Female",63,"Arizona","West",4,4,1,22.2222222222222,1,NA,0
+1,1,"Male",22,"Texas","South",4,5,0,43.75,0,1,1
+0,0,"Male",66,"Arizona","West",NA,NA,NA,NA,NA,NA,0
+1,1,"Male",56,"Colorado","West",4,4,0,88.8888888888889,1,0,0
+1,0,"Male",71,"Utah","West",5,3,0,0,1,0,0
+1,1,"Female",57,"Ohio","Midwest",3,4,0,100,0,0,0
+1,0,"Male",67,"Wisconsin","Midwest",3,3,0,55.5555555555556,0,0,0
+1,1,"Male",33,"Florida","South",4,3,0,31.25,1,0,0
+1,1,"Male",60,"Indiana","Midwest",4,9,0,22.2222222222222,0,1,1
+1,0,"Female",27,"Illinois","Midwest",NA,6,0,18.75,1,0,1
+1,0,"Male",60,"Idaho","West",2,0,0,21.4285714285714,NA,0,1
+1,0,"Female",62,"New York","Northeast",3,3,1,94.4444444444444,1,0,0
+1,1,"Female",57,"North Carolina","South",2,7,1,94.4444444444444,0,0,0
+1,1,"Male",57,"New York","Northeast",NA,1,0,0,1,1,1
+1,1,"Female",42,"Connecticut","Northeast",1,7,1,50,0,1,1
+1,1,"Male",36,"Colorado","West",3,5,1,94.4444444444444,1,1,0
+1,0,"Female",79,"Nevada","West",2,2,0,0,NA,0,1
+1,1,"Male",26,"California","West",2,6,1,33.3333333333333,1,0,0
+1,1,"Female",19,"California","West",2,7,0,77.7777777777778,0,0,0
+1,1,"Male",64,"California","West",2,7,1,83.3333333333333,1,1,0
+1,1,"Female",22,"California","West",3,4,0,33.3333333333333,1,0,0
+0,0,"Male",51,"California","West",3,NA,NA,NA,NA,NA,1
+1,1,"Male",33,"California","West",3,1,1,88.8888888888889,0,0,0
+1,1,"Male",28,"North Dakota","Midwest",4,8,1,66.6666666666667,0,0,0
+1,1,"Male",71,"California","West",3,4,1,100,0,0,0
+1,0,"Female",68,"California","West",4,1,0,16.6666666666667,0,0,1
+0,0,"Male",82,"California","West",3,NA,NA,NA,NA,NA,1
+1,1,"Female",60,"California","West",5,3,0,62.5,0,0,0
+1,1,"Male",73,"California","West",2,3,0,100,1,0,0
+1,1,"Male",NA,"Maryland","South",1,6,1,88.8888888888889,1,1,0
+1,1,"Female",23,"North Carolina","South",3,7,0,0,0,1,0
+1,1,"Male",61,"Georgia","South",3,3,1,94.4444444444444,0,1,0
+1,1,"Female",56,"Pennsylvania","Northeast",NA,11,1,100,0,0,0
+1,1,"Male",56,"Nevada","West",2,6,1,83.3333333333333,0,0,0
+1,1,"Male",64,"Texas","South",4,3,1,100,0,0,0
+1,1,"Male",35,"Texas","South",4,3,0,88.8888888888889,0,0,1
+1,1,"Male",35,"New York","Northeast",1,2,1,55.5555555555556,0,0,1
+1,1,"Female",23,"Nebraska","Midwest",2,5,0,44.4444444444444,0,0,0
+1,1,"Female",27,"Virginia","South",NA,5,1,83.3333333333333,0,0,1
+0,0,"Female",50,"District of Columbia","South",4,NA,NA,NA,NA,NA,1
+1,0,"Female",21,"New York","Northeast",3,4,0,72.2222222222222,1,0,0
+1,1,"Male",21,"Ohio","Midwest",3,5,1,33.3333333333333,1,0,0
+1,1,"Male",52,"Florida","South",3,2,1,100,0,0,NA
+1,1,"Male",61,"Ohio","Midwest",3,4,0,91.6666666666667,0,1,0
+1,1,"Female",29,"Tennessee","South",3,2,1,72.2222222222222,1,0,1
+1,0,"Male",32,"New York","Northeast",1,8,0,72.2222222222222,0,0,0
+1,1,"Male",26,"Wisconsin","Midwest",4,3,1,66.6666666666667,0,0,0
+1,1,"Male",69,"Illinois","Midwest",4,5,0,0,0,0,1
+1,1,"Male",24,"Texas","South",4,10,0,44.4444444444444,1,0,1
+1,1,"Female",30,"Washington","West",4,8,1,100,0,0,1
+0,0,"Male",51,"California","West",3,NA,NA,NA,NA,NA,0
+1,0,"Female",45,"Washington","West",NA,4,1,100,1,0,0
+1,0,"Male",21,"California","West",2,6,0,11.1111111111111,1,0,1
+1,1,"Female",49,"Virginia","South",3,0,1,11.1111111111111,1,0,0
+1,1,"Male",56,"California","West",4,9,0,25,1,0,0
+1,1,"Male",37,"California","West",3,0,1,100,0,0,1
+1,1,"Male",56,"Washington","West",2,4,1,27.7777777777778,0,0,NA
+0,0,"Male",59,"California","West",1,NA,NA,NA,NA,NA,1
+1,1,"Male",18,"California","West",4,6,0,NA,1,0,0
+1,NA,"Female",62,"Texas","South",2,0,1,56.25,1,1,0
+1,1,"Male",38,"California","West",3,1,1,83.3333333333333,1,0,0
+0,1,"Male",57,"Wyoming","West",4,0,0,100,1,0,1
+1,1,"Female",57,"Arizona","West",4,2,1,66.6666666666667,0,1,0
+1,1,"Male",23,"California","West",4,7,0,55.5555555555556,1,1,NA
+1,0,"Male",45,"California","West",4,0,1,66.6666666666667,0,0,0
+1,1,"Male",27,"California","West",2,5,0,88.8888888888889,1,0,0
+1,1,"Male",25,"California","West",3,5,1,22.2222222222222,1,1,0
+1,1,"Male",43,"California","West",3,4,1,100,1,0,0
+1,1,"Male",21,"Washington","West",2,8,0,16.6666666666667,1,0,0
+1,1,"Female",28,"Washington","West",2,0,1,0,0,0,NA
+1,NA,"Female",54,"California","West",5,3,0,68.75,0,0,0
+0,NA,"Male",48,"New York","Northeast",5,NA,NA,NA,NA,NA,0
+1,1,"Male",33,"Maryland","South",4,7,0,68.75,0,0,0
+1,0,"Female",62,"Arizona","West",2,6,0,11.1111111111111,0,0,0
+1,1,"Male",46,"California","West",NA,7,1,100,0,1,NA
+1,0,"Female",36,"Utah","West",4,0,0,33.3333333333333,0,0,1
+1,1,"Female",NA,"Washington","West",4,3,1,33.3333333333333,1,0,NA
+1,0,"Male",48,"Nevada","West",3,0,1,100,0,1,0
+1,1,"Female",48,"California","West",3,5,1,88.8888888888889,1,1,0
+1,1,"Female",77,"Wyoming","West",4,4,1,77.7777777777778,1,0,NA
+1,1,"Female",NA,"Arizona","West",3,1,1,100,0,1,0
+1,NA,"Male",24,"Tennessee","South",4,0,0,85.7142857142857,1,0,NA
+0,0,"Female",65,"Indiana","Midwest",4,NA,NA,NA,NA,NA,0
+1,1,"Female",21,"California","West",5,0,0,72.2222222222222,0,0,0
+1,0,"Female",30,"Pennsylvania","Northeast",3,9,0,44.4444444444444,0,0,0
+1,1,"Male",20,"California","West",4,2,1,44.4444444444444,0,0,0
+1,1,"Female",30,"Nebraska","Midwest",3,3,1,88.8888888888889,0,0,0
+1,1,"Male",20,"Washington","West",4,3,1,55.5555555555556,0,1,0
+1,1,"Male",23,"Nevada","West",3,7,1,50,0,NA,1
+1,1,"Female",26,"Louisiana","South",2,8,0,94.4444444444444,0,0,0
+1,1,"Male",20,"Washington","West",2,3,0,22.2222222222222,1,1,0
+1,0,"Male",51,"Arizona","West",NA,1,1,88.8888888888889,NA,0,0
+1,1,"Male",22,"Iowa","Midwest",4,7,0,22.2222222222222,0,0,1
+1,1,"Male",28,"Oklahoma","South",3,1,0,77.7777777777778,0,0,0
+1,0,"Female",19,"Indiana","Midwest",3,3,1,55.5555555555556,0,1,0
+1,1,"Male",57,"California","West",3,10,0,100,1,0,0
+1,1,"Male",68,"Tennessee","South",4,2,0,66.6666666666667,0,0,0
+0,NA,"Female",58,"Oregon","West",NA,NA,NA,NA,NA,NA,0
+1,1,"Male",24,"North Carolina","South",3,7,1,50,0,1,0
+1,1,"Female",27,"Illinois","Midwest",NA,3,0,50,NA,0,NA
+1,1,"Female",29,"Mississippi","South",5,7,0,88.8888888888889,0,1,0
+0,0,"Male",55,"Indiana","Midwest",3,NA,NA,NA,NA,NA,NA
+1,1,"Female",NA,"California","West",NA,7,1,83.3333333333333,0,0,0
+1,1,"Female",28,"Minnesota","Midwest",3,5,1,61.1111111111111,0,0,0
+1,0,"Female",53,"Washington","West",1,3,0,44.4444444444444,0,0,0
+1,0,"Female",60,"Illinois","Midwest",2,1,0,22.2222222222222,0,0,0
+1,0,"Male",18,"California","West",3,5,1,94.4444444444444,0,0,1
+1,0,"Female",55,"Arkansas","South",2,6,0,44.4444444444444,0,0,NA
+1,1,"Female",29,"Nebraska","Midwest",3,6,1,100,0,0,0
+1,1,"Male",50,"Massachusetts","Northeast",3,2,1,81.25,0,1,0
+0,0,"Male",24,"California","West",NA,NA,NA,NA,NA,NA,0
+1,1,"Male",33,"Ohio","Midwest",3,6,1,77.7777777777778,0,1,0
+1,1,"Male",20,"Maryland","South",4,2,0,33.3333333333333,1,0,0
+1,1,"Male",62,"Oregon","West",5,2,1,100,NA,0,0
+1,0,"Male",33,"Pennsylvania","Northeast",2,3,0,72.2222222222222,0,0,0
+1,0,"Female",49,"Nebraska","Midwest",4,2,1,94.4444444444444,0,0,NA
+1,1,"Female",53,"Missouri","Midwest",4,5,1,100,0,0,0
+1,1,"Male",33,"Louisiana","South",4,2,1,88.8888888888889,1,0,0
+0,1,"Male",64,"Missouri","Midwest",4,0,0,88.8888888888889,NA,0,0
+1,1,"Male",29,"Wisconsin","Midwest",5,5,1,100,1,1,0
+1,0,"Male",33,"California","West",1,7,0,0,0,0,0
+1,1,"Female",23,"Missouri","Midwest",3,5,0,83.3333333333333,1,0,0
+1,1,"Female",28,"New York","Northeast",2,7,1,38.8888888888889,0,0,0
+0,0,"Female",67,"Pennsylvania","Northeast",3,NA,NA,NA,NA,NA,1
+0,0,"Male",62,"Wisconsin","Midwest",NA,NA,NA,NA,NA,NA,0
+1,1,"Female",38,"Pennsylvania","Northeast",4,4,1,83.3333333333333,1,0,0
+0,0,"Female",74,"Oklahoma","South",3,NA,NA,NA,NA,NA,0
+0,0,"Male",61,"New Jersey","Northeast",4,NA,NA,NA,NA,NA,0
+1,1,"Male",48,"Florida","South",3,0,1,88.8888888888889,1,NA,0
+1,0,"Female",50,"Alabama","South",3,7,1,83.3333333333333,1,0,0
+0,1,"Male",72,"Missouri","Midwest",4,0,0,NA,0,0,0
+0,0,"Male",33,"Tennessee","South",5,NA,NA,NA,NA,NA,1
+1,1,"Male",29,"New Hampshire","Northeast",NA,2,0,75,1,0,0
+1,1,"Male",59,"Iowa","Midwest",4,1,0,16.6666666666667,1,0,1
+1,0,"Female",60,"New York","Northeast",4,4,1,100,1,0,0
+1,1,"Male",NA,"Missouri","Midwest",4,1,0,100,0,0,0
+0,0,"Male",70,"Illinois","Midwest",2,NA,NA,NA,NA,NA,0
+0,1,"Female",46,"Pennsylvania","Northeast",4,0,0,33.3333333333333,NA,1,1
+1,1,"Male",40,"Florida","South",2,4,1,100,1,1,0
+1,1,"Male",22,"Michigan","Midwest",4,7,0,27.7777777777778,1,0,1
+1,1,"Male",19,"Ohio","Midwest",2,5,1,77.7777777777778,0,1,1
+1,1,"Male",42,"New York","Northeast",3,5,1,100,0,0,0
+1,0,"Male",59,"Maryland","South",4,8,0,61.1111111111111,1,0,0
+1,1,"Female",25,"Georgia","South",3,4,1,83.3333333333333,0,0,0
+0,0,"Male",92,"Pennsylvania","Northeast",2,NA,NA,NA,NA,NA,0
+1,1,"Male",31,"Kansas","Midwest",4,0,0,16.6666666666667,0,0,0
+1,1,"Male",24,"Idaho","West",4,7,0,0,0,0,1
+0,0,"Female",92,"Idaho","West",5,NA,NA,NA,NA,NA,NA
+1,1,"Female",28,"California","West",1,3,0,85.7142857142857,1,1,0
+1,0,"Male",52,"Indiana","Midwest",3,3,1,33.3333333333333,0,0,1
+1,1,"Female",40,"California","West",2,5,1,77.7777777777778,0,0,0
+1,1,"Female",33,"Arizona","West",2,2,1,72.2222222222222,0,1,0
+1,1,"Male",36,"Washington","West",4,2,1,55.5555555555556,1,0,0
+1,1,"Male",59,"New York","Northeast",2,7,0,72.2222222222222,0,0,1
+1,0,"Female",65,"Pennsylvania","Northeast",5,1,0,100,1,0,0
+1,1,"Female",57,"Indiana","Midwest",2,5,1,93.75,0,0,0
+1,1,"Female",39,"New York","Northeast",NA,4,1,66.6666666666667,0,0,1
+1,1,"Female",24,"Georgia","South",4,6,1,83.3333333333333,NA,1,1
+1,1,"Male",54,"New York","Northeast",5,11,0,16.6666666666667,0,1,1
+0,0,"Male",80,"Ohio","Midwest",3,NA,NA,NA,NA,NA,0
+0,0,"Male",47,"Virginia","South",4,NA,NA,NA,NA,NA,0
+1,1,"Male",48,"Delaware","South",4,5,0,16.6666666666667,0,0,0
+1,0,"Male",36,"Florida","South",3,5,NA,31.25,1,0,1
+1,1,"Male",31,"Massachusetts","Northeast",4,7,1,61.1111111111111,1,0,0
+1,1,"Female",61,"Massachusetts","Northeast",3,6,1,61.1111111111111,0,0,1
+1,0,"Female",71,"Florida","South",3,1,1,66.6666666666667,0,0,0
+1,1,"Male",44,"Rhode Island","Northeast",3,1,1,55.5555555555556,1,0,0
+1,NA,"Female",52,"Alabama","South",4,0,0,0,1,0,1
+1,1,"Female",33,"New York","Northeast",3,3,0,75,1,0,0
+1,0,"Male",50,"Pennsylvania","Northeast",4,0,0,100,0,0,NA
+1,1,"Female",NA,"Florida","South",3,0,1,68.75,0,0,1
+1,1,"Male",26,"Texas","South",3,8,1,83.3333333333333,1,1,1
+0,0,"Female",30,"Montana","West",NA,NA,NA,NA,NA,NA,1
+1,1,"Male",19,"New Jersey","Northeast",2,8,0,16.6666666666667,1,0,NA
+1,1,"Male",43,"California","West",4,4,0,22.2222222222222,1,0,0
+1,0,"Female",74,"Arizona","West",4,1,1,43.75,0,0,0
+1,0,"Female",60,"California","West",NA,2,0,60,0,0,0
+1,1,"Female",34,"Wisconsin","Midwest",2,3,0,16.6666666666667,0,0,0
+1,1,"Female",50,"Texas","South",3,5,1,57.1428571428571,1,0,NA
+0,0,"Male",40,"Texas","South",5,NA,NA,NA,NA,NA,0
+1,1,"Male",53,"California","West",4,8,0,66.6666666666667,1,0,1
+1,1,"Male",65,"Indiana","Midwest",5,3,0,22.2222222222222,1,1,0
+1,0,"Male",55,"California","West",4,6,0,33.3333333333333,1,0,0
+1,1,"Female",19,"Massachusetts","Northeast",3,8,1,72.2222222222222,0,0,1
+1,0,"Male",46,"Oklahoma","South",5,2,1,100,0,0,0
+1,1,"Male",22,"Indiana","Midwest",NA,1,0,91.6666666666667,1,0,0
+0,0,"Male",52,"Iowa","Midwest",3,NA,NA,NA,NA,NA,0
+1,1,"Female",39,"Indiana","Midwest",3,3,0,72.2222222222222,0,0,0
+0,0,"Male",41,"Ohio","Midwest",3,NA,NA,NA,NA,NA,1
+1,1,"Female",55,"California","West",2,7,1,100,0,0,0
+1,0,"Male",66,"North Carolina","South",4,1,1,77.7777777777778,1,0,0
+1,1,"Male",21,"California","West",4,4,0,11.1111111111111,1,0,1
+1,1,"Male",54,"California","West",4,11,1,100,0,0,0
+1,1,"Male",51,"Washington","West",5,4,1,88.8888888888889,1,0,0
+0,0,"Male",34,"Florida","South",2,NA,NA,NA,NA,NA,1
+1,1,"Male",21,"Washington","West",1,10,1,72.2222222222222,0,1,0
+1,1,"Female",28,"Louisiana","South",3,6,1,83.3333333333333,0,0,NA
+1,0,"Male",75,"North Carolina","South",4,0,0,100,NA,0,0
+1,0,"Female",70,"Texas","South",2,0,1,100,1,0,0
+1,1,"Male",53,"Maryland","South",5,5,1,94.4444444444444,0,1,1
+1,1,"Female",50,"Alabama","South",4,2,0,83.3333333333333,0,0,0
+1,NA,"Male",35,"Minnesota","Midwest",1,2,1,94.4444444444444,1,0,0
+1,1,"Female",59,"Missouri","Midwest",4,0,1,100,0,0,0
+1,0,"Female",31,"Pennsylvania","Northeast",3,5,0,22.2222222222222,0,0,0
+1,1,"Female",60,"Minnesota","Midwest",3,3,1,100,1,0,1
+1,1,"Male",23,"Texas","South",3,7,1,100,0,0,0
+1,1,"Female",59,"Iowa","Midwest",4,2,1,61.1111111111111,1,0,1
+1,0,"Male",65,"Minnesota","Midwest",3,4,1,61.1111111111111,1,1,0
+1,1,"Male",68,"Arkansas","South",3,4,0,44.4444444444444,1,0,0
+1,1,"Male",19,"Georgia","South",4,8,1,88.8888888888889,0,0,0
+1,0,"Female",49,"Illinois","Midwest",3,5,0,66.6666666666667,1,0,0
+1,0,"Male",56,"Florida","South",4,3,0,85.7142857142857,1,0,1
+1,0,"Male",60,"Missouri","Midwest",2,5,1,38.8888888888889,0,0,0
+1,1,"Female",62,"Florida","South",4,3,0,0,NA,0,0
+1,1,"Female",40,"South Carolina","South",2,2,1,44.4444444444444,0,0,0
+1,1,"Male",35,"Florida","South",2,4,1,81.25,0,0,0
+1,1,"Male",53,"Pennsylvania","Northeast",2,9,0,72.2222222222222,1,0,0
+1,1,"Male",48,"New York","Northeast",4,6,1,61.1111111111111,0,0,0
+1,0,"Female",30,"Ohio","Midwest",5,5,1,100,1,0,0
+0,0,"Female",39,"Texas","South",3,NA,NA,NA,NA,NA,1
+1,1,"Male",22,"Kentucky","South",2,10,1,55.5555555555556,1,0,1
+1,0,"Female",NA,"New Hampshire","Northeast",4,4,1,85.7142857142857,1,0,0
+1,1,"Female",55,"Maryland","South",2,3,1,61.1111111111111,0,1,0
+1,0,"Male",65,"New Jersey","Northeast",3,0,0,11.1111111111111,0,0,0
+0,0,"Female",70,"New York","Northeast",4,NA,NA,NA,NA,NA,0
+1,0,"Male",39,"Vermont","Northeast",4,4,1,22.2222222222222,0,0,0
+1,1,"Male",50,"California","West",4,1,1,12.5,0,0,0
+1,1,"Male",23,"Virginia","South",NA,3,0,5.55555555555556,1,0,1
+1,0,"Female",28,"New Jersey","Northeast",3,8,1,94.4444444444444,0,0,0
+1,0,"Female",59,"New Hampshire","Northeast",3,11,1,100,1,0,0
+1,1,"Male",29,"Michigan","Midwest",4,5,0,94.4444444444444,0,0,0
+1,1,"Male",25,"Virginia","South",2,4,0,33.3333333333333,0,0,1
+1,1,"Male",74,"Ohio","Midwest",4,3,0,22.2222222222222,0,0,1
+0,NA,"Male",52,"Ohio","Midwest",2,NA,NA,NA,NA,NA,0
+1,1,"Male",23,"Maryland","South",3,3,1,87.5,1,1,0
+1,1,"Male",33,"Kentucky","South",3,5,1,72.2222222222222,0,0,0
+1,0,"Female",NA,"Delaware","South",4,0,0,55.5555555555556,NA,0,1
+1,1,"Female",51,"Kentucky","South",3,10,1,66.6666666666667,1,1,0
+1,0,"Female",19,"Kansas","Midwest",2,2,0,5.55555555555556,0,0,0
+1,1,"Female",22,"Alabama","South",3,5,0,72.2222222222222,0,0,0
+1,1,"Male",43,"Texas","South",NA,0,1,100,0,0,0
+1,1,"Female",NA,"Indiana","Midwest",4,0,0,100,0,0,NA
+1,NA,"Female",19,"Louisiana","South",NA,6,0,78.5714285714286,0,0,0
+0,0,"Male",84,"Arkansas","South",4,NA,NA,NA,NA,NA,NA
+1,1,"Female",26,"Texas","South",2,1,0,16.6666666666667,0,0,0
+1,0,"Male",19,"Texas","South",4,4,0,66.6666666666667,1,0,0
+1,1,"Female",26,"Iowa","Midwest",3,7,1,72.2222222222222,0,0,0
+1,1,"Male",45,"Louisiana","South",3,2,1,100,0,0,0
+1,1,"Female",26,"Minnesota","Midwest",1,9,0,72.2222222222222,0,0,NA
+1,1,"Female",36,"Missouri","Midwest",3,6,0,100,0,0,1
+1,1,"Female",27,"North Dakota","Midwest",3,6,1,77.7777777777778,1,1,0
+1,1,"Male",37,"Texas","South",1,2,0,50,1,0,0
+1,1,"Female",63,"Wisconsin","Midwest",2,0,0,83.3333333333333,0,0,1
+1,1,"Male",18,"Oklahoma","South",3,7,0,44.4444444444444,0,0,0
+1,1,"Female",55,"Colorado","West",3,3,1,88.8888888888889,0,0,0
+1,1,"Female",30,"Arizona","West",2,5,0,94.4444444444444,1,0,0
+1,1,"Male",29,"California","West",3,7,1,77.7777777777778,1,1,1
+1,1,"Female",57,"Utah","West",4,7,1,27.7777777777778,0,0,1
+0,NA,"Male",29,"Colorado","West",3,NA,NA,NA,NA,NA,0
+1,1,"Male",22,"California","West",4,6,0,11.1111111111111,0,0,1
+0,0,"Female",63,"California","West",4,NA,NA,NA,NA,NA,1
+1,1,"Female",26,"Texas","South",3,3,1,55.5555555555556,0,0,0
