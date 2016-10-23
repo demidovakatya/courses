@@ -1,33 +1,21 @@
 **.RData
 **.Rhistory
 .Rproj.user
+/.Rproj.user/*
 */.ipynb_checkpoints/*-checkpoint.ipynb
 */.idea/*
+*.iml
 
 data-science/r-programming/assignment_1/specdata/*.csv
-analytics-edge/.Rproj.user/*
 
-python-for-everybody/python-databases/counting-emails.sqlite
-python-for-everybody/python-databases/emaildb.sqlite
-python-for-everybody/python-databases/geodata/where.html
-python-for-everybody/python-databases/geodata/where.js
-python-for-everybody/python-databases/geodata/where.data
-python-for-everybody/python-databases/gmane/d3.v2.js
-python-for-everybody/python-databases/gmane/d3.layout.cloud.js
-python-for-everybody/python-databases/gmane/gline.jsonp
-python-for-everybody/python-databases/pagerank/d3.v2.js
-python-for-everybody/python-databases/gmane/gword.jsonp
-python-for-everybody/python-databases/pagerank/force.js
-python-for-everybody/python-databases/rosterdb.sqlite
-python-for-everybody/python-databases/trackdb.sqlite
+python-for-everybody/python-databases/*.sqlite
+python-for-everybody/python-databases/geodata/*.data
+python-for-everybody/python-databases/geodata/*.html
+python-for-everybody/python-databases/geodata/*.js
+python-for-everybody/python-databases/gmane/*.js
+python-for-everybody/python-databases/gmane/*.jsonp
+python-for-everybody/python-databases/pagerank/*.js
 python-for-everybody/python-databases/sql1
 
 analytics-edge/week_5/tweets.csv
-
-analytics-edge/kaggle_competition/kaggle.R
-analytics-edge/kaggle_competition/submissions/*
-analytics-edge/kaggle_competition/test.csv
-analytics-edge/kaggle_competition/train.csv
-analytics-edge/kaggle_competition/train_labels.csv
-analytics-edge/kaggle_competition/05_31_old.R
-
+analytics-edge/kaggle_competition/
