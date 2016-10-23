@@ -1,5 +1,6 @@
 **.RData
 **.Rhistory
+**.Rproj
 .Rproj.user
 /.Rproj.user/*
 */.ipynb_checkpoints/*-checkpoint.ipynb
@@ -19,3 +20,9 @@ python-for-everybody/python-databases/sql1
 
 analytics-edge/week_5/tweets.csv
 analytics-edge/kaggle_competition/
+
+machine-learning/machine-learning-class-master/
+machine-learning/mlclass-master/
+machine-learning/*.zip
+
+csc-java/week_01/Sokobano/**
