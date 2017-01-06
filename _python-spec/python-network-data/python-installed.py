@@ -1,0 +1,1 @@
+print "Oh, look, I've installed Python."
