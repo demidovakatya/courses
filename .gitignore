@@ -6,6 +6,10 @@
 */.ipynb_checkpoints/*-checkpoint.ipynb
 */.idea/*
 *.iml
+*.sublime-project
+*.sublime-workspace
+*.tar.gz
+*.tar
 
 data-science/r-programming/assignment_1/specdata/*.csv
 
