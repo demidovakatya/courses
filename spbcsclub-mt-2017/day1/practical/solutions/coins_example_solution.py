@@ -49,10 +49,10 @@ def get_observed_statistics(labels, samples):
 def get_maximum_likelihood_parameters(count_coin_r, count_coin_b,
                                       count_head_r, count_head_b):
     "Compute the maximum likelihood estimates for the parameters."
-    estimate_prob_coin_r = count_coin_r / float(count_coin_r + count_coin_b)
-    estimate_prob_head_r = count_head_r / float(count_coin_r)
-    estimate_prob_head_b = count_head_b / float(count_coin_b)
-    return estimate_prob_coin_r, estimate_prob_head_r, estimate_prob_head_b
+    est_prob_coin_r = count_coin_r / float(count_coin_r + count_coin_b)
+    est_prob_head_r = count_head_r / float(count_coin_r)
+    est_prob_head_b = count_head_b / float(count_coin_b)
+    return est_prob_coin_r, est_prob_head_r, est_prob_head_b
 
 def read_user_input(args):
     if len(args) != 5:
@@ -82,14 +82,14 @@ if __name__ == "__main__":
 
     count_coin_r, count_coin_b, count_head_r, count_head_b = (
         get_observed_statistics(labels, samples))
-    estimate_prob_coin_r, estimate_prob_head_r, estimate_prob_head_b = (
+    est_prob_coin_r, est_prob_head_r, est_prob_head_b = (
         get_maximum_likelihood_parameters(count_coin_r, count_coin_b,
                                           count_head_r, count_head_b))
 
     print "Maximum likelihood estimates:"
-    print "estimate_prob_coin_r = %1.4f (actual = %1.4f)" % (estimate_prob_coin_r, prob_coin_r)
-    print "estimate_prob_head_r = %1.4f (actual = %1.4f)" % (estimate_prob_head_r, prob_head_r)
-    print "estimate_prob_head_b = %1.4f (actual = %1.4f)" % (estimate_prob_head_b, prob_head_b)
+    print "est_prob_coin_r = %1.4f (actual = %1.4f)" % (est_prob_coin_r, prob_coin_r)
+    print "est_prob_head_r = %1.4f (actual = %1.4f)" % (est_prob_head_r, prob_head_r)
+    print "est_prob_head_b = %1.4f (actual = %1.4f)" % (est_prob_head_b, prob_head_b)
     print "number of coins = %d" % n
     print "number of times each coin was flipped = %d" % m
     print "total coin flips = %d" % (m * n)
